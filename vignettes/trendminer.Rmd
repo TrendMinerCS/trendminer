@@ -1,0 +1,38 @@
+---
+title: "trendminer Quickstart Guide"
+author: "Alexander Lemm"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{trendminer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN,
+  eval = NOT_CRAN
+)
+```
+
+trendminer is an R client for the TrendMiner API available at http://developer.trendminer.com/. 
+
+## Authentication 
+
+All requests to the TrendMiner API require authentication. This is achieved by sending a valid Bearer access token in the request headers. Request tokens are obtained via OAuth2.0 using the Resource Owner Password Credentials flow. That means that any client which likes to interact with the API needs to collect the credentials from the user (username and password) first before passing them together with its own client credentials (client ID and client secret) to the server. The server responds with an access token which the user needs to use for any subsequent API request. 
+
+Since typing your password in the console is a bit too dangerous (you might accidentally share the `.Rhistory` file) and asking each time gets too cumbersome quickly, the trendminer package requires that you store your secrets and the base URL of your TrendMiner instance as environment variables in the `.Renviron` file in your home directory.
+
+Please make sure to set the environment variables below in your `.Renviron` file before using functions from the trendminer package. You can easily edit `.Renviron` using `usethis::edit_r_environ()`.
+
+``` {r eval=FALSE}
+TM_base_url = https://your.trendminer.cloud
+TM_usr = YOUR_TM_USER
+TM_pwd = YOUR_TM_PASSWORD
+TM_clientID = TM_CLIENT_ID
+TM_secret = TM_CLIENT_SECRET
+```
+

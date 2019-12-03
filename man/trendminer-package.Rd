@@ -4,11 +4,14 @@
 \name{trendminer-package}
 \alias{trendminer}
 \alias{trendminer-package}
-\title{trendminer: R client for the TrendMiner API}
+\title{trendminer: R client for the 'TrendMiner' API}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-What the package does (one paragraph).
+Allows access to selected endpoints that are part of the 
+    'TrendMiner' API <http://developer.trendminer.com/apidocs/index.html>.
+    'TrendMiner' is an industrial self-service analytics platform for analyzing, 
+    monitoring and predicting time-series based process and asset data.
 }
 \author{
 \strong{Maintainer}: Alexander Lemm \email{alex23lemm@gmail.com}

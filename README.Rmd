@@ -60,6 +60,6 @@ User and client credentials can be passed as arguments to `tm_get_token()` for q
 TM_usr = ADD_YOUR_USER
 TM_pwd = ADD_YOUR_PASSWORD
 TM_client_ID = ADD_CLIENT_ID
-TM_client_secret = ADD_CLIENT_SECRET`
+TM_client_secret = ADD_CLIENT_SECRET
 ```
 

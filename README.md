@@ -45,11 +45,11 @@ token
 #> List of 7
 #>  $ access_token     : chr "041ba031-45d3-4824-aec2-3a6f610a9a5b"
 #>  $ token_type       : chr "bearer"
-#>  $ expires_in       : int 40001
+#>  $ expires_in       : int 1500
 #>  $ scope            : chr "read"
 #>  $ allowedHistorians: chr "ALL"
 #>  $ userId           : chr "d891dff7-051d-4649-a389-029aa5b116de"
-#>  $ expiration_date  : POSIXct[1:1], format: "2019-12-03 21:58:39"
+#>  $ expiration_date  : POSIXct[1:1], format: "2019-12-03 21:58:40"
 #>  - attr(*, "class")= chr "tm_token"
 ```
 
@@ -75,4 +75,4 @@ variables below which you need to store in `.Renviron`.
     TM_usr = ADD_YOUR_USER
     TM_pwd = ADD_YOUR_PASSWORD
     TM_client_ID = ADD_CLIENT_ID
-    TM_client_secret = ADD_CLIENT_SECRET`
+    TM_client_secret = ADD_CLIENT_SECRET

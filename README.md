@@ -7,6 +7,8 @@
 
 [![Travis build
 status](https://travis-ci.com/alex23lemm/trendminer.svg?branch=master)](https://travis-ci.com/alex23lemm/trendminer)
+[![Codecov test
+coverage](https://codecov.io/gh/alex23lemm/trendminer/branch/master/graph/badge.svg)](https://codecov.io/gh/alex23lemm/trendminer?branch=master)
 <!-- badges: end -->
 
 trendminer is an R client for accessing selected endpoints of the
@@ -43,7 +45,7 @@ token
 #> List of 7
 #>  $ access_token     : chr "041ba031-45d3-4824-aec2-3a6f610a9a5b"
 #>  $ token_type       : chr "bearer"
-#>  $ expires_in       : int 40173
+#>  $ expires_in       : int 40001
 #>  $ scope            : chr "read"
 #>  $ allowedHistorians: chr "ALL"
 #>  $ userId           : chr "d891dff7-051d-4649-a389-029aa5b116de"

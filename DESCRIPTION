@@ -17,7 +17,8 @@ Suggests:
     testthat (>= 2.1.0),
     spelling,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 Language: en-US
 VignetteBuilder: knitr
 Imports: 

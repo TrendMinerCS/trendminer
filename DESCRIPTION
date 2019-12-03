@@ -11,6 +11,8 @@ Description: Allows access to selected endpoints that are part of the
     'TrendMiner' is an industrial self-service analytics platform for analyzing, 
     monitoring and predicting time-series based process and asset data.
 License: MIT + file LICENSE
+URL: https://alex23lemm.github.io/trendminer, https://github.com/alex23lemm/trendminer
+BugReports: https://github.com/alex23lemm/trendminer/issues
 Encoding: UTF-8
 LazyData: true
 Suggests: 

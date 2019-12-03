@@ -13,6 +13,15 @@ Allows access to selected endpoints that are part of the
     'TrendMiner' is an industrial self-service analytics platform for analyzing, 
     monitoring and predicting time-series based process and asset data.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://alex23lemm.github.io/trendminer}
+  \item \url{https://github.com/alex23lemm/trendminer}
+  \item Report bugs at \url{https://github.com/alex23lemm/trendminer/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Alexander Lemm \email{alex23lemm@gmail.com}
 

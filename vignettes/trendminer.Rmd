@@ -1,5 +1,5 @@
 ---
-title: "trendminer Quickstart Guide"
+title: "Introduction to the TrendMiner R package"
 author: "Alexander Lemm"
 output: rmarkdown::html_vignette
 vignette: >
@@ -18,21 +18,37 @@ knitr::opts_chunk$set(
 )
 ```
 
-trendminer is an R client for the TrendMiner API available at http://developer.trendminer.com/. 
+TrendMiner is an industrial self-service analytics platform for analyzing, monitoring and predicting time-series based process and asset data. The trendminer R package allows access to selected endpoints of the TrendMiner API which is documented here: http://developer.trendminer.com/apidocs/index.html.
+
+This vignette provides a brief introduction to the trendminer R package, highlighting the following key details of its use:
+
+* Connecting to a TrendMiner instance from an interactive R session
+* Fetching time-series data of specific tags  
+
 
 ## Authentication 
 
 All requests to the TrendMiner API require authentication. This is achieved by sending a valid Bearer access token in the request headers. Request tokens are obtained via OAuth2.0 using the Resource Owner Password Credentials flow. That means that any client which likes to interact with the API needs to collect the credentials from the user (username and password) first before passing them together with its own client credentials (client ID and client secret) to the server. The server responds with an access token which the user needs to use for any subsequent API request. 
 
-Since typing your password in the console is a bit too dangerous (you might accidentally share the `.Rhistory` file) and asking each time gets too cumbersome quickly, the trendminer package requires that you store your secrets and the base URL of your TrendMiner instance as environment variables in the `.Renviron` file in your home directory.
+**Note**: You can request your client ID and client secret by contacting TrendMiner support or your TrendMiuner Customer Success Manager.
 
-Please make sure to set the environment variables below in your `.Renviron` file before using functions from the trendminer package. You can easily edit `.Renviron` using `usethis::edit_r_environ()`.
+User credentials, client credentials and the TrendMiner base URL can be passed as arguments to `tm_get_token()` for quick testing in interactive mode. 
+
+```{r eval=FALSE}
+tm_get_token(client_id = "YOUR_CLIENT_ID_HERE", 
+             client_secret = "YOUR_CLIENT_SECRET_HERE", 
+             usr_name = "YOUR_USER_NAME_HERE", 
+             usr_pwd = "YOUR_USER_PASSWORD_HERE", 
+             base_url = "YOUR_TM_BASE_URL_HERE")
+```
+
+However, it is recommended to call `tm_get_token()` without arguments. In this case `tm_get_token()` will fetch the credentials and the TrendMiner base URL from the environment variables specified below which you need to store in `.Renviron`. You can easily edit `.Renviron` using `usethis::edit_r_environ()`.
 
 ``` {r eval=FALSE}
-TM_base_url = https://your.trendminer.cloud
-TM_usr = YOUR_TM_USER
-TM_pwd = YOUR_TM_PASSWORD
-TM_clientID = TM_CLIENT_ID
-TM_secret = TM_CLIENT_SECRET
+TM_client_ID = YOUR_CLIENT_ID_HERE
+TM_secret = YOUR_CLIENT_SECRET_HERE
+TM_usr = YOUR_USER_NAME_HERE
+TM_pwd = YOUR_USER_PASSWORD_HERE
+TM_base_url = YOUR_TM_BASE_URL_HERE
 ```
 

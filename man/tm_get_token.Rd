@@ -9,6 +9,7 @@ tm_get_token(
   client_secret = NULL,
   usr_name = NULL,
   usr_pwd = NULL,
+  base_url = NULL,
   ...
 )
 }
@@ -20,6 +21,8 @@ tm_get_token(
 \item{usr_name}{Username}
 
 \item{usr_pwd}{User password}
+
+\item{base_url}{TrendMiner base URL}
 
 \item{...}{Additional arguments passed on to the underlying HTTP method.
 This might be necessary if you need to set some curl options explicitly
@@ -38,6 +41,7 @@ which can be accessed with the \code{access_token}
 \item \code{userId} The user's ID which will be used for any action performed
 on the connected TrendMiner instance using the \code{access_token}
 \item \code{expiration_date} "POSIXct" object representing the date the token will expire
+\item \code{base_url} TrendMiner base URL
 }
 }
 \description{
@@ -54,16 +58,18 @@ together with its own client credentials (client ID and client secret)
 to the TrendMiner server. The server responds with an access token which the
 user needs to use for any subsequent API requests.
 
-User and client credentials can be passed as arguments to \code{tm_get_token()}
-for quick testing in interactive mode. However, it is recommended to
-call \code{tm_get_token()} without arguments. In this case \code{tm_get_token()}
-will fetch the credentials from the following environment variables stored in
+User credentials, client credentials and the TrendMiner base URL can be passed
+as arguments to \code{tm_get_token()} for quick testing in interactive mode.
+However, it is recommended to call \code{tm_get_token()} without arguments.
+In this case \code{tm_get_token()} will fetch the credentials and the TrendMiner
+base URL from the following environment variables stored in
 \code{.Renviron}:
 
-\code{TM_usr = YOUR_USER}\cr
-\code{TM_pwd = YOUR_PASSWORD}\cr
-\code{TM_client_ID = CLIENT_ID}\cr
-\code{TM_client_secret = CLIENT_SECRET}\cr
+\code{TM_client_ID = YOUR_CLIENT_ID_HERE}\cr
+\code{TM_secret = YOUR_CLIENT_SECRET_HERE}\cr
+\code{TM_usr = YOUR_USER_NAME_HERE}\cr
+\code{TM_pwd = YOUR_USER_PASSWORD_HERE}\cr
+\code{TM_base_url = YOUR_TM_BASE_URL_HERE}
 }
 \examples{
 \dontrun{

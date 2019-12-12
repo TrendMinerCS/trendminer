@@ -13,20 +13,23 @@
 #' user needs to use for any subsequent API requests.
 #'
 #' @details
-#' User and client credentials can be passed as arguments to `tm_get_token()`
-#' for quick testing in interactive mode. However, it is recommended to
-#' call `tm_get_token()` without arguments. In this case `tm_get_token()`
-#' will fetch the credentials from the following environment variables stored in
+#' User credentials, client credentials and the TrendMiner base URL can be passed
+#' as arguments to `tm_get_token()` for quick testing in interactive mode.
+#' However, it is recommended to call `tm_get_token()` without arguments.
+#' In this case `tm_get_token()` will fetch the credentials and the TrendMiner
+#' base URL from the following environment variables stored in
 #' `.Renviron`:
 #'
-#' `TM_usr = YOUR_USER`\cr
-#' `TM_pwd = YOUR_PASSWORD`\cr
-#' `TM_client_ID = CLIENT_ID`\cr
-#' `TM_client_secret = CLIENT_SECRET`\cr
+#' `TM_client_ID = YOUR_CLIENT_ID_HERE`\cr
+#' `TM_secret = YOUR_CLIENT_SECRET_HERE`\cr
+#' `TM_usr = YOUR_USER_NAME_HERE`\cr
+#' `TM_pwd = YOUR_USER_PASSWORD_HERE`\cr
+#' `TM_base_url = YOUR_TM_BASE_URL_HERE`
 #' @param client_id Client identifier issued by the authorization server
 #' @param client_secret Client secret issued by the authorization server
 #' @param usr_name Username
 #' @param usr_pwd User password
+#' @param base_url TrendMiner base URL
 #' @param ... Additional arguments passed on to the underlying HTTP method.
 #'   This might be necessary if you need to set some curl options explicitly
 #'   via \code{\link[httr]{config}}.
@@ -41,6 +44,7 @@
 #' * `userId` The user's ID which will be used for any action performed
 #'   on the connected TrendMiner instance using the `access_token`
 #' * `expiration_date` "POSIXct" object representing the date the token will expire
+#' * `base_url` TrendMiner base URL
 #' @export
 #'
 #' @examples
@@ -48,7 +52,7 @@
 #' tm_get_token()
 #' }
 tm_get_token <- function(client_id = NULL, client_secret = NULL,
-                         usr_name = NULL , usr_pwd = NULL, ...) {
+                         usr_name = NULL , usr_pwd = NULL, base_url = NULL, ...) {
 
   if (!is.null(client_id)) {
     if (length(client_id) != 1L || typeof(client_id) != "character") {
@@ -82,7 +86,15 @@ tm_get_token <- function(client_id = NULL, client_secret = NULL,
     usr_pwd <- tm_get_pwd()
   }
 
-  url <- paste(tm_get_base_url(), "security/oauth/token", sep = "/")
+  if (!is.null(base_url)) {
+    if (length(base_url) != 1L || typeof(base_url) != "character") {
+      stop("If provided,'base_url' must be a length-one character vector.")
+    }
+  } else {
+    base_url <- tm_get_base_url()
+  }
+
+  url <- paste(base_url, "security/oauth/token", sep = "/")
   body = list(scope = "read",
               grant_type = "password",
               username = usr_name,

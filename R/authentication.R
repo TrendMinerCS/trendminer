@@ -102,7 +102,7 @@ tm_get_token <- function(client_id = NULL, client_secret = NULL,
 
   response <- httr::POST(url, httr::authenticate(client_id,
                                                  client_secret),
-                         httr::user_agent(get_useragent()),
+                         httr::user_agent(tm_get_useragent()),
                          httr::accept_json(),
                          encode = "form",
                          body = body,
@@ -138,7 +138,7 @@ print.tm_token <- function(x, ...) {
   invisible(x)
 }
 
-tm_validate_token <- function(token) {
+tm_is_valid_token <- function(token) {
   token[["expiration_date"]] > Sys.time()
 }
 

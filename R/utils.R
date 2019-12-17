@@ -10,7 +10,7 @@
 #' @usage lhs \%>\% rhs
 NULL
 
-get_useragent <- function() {
+tm_get_useragent <- function() {
   ua <- "Request created by the trendminer package; https://github.com/alex23lemm/trendminer"
   ua
 }

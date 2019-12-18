@@ -34,11 +34,18 @@ devtools::install_github("alex23lemm/trendminer")
 
 Below are some things you can do after installing the package:
 
-```{r}
+```{r message=FALSE}
 library(trendminer)
+library(dplyr)
 
 token <- tm_get_token()
-token
+
+# Fetch all available tags
+my_tags <- tm_get_tags(token)
+
+my_tags %>% 
+  select(name, data) %>%
+  head
 ```
 
 

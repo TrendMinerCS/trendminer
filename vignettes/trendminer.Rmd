@@ -23,7 +23,8 @@ TrendMiner is an industrial self-service analytics platform for analyzing, monit
 This vignette provides a brief introduction to the trendminer R package, highlighting the following key details of its use:
 
 * Connecting to a TrendMiner instance from an interactive R session
-* Fetching time-series data of specific tags  
+* Searching and browsing the asset hierarchy
+* Fetching time-series data of tags  
 
 
 ## Authentication 

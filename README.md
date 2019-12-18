@@ -30,18 +30,23 @@ Below are some things you can do after installing the package:
 
 ``` r
 library(trendminer)
+library(dplyr)
 
 token <- tm_get_token()
-token
-#> List of 7
-#>  $ access_token     : chr "0041147b-2ad6-43f2-9952-535df473bc13"
-#>  $ token_type       : chr "bearer"
-#>  $ expires_in       : int 37216
-#>  $ scope            : chr "read"
-#>  $ allowedHistorians: chr "ALL"
-#>  $ userId           : chr "d891dff7-051d-4649-a389-029aa5b116de"
-#>  $ expiration_date  : POSIXct[1:1], format: "2019-12-12 21:45:40"
-#>  - attr(*, "class")= chr "tm_token"
+
+# Fetch all available tags
+my_tags <- tm_get_tags(token)
+
+my_tags %>% 
+  select(name, data) %>%
+  head
+#>                    name        data
+#> 1 Reactor Concentration  BA2:CONC.1
+#> 2         Reactor Level  BA:LEVEL.1
+#> 3 Reactor Concentration   BA:CONC.1
+#> 4   Reactor Temperature   BA:TEMP.1
+#> 5        Reactor Status BA:ACTIVE.1
+#> 6        Reaction Phase  BA:PHASE.1
 ```
 
 ## Authentication

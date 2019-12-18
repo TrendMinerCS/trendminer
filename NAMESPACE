@@ -2,7 +2,8 @@
 
 S3method(print,tm_token)
 export("%>%")
-export(tm_asset_search)
+export(tm_assets_search)
 export(tm_get_tags)
 export(tm_get_token)
 importFrom(magrittr,"%>%")
+importFrom(rlang,.data)

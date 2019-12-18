@@ -1,6 +1,57 @@
-#' /af/assets/search
+#' General search function on assets and tags
+#'
+#' Search for assets and tags in the asset hierarchy that match the query pattern.
+#'
+#' @details
+#' `tm_assets_search()` allows to search for nodes in the TrendMiner asset hierachy
+#' with arbitary queries. A node either represents an asset (component of the installation)
+#' or a tag (property of an asset containing timeseries data). `tm_assets_search()` is
+#' powering a couple of other functions under-the-hood like, e.g., `tm_get_assets()` and
+#' `tm_get_tags()` which offer a higher abstraction level by using pre-defined search queries.
+#'
+#' Depending on the query, TrendMiner search results might be paginated.
+#' `tm_assets_search()` manages pagination completely on its own by combining all
+#' paginated search results in a list before returning them.
+#'
+#'
+#' ## Available query operators
+#'
+#' * Search operators: equal(==), not equal(!=), in(=in=), not in(=out=)\cr
+#' * Logical operator: AND(;), OR(,)\cr
+#' * Wildcard operator: *
+#'
+#' ## List of attributes you can search on
+#'
+#' id\cr
+#' sourceId\cr
+#' type\cr
+#' externalId\cr
+#' template\cr
+#' templateId\cr
+#' name\cr
+#' description\cr
+#' dataType\cr
+#' data\cr
+#' options\cr
+#' deleted
+#'
+#' @param token A valid access token
+#' @param query Search query
+#' @inheritParams tm_get_token
+#' @importFrom rlang .data
+#' @return A list with search results. Each list entry represents one page of
+#'   a paginated response.
 #' @export
-tm_asset_search <- function(token, query, base_url = NULL, ...) {
+#'
+#' @examples
+#'  \dontrun{
+#'    # Retrieve all assets that have "Reactor" in their name
+#'    tm_assets_search(token, 'type=="ASSET";name=="*Reactor*"')
+#'
+#'    # Retrieve all tags that have "Temperature" in their name
+#'    tm_assets_search(token, "type=='ATTRIBUTE';name=='*Temperature*'")
+#' }
+tm_assets_search <- function(token, query, base_url = NULL, ...) {
 
   if (class(token) != "tm_token" || !tm_is_valid_token(token)) {
     stop("Please provide a valid access token.")
@@ -53,8 +104,8 @@ tm_asset_search <- function(token, query, base_url = NULL, ...) {
   for(i in 2:length(content)) {
 
     next_link <- parsed$links %>%
-      dplyr::filter(rel == "next") %>%
-      dplyr::select(href) %>%
+      dplyr::filter(.data$rel == "next") %>%
+      dplyr::select(.data$href) %>%
       sub(".*search", "", .)
 
     url <- paste(base_url, "/af/assets/search", next_link, sep = "")
@@ -84,8 +135,12 @@ tm_asset_search <- function(token, query, base_url = NULL, ...) {
   content
 }
 
+#' Get all tags
+#'
+#' Gets all tag information from TrendMiner and returns it in a data frame.
+#'
 #' @export
 tm_get_tags <- function(token, base_url = NULL, ...) {
-  do.call("rbind", tm_asset_search(token, 'type=="ATTRIBUTE"', base_url, ...))
+  do.call("rbind", tm_assets_search(token, 'type=="ATTRIBUTE"', base_url, ...))
 }
 

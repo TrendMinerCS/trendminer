@@ -4,14 +4,12 @@
 \alias{tm_search_assets}
 \title{General search function on assets and tags}
 \usage{
-tm_search_assets(token, query, base_url = NULL, ...)
+tm_search_assets(token, query, ...)
 }
 \arguments{
 \item{token}{A valid access token}
 
 \item{query}{Search query}
-
-\item{base_url}{TrendMiner base URL}
 
 \item{...}{Additional arguments passed on to the underlying HTTP method.
 This might be necessary if you need to set some curl options explicitly

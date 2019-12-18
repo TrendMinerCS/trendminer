@@ -125,6 +125,7 @@ tm_get_token <- function(client_id = NULL, client_secret = NULL,
   parsed <- httr::content(response, as =  "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
   parsed[["expiration_date"]] <- curr_time + parsed[["expires_in"]]
+  parsed[["base_url"]] <- base_url
 
   structure(
     parsed,

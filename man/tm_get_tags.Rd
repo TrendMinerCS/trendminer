@@ -4,12 +4,10 @@
 \alias{tm_get_tags}
 \title{Get all tags}
 \usage{
-tm_get_tags(token, base_url = NULL, ...)
+tm_get_tags(token, ...)
 }
 \arguments{
 \item{token}{A valid access token}
-
-\item{base_url}{TrendMiner base URL}
 
 \item{...}{Additional arguments passed on to the underlying HTTP method.
 This might be necessary if you need to set some curl options explicitly

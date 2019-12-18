@@ -5,10 +5,10 @@ test_that("tm_get_token() returns Bearer access token when fetching
   skip_on_cran()
 
   token <- tm_get_token()
-  expect_length(token, 7)
+  expect_length(token, 8)
   expect_equal(names(token), c("access_token", "token_type", "expires_in",
                                "scope", "allowedHistorians", "userId",
-                               "expiration_date"))
+                               "expiration_date", "base_url"))
 
 })
 
@@ -21,10 +21,10 @@ test_that("tm_get_token() returns Bearer access token when the user passes the
                         usr_name = tm_get_usr(),
                         usr_pwd = tm_get_pwd(),
                         base_url = tm_get_base_url())
-  expect_length(token, 7)
+  expect_length(token, 8)
   expect_equal(names(token), c("access_token", "token_type", "expires_in",
                                "scope", "allowedHistorians", "userId",
-                               "expiration_date"))
+                               "expiration_date", "base_url"))
 })
 
 test_that("tm_get_token() throws and error when trying to authenticate with

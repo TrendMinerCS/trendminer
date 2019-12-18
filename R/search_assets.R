@@ -51,21 +51,13 @@
 #'    # Retrieve all tags that have "Temperature" in their name
 #'    tm_search_assets(token, "type=='ATTRIBUTE';name=='*Temperature*'")
 #'  }
-tm_search_assets <- function(token, query, base_url = NULL, ...) {
+tm_search_assets <- function(token, query, ...) {
 
   if (class(token) != "tm_token" || !tm_is_valid_token(token)) {
     stop("Token expired. Please provide a valid access token.")
   }
 
-  if (!is.null(base_url)) {
-    if (length(base_url) != 1L || typeof(base_url) != "character") {
-      stop("If provided,'base_url' must be a length-one character vector.")
-    }
-  } else {
-    base_url <- tm_get_base_url()
-  }
-
-  url <- paste(base_url, "/af/assets/search?query=",
+  url <- paste(token$base_url, "/af/assets/search?query=",
                query, sep = "") %>%
     gsub("\"","%22", .) %>% #encode quotes
     gsub(" ", "%20", .) #encode spaces
@@ -108,7 +100,7 @@ tm_search_assets <- function(token, query, base_url = NULL, ...) {
       dplyr::select(.data$href) %>%
       sub(".*search", "", .)
 
-    url <- paste(base_url, "/af/assets/search", next_link, sep = "")
+    url <- paste(token$base_url, "/af/assets/search", next_link, sep = "")
 
     response <- httr::GET(url,
                           httr::add_headers(Authorization = paste("Bearer", token$access_token, sep = "")),
@@ -149,7 +141,7 @@ tm_search_assets <- function(token, query, base_url = NULL, ...) {
 #'  \dontrun{
 #'   tm_get_tags(token)
 #'  }
-tm_get_tags <- function(token, base_url = NULL, ...) {
-  do.call("rbind", tm_search_assets(token, 'type=="ATTRIBUTE"', base_url, ...))
+tm_get_tags <- function(token, ...) {
+  do.call("rbind", tm_search_assets(token, 'type=="ATTRIBUTE"', ...))
 }
 

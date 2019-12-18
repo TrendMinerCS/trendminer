@@ -4,7 +4,7 @@
 #'
 #' @details
 #' `tm_assets_search()` allows to search for nodes in the TrendMiner asset hierachy
-#' with arbitary queries. A node either represents an asset (component of the installation)
+#' with arbitrary queries. A node either represents an asset (component of the installation)
 #' or a tag (property of an asset containing timeseries data). `tm_assets_search()` is
 #' powering a couple of other functions under-the-hood like, e.g., `tm_get_assets()` and
 #' `tm_get_tags()` which offer a higher abstraction level by using pre-defined search queries.

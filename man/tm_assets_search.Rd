@@ -65,5 +65,5 @@ deleted
 
    # Retrieve all tags that have "Temperature" in their name
    tm_assets_search(token, "type=='ATTRIBUTE';name=='*Temperature*'")
-}
+ }
 }

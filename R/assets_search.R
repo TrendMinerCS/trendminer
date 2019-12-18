@@ -50,7 +50,7 @@
 #'
 #'    # Retrieve all tags that have "Temperature" in their name
 #'    tm_assets_search(token, "type=='ATTRIBUTE';name=='*Temperature*'")
-#' }
+#'  }
 tm_assets_search <- function(token, query, base_url = NULL, ...) {
 
   if (class(token) != "tm_token" || !tm_is_valid_token(token)) {
@@ -137,9 +137,18 @@ tm_assets_search <- function(token, query, base_url = NULL, ...) {
 
 #' Get all tags
 #'
-#' Gets all tag information from TrendMiner and returns it in a data frame.
+#' Gets the complete list of available tags including their attributes from
+#' TrendMiner and returns it in a data frame.
 #'
+#' @inheritParams tm_assets_search
+#' @return A data frame with tag information. Each row represents a single tag
+#'   and the columns represent specific tag attributes.
 #' @export
+#'
+#' @examples
+#'  \dontrun{
+#'   tm_get_tags(token)
+#'  }
 tm_get_tags <- function(token, base_url = NULL, ...) {
   do.call("rbind", tm_assets_search(token, 'type=="ATTRIBUTE"', base_url, ...))
 }

@@ -54,7 +54,7 @@
 tm_search_assets <- function(token, query, base_url = NULL, ...) {
 
   if (class(token) != "tm_token" || !tm_is_valid_token(token)) {
-    stop("Please provide a valid access token.")
+    stop("Token expired. Please provide a valid access token.")
   }
 
   if (!is.null(base_url)) {

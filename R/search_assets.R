@@ -1,4 +1,4 @@
-#' General search function on assets and tags
+#' General search on assets and tags
 #'
 #' Search for assets and tags in the asset hierarchy that match the query pattern.
 #'
@@ -55,6 +55,10 @@ tm_search_assets <- function(token, query, ...) {
 
   if (class(token) != "tm_token" || !tm_is_valid_token(token)) {
     stop("Token expired. Please provide a valid access token.")
+  }
+
+  if (length(query) != 1L || typeof(query) != "character") {
+    stop("'query' must be a length-one character vector.")
   }
 
   url <- paste(token$base_url, "/af/assets/search?query=",

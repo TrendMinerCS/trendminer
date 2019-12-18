@@ -3,14 +3,14 @@
 #' Search for assets and tags in the asset hierarchy that match the query pattern.
 #'
 #' @details
-#' `tm_assets_search()` allows to search for nodes in the TrendMiner asset hierachy
+#' `tm_search_assets()` allows to search for nodes in the TrendMiner asset hierachy
 #' with arbitrary queries. A node either represents an asset (component of the installation)
-#' or a tag (property of an asset containing timeseries data). `tm_assets_search()` is
+#' or a tag (property of an asset containing timeseries data). `tm_search_assets()` is
 #' powering a couple of other functions under-the-hood like, e.g., `tm_get_assets()` and
 #' `tm_get_tags()` which offer a higher abstraction level by using pre-defined search queries.
 #'
 #' Depending on the query, TrendMiner search results might be paginated.
-#' `tm_assets_search()` manages pagination completely on its own by combining all
+#' `tm_search_assets()` manages pagination completely on its own by combining all
 #' paginated search results in a list before returning them.
 #'
 #'
@@ -40,18 +40,18 @@
 #' @inheritParams tm_get_token
 #' @importFrom rlang .data
 #' @return A list with search results. Each list entry represents one page of
-#'   a paginated response.
+#'   the paginated response.
 #' @export
 #'
 #' @examples
 #'  \dontrun{
 #'    # Retrieve all assets that have "Reactor" in their name
-#'    tm_assets_search(token, 'type=="ASSET";name=="*Reactor*"')
+#'    tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
 #'
 #'    # Retrieve all tags that have "Temperature" in their name
-#'    tm_assets_search(token, "type=='ATTRIBUTE';name=='*Temperature*'")
+#'    tm_search_assets(token, "type=='ATTRIBUTE';name=='*Temperature*'")
 #'  }
-tm_assets_search <- function(token, query, base_url = NULL, ...) {
+tm_search_assets <- function(token, query, base_url = NULL, ...) {
 
   if (class(token) != "tm_token" || !tm_is_valid_token(token)) {
     stop("Please provide a valid access token.")
@@ -140,7 +140,7 @@ tm_assets_search <- function(token, query, base_url = NULL, ...) {
 #' Gets the complete list of available tags including their attributes from
 #' TrendMiner and returns it in a data frame.
 #'
-#' @inheritParams tm_assets_search
+#' @inheritParams tm_search_assets
 #' @return A data frame with tag information. Each row represents a single tag
 #'   and the columns represent specific tag attributes.
 #' @export
@@ -150,6 +150,6 @@ tm_assets_search <- function(token, query, base_url = NULL, ...) {
 #'   tm_get_tags(token)
 #'  }
 tm_get_tags <- function(token, base_url = NULL, ...) {
-  do.call("rbind", tm_assets_search(token, 'type=="ATTRIBUTE"', base_url, ...))
+  do.call("rbind", tm_search_assets(token, 'type=="ATTRIBUTE"', base_url, ...))
 }
 

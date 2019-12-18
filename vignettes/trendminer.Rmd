@@ -30,7 +30,7 @@ This vignette provides a brief introduction to the trendminer R package, highlig
 
 All requests to the TrendMiner API require authentication. This is achieved by sending a valid Bearer access token in the request headers. Request tokens are obtained via OAuth2.0 using the Resource Owner Password Credentials flow. That means that any client which likes to interact with the API needs to collect the credentials from the user (username and password) first before passing them together with its own client credentials (client ID and client secret) to the server. The server responds with an access token which the user needs to use for any subsequent API request. 
 
-**Note**: You can request your client ID and client secret by contacting TrendMiner support or your TrendMiuner Customer Success Manager.
+**Note**: You can request your client ID and client secret by contacting TrendMiner support or your TrendMiner Customer Success Manager.
 
 User credentials, client credentials and the TrendMiner base URL can be passed as arguments to `tm_get_token()` for quick testing in interactive mode. 
 

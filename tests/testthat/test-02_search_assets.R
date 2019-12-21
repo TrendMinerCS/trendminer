@@ -15,13 +15,18 @@ test_that("tm_search_assets() returns expected results", {
                    c(6L, 15L))
 })
 
+test_that("tm_search_assets() returns error if token is not of class 'tm_token'", {
+  skip_on_cran()
+
+  expect_error(tm_search_assets("not_a_token"), "'token' must be a TrendMiner access token.")
+})
+
 test_that("tm_search_assets() returns error if an invalid token is used", {
   skip_on_cran()
 
   deprecated_token <- token
   deprecated_token$expiration_date <- deprecated_token$expiration_date - 43201
   expect_error(tm_search_assets(deprecated_token, "Token expired. Please provide a valid access token."))
-  expect_error(tm_search_assets("not_a_token"), "Token expired. Please provide a valid access token.")
 })
 
 test_that("tm_search_assets() returns error if 'query' is not length one character vector", {

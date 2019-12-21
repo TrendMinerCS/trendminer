@@ -53,7 +53,11 @@
 #'  }
 tm_search_assets <- function(token, query, ...) {
 
-  if (class(token) != "tm_token" || !tm_is_valid_token(token)) {
+  if (class(token) != "tm_token") {
+    stop("'token' must be a TrendMiner access token.")
+  }
+
+  if (class(token) == "tm_token" && !tm_is_valid_token(token)) {
     stop("Token expired. Please provide a valid access token.")
   }
 

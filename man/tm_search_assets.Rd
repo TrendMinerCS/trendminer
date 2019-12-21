@@ -2,7 +2,7 @@
 % Please edit documentation in R/search_assets.R
 \name{tm_search_assets}
 \alias{tm_search_assets}
-\title{General search function on assets and tags}
+\title{General search on assets and tags}
 \usage{
 tm_search_assets(token, query, ...)
 }

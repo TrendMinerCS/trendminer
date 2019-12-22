@@ -16,22 +16,22 @@ This might be necessary if you need to set some curl options explicitly
 via \code{\link[httr]{config}}.}
 }
 \value{
-A list with search results. Each list entry represents one page of
-the paginated response.
+A data frame with search results. Each row represents one asset/tag which
+matched the query pattern.
 }
 \description{
-Search for assets and tags in the asset hierarchy that match the query pattern.
+Search for assets and tags in the assets framework that match the query pattern.
 }
 \details{
-\code{tm_search_assets()} allows to search for nodes in the TrendMiner asset hierachy
-with arbitrary queries. A node either represents an asset (component of the installation)
-or a tag (property of an asset containing timeseries data). \code{tm_search_assets()} is
+\code{tm_search_assets()} allows to search for nodes in the TrendMiner asset framework
+with arbitrary queries. A node either represents an asset (component of the plant)
+or a tag (attribute of an asset storing timeseries data). \code{tm_search_assets()} is
 powering a couple of other functions under-the-hood like, e.g., \code{tm_get_assets()} and
 \code{tm_get_tags()} which offer a higher abstraction level by using pre-defined search queries.
 
 Depending on the query, TrendMiner search results might be paginated.
 \code{tm_search_assets()} manages pagination completely on its own by combining all
-paginated search results in a list before returning them.
+paginated search results in a data frame before returning them.
 \subsection{Available query operators}{
 \itemize{
 \item Search operators: equal(==), not equal(!=), in(=in=), not in(=out=)\cr
@@ -41,19 +41,20 @@ paginated search results in a list before returning them.
 }
 
 \subsection{List of attributes you can search on}{
-
-id\cr
-sourceId\cr
-type\cr
-externalId\cr
-template\cr
-templateId\cr
-name\cr
-description\cr
-dataType\cr
-data\cr
-options\cr
-deleted
+\itemize{
+\item \code{id} Unique node id (in UUID format)\cr
+\item \code{sourceId}\cr
+\item \code{type} Type of the node. Either "ASSET" or "ATTRIBUTE" whereas the later referes to a tag\cr
+\item \code{externalId}\cr
+\item \code{template}\cr
+\item \code{templateId}\cr
+\item \code{name} Name of the node\cr
+\item \code{description} Description of the node\cr
+\item \code{options}\cr
+\item \code{deleted} Boolean value. Either "TRUE" or "FALSE"
+\item \code{dataType} Only available for nodes of type "ATTRIBUTE"\cr
+\item \code{data} Tag id. Only available for nodes of type "ATTRIBUTE"\cr
+}
 }
 }
 \examples{

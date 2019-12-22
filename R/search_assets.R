@@ -1,17 +1,17 @@
 #' General search on assets and tags
 #'
-#' Search for assets and tags in the asset hierarchy that match the query pattern.
+#' Search for assets and tags in the assets framework that match the query pattern.
 #'
 #' @details
-#' `tm_search_assets()` allows to search for nodes in the TrendMiner asset hierachy
-#' with arbitrary queries. A node either represents an asset (component of the installation)
-#' or a tag (property of an asset containing timeseries data). `tm_search_assets()` is
+#' `tm_search_assets()` allows to search for nodes in the TrendMiner asset framework
+#' with arbitrary queries. A node either represents an asset (component of the plant)
+#' or a tag (attribute of an asset storing timeseries data). `tm_search_assets()` is
 #' powering a couple of other functions under-the-hood like, e.g., `tm_get_assets()` and
 #' `tm_get_tags()` which offer a higher abstraction level by using pre-defined search queries.
 #'
 #' Depending on the query, TrendMiner search results might be paginated.
 #' `tm_search_assets()` manages pagination completely on its own by combining all
-#' paginated search results in a list before returning them.
+#' paginated search results in a data frame before returning them.
 #'
 #'
 #' ## Available query operators
@@ -22,25 +22,25 @@
 #'
 #' ## List of attributes you can search on
 #'
-#' id\cr
-#' sourceId\cr
-#' type\cr
-#' externalId\cr
-#' template\cr
-#' templateId\cr
-#' name\cr
-#' description\cr
-#' dataType\cr
-#' data\cr
-#' options\cr
-#' deleted
+#' * `id` Unique node id (in UUID format)\cr
+#' * `sourceId`\cr
+#' * `type` Type of the node. Either "ASSET" or "ATTRIBUTE" whereas the later referes to a tag\cr
+#' * `externalId`\cr
+#' * `template`\cr
+#' * `templateId`\cr
+#' * `name` Name of the node\cr
+#' * `description` Description of the node\cr
+#' * `options`\cr
+#' * `deleted` Boolean value. Either "TRUE" or "FALSE"
+#' * `dataType` Only available for nodes of type "ATTRIBUTE"\cr
+#' * `data` Tag id. Only available for nodes of type "ATTRIBUTE"\cr
 #'
 #' @param token A valid access token
 #' @param query Search query
 #' @inheritParams tm_get_token
 #' @importFrom rlang .data
-#' @return A list with search results. Each list entry represents one page of
-#'   the paginated response.
+#' @return A data frame with search results. Each row represents one asset/tag which
+#'   matched the query pattern.
 #' @export
 #'
 #' @examples
@@ -97,8 +97,11 @@ tm_search_assets <- function(token, query, ...) {
   content <- vector("list", total_pages)
   content[[1]] <- parsed$content
 
-  if (total_pages == 1)
+  if (total_pages == 1) {
+    content <- content[[1]] %>%
+      select_search_result_columns()
     return(content)
+  }
 
   # deal with pagination
   for(i in 2:length(content)) {
@@ -132,8 +135,21 @@ tm_search_assets <- function(token, query, ...) {
       jsonlite::fromJSON()
     content[[i]] <- parsed$content
   }
-  content
+  dplyr::bind_rows(content) %>%
+    select_search_result_columns()
 }
+
+
+select_search_result_columns <- function(df) {
+  df %>%
+    dplyr::select(.data$nodeIdentifier, .data$sourceId, .data$type, .data$externalId,
+                  .data$template, .data$templateId, .data$name, .data$description,
+                  .data$deleted, dplyr::contains("data")) %>%
+    dplyr::rename(id = .data$nodeIdentifier)
+}
+
+
+
 
 #' Get all tags
 #'
@@ -150,6 +166,6 @@ tm_search_assets <- function(token, query, ...) {
 #'   tm_get_tags(token)
 #'  }
 tm_get_tags <- function(token, ...) {
-  do.call("rbind", tm_search_assets(token, 'type=="ATTRIBUTE"', ...))
+  tm_search_assets(token, 'type=="ATTRIBUTE"', ...)
 }
 

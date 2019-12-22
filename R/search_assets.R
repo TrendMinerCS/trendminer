@@ -40,7 +40,9 @@
 #' @inheritParams tm_get_token
 #' @importFrom rlang .data
 #' @return A data frame with search results. Each row represents one asset/tag which
-#'   matched the query pattern.
+#'   matched the query pattern. The column names of the data frame returned
+#'   correspond to the search attributes listed in **Details**. Data frames containing only
+#'   asset but no tag search results won't include the `dataType` and `data` column.
 #' @export
 #'
 #' @examples

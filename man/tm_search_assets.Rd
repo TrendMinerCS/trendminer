@@ -17,7 +17,9 @@ via \code{\link[httr]{config}}.}
 }
 \value{
 A data frame with search results. Each row represents one asset/tag which
-matched the query pattern.
+matched the query pattern. The column names of the data frame returned
+correspond to the search attributes listed in \strong{Details}. Data frames containing only
+asset but no tag search results won't include the \code{dataType} and \code{data} column.
 }
 \description{
 Search for assets and tags in the assets framework that match the query pattern.

@@ -46,7 +46,7 @@ paginated search results in a data frame before returning them.
 \itemize{
 \item \code{id} Unique node id (in UUID format)\cr
 \item \code{sourceId}\cr
-\item \code{type} Type of the node. Either "ASSET" or "ATTRIBUTE" whereas the later referes to a tag\cr
+\item \code{type} Type of the node. Either "ASSET" or "ATTRIBUTE" whereas the later refers to a tag\cr
 \item \code{externalId}\cr
 \item \code{template}\cr
 \item \code{templateId}\cr

@@ -24,7 +24,7 @@
 #'
 #' * `id` Unique node id (in UUID format)\cr
 #' * `sourceId`\cr
-#' * `type` Type of the node. Either "ASSET" or "ATTRIBUTE" whereas the later referes to a tag\cr
+#' * `type` Type of the node. Either "ASSET" or "ATTRIBUTE" whereas the later refers to a tag\cr
 #' * `externalId`\cr
 #' * `template`\cr
 #' * `templateId`\cr

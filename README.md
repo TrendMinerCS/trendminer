@@ -72,7 +72,7 @@ need to store in `.Renviron`. You can easily edit `.Renviron` using
 
 ``` r
 TM_client_ID = YOUR_CLIENT_ID_HERE
-TM_secret = YOUR_CLIENT_SECRET_HERE
+TM_client_secret = YOUR_CLIENT_SECRET_HERE
 TM_usr = YOUR_USER_NAME_HERE
 TM_pwd = YOUR_USER_PASSWORD_HERE
 TM_base_url = YOUR_TM_BASE_URL_HERE

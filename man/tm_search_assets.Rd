@@ -2,7 +2,7 @@
 % Please edit documentation in R/search_assets.R
 \name{tm_search_assets}
 \alias{tm_search_assets}
-\title{General search on assets and tags}
+\title{Search on assets and tags}
 \usage{
 tm_search_assets(token, query, ...)
 }
@@ -18,11 +18,13 @@ via \code{\link[httr]{config}}.}
 \value{
 A data frame with search results. Each row represents one asset/tag which
 matched the query pattern. The column names of the data frame returned
-correspond to the search attributes listed in \strong{Details}. Data frames containing only
-asset but no tag search results won't include the \code{dataType} and \code{data} column.
+correspond to the search attributes listed in \strong{Details}. The only exception
+from this pattern is the \code{ìd} search attribute which will be represented
+by the \code{nodeId} column. Data frames containing only asset but no tag
+search results won't include the \code{dataType} and \code{data} column.
 }
 \description{
-Search for assets and tags in the assets framework that match the query pattern.
+Search for assets and tags in the asset framework that match the query pattern.
 }
 \details{
 \code{tm_search_assets()} allows to search for nodes in the TrendMiner asset framework
@@ -44,7 +46,7 @@ paginated search results in a data frame before returning them.
 
 \subsection{List of attributes you can search on}{
 \itemize{
-\item \code{id} Unique node id (in UUID format)\cr
+\item \code{id} Node id (in UUID format)\cr
 \item \code{sourceId}\cr
 \item \code{type} Type of the node. Either "ASSET" or "ATTRIBUTE" whereas the later refers to a tag\cr
 \item \code{externalId}\cr
@@ -61,6 +63,8 @@ paginated search results in a data frame before returning them.
 }
 \examples{
  \dontrun{
+   token <- tm_get_token()
+
    # Retrieve all assets that have "Reactor" in their name
    tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
 

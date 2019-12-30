@@ -1,6 +1,6 @@
-#' General search on assets and tags
+#' Search on assets and tags
 #'
-#' Search for assets and tags in the assets framework that match the query pattern.
+#' Search for assets and tags in the asset framework that match the query pattern.
 #'
 #' @details
 #' `tm_search_assets()` allows to search for nodes in the TrendMiner asset framework
@@ -22,7 +22,7 @@
 #'
 #' ## List of attributes you can search on
 #'
-#' * `id` Unique node id (in UUID format)\cr
+#' * `id` Node id (in UUID format)\cr
 #' * `sourceId`\cr
 #' * `type` Type of the node. Either "ASSET" or "ATTRIBUTE" whereas the later refers to a tag\cr
 #' * `externalId`\cr
@@ -41,12 +41,16 @@
 #' @importFrom rlang .data
 #' @return A data frame with search results. Each row represents one asset/tag which
 #'   matched the query pattern. The column names of the data frame returned
-#'   correspond to the search attributes listed in **Details**. Data frames containing only
-#'   asset but no tag search results won't include the `dataType` and `data` column.
+#'   correspond to the search attributes listed in **Details**. The only exception
+#'   from this pattern is the `ìd` search attribute which will be represented
+#'   by the `nodeId` column. Data frames containing only asset but no tag
+#'   search results won't include the `dataType` and `data` column.
 #' @export
 #'
 #' @examples
 #'  \dontrun{
+#'    token <- tm_get_token()
+#'
 #'    # Retrieve all assets that have "Reactor" in their name
 #'    tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
 #'
@@ -101,7 +105,7 @@ tm_search_assets <- function(token, query, ...) {
 
   if (total_pages == 1) {
     content <- content[[1]] %>%
-      select_search_result_columns()
+      select_node_result_columns()
     return(content)
   }
 
@@ -138,19 +142,17 @@ tm_search_assets <- function(token, query, ...) {
     content[[i]] <- parsed$content
   }
   dplyr::bind_rows(content) %>%
-    select_search_result_columns()
+    select_node_result_columns()
 }
 
 
-select_search_result_columns <- function(df) {
+select_node_result_columns <- function(df) {
   df %>%
     dplyr::select(.data$nodeIdentifier, .data$sourceId, .data$type, .data$externalId,
                   .data$template, .data$templateId, .data$name, .data$description,
                   .data$deleted, dplyr::contains("data")) %>%
-    dplyr::rename(id = .data$nodeIdentifier)
+    dplyr::rename(nodeId = .data$nodeIdentifier)
 }
-
-
 
 
 #' Get all tags

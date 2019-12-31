@@ -36,10 +36,10 @@ test_that("tm_search_assets() returns error if 'query' is not length one charact
   expect_error(tm_search_assets(token, c("not", "a", "query")), "'query' must be a length-one character vector")
 })
 
-test_that("tm_get_assets() returns a data frame with all assets", {
+test_that("tm_assets() returns a data frame with all assets", {
   skip_on_cran()
 
-  assets <- tm_get_assets(token)
+  assets <- tm_assets(token)
   expect_identical(dim(assets), c(21L, 9L))
 })
 

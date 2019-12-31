@@ -18,8 +18,8 @@ A data frame with tag information. Each row represents a single tag
 and the columns represent specific tag attributes.
 }
 \description{
-Gets the complete list of available tags including their attributes from
-TrendMiner and returns it in a data frame.
+Gets the complete list of available tags including their attributes
+and returns it as a data frame.
 }
 \examples{
  \dontrun{

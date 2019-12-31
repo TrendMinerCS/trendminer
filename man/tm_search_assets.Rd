@@ -30,7 +30,7 @@ Search for assets and tags in the asset framework that match the query pattern.
 \code{tm_search_assets()} allows to search for nodes in the TrendMiner asset framework
 with arbitrary queries. A node either represents an asset (component of the plant)
 or a tag (attribute of an asset storing timeseries data). \code{tm_search_assets()} is
-powering a couple of other functions under-the-hood like, e.g., \code{tm_get_assets()} and
+powering a couple of other functions under-the-hood like, e.g., \code{tm_assets()} and
 \code{tm_tags()} which offer a higher abstraction level by using pre-defined search queries.
 
 Depending on the query, TrendMiner search results might be paginated.

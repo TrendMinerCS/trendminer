@@ -6,7 +6,7 @@
 #' `tm_search_assets()` allows to search for nodes in the TrendMiner asset framework
 #' with arbitrary queries. A node either represents an asset (component of the plant)
 #' or a tag (attribute of an asset storing timeseries data). `tm_search_assets()` is
-#' powering a couple of other functions under-the-hood like, e.g., `tm_get_assets()` and
+#' powering a couple of other functions under-the-hood like, e.g., `tm_assets()` and
 #' `tm_tags()` which offer a higher abstraction level by using pre-defined search queries.
 #'
 #' Depending on the query, TrendMiner search results might be paginated.
@@ -157,8 +157,8 @@ select_node_result_columns <- function(df) {
 
 #' Get all tags
 #'
-#' Gets the complete list of available tags including their attributes from
-#' TrendMiner and returns it in a data frame.
+#' Gets the complete list of available tags including their attributes
+#' and returns it as a data frame.
 #'
 #' @inheritParams tm_search_assets
 #' @return A data frame with tag information. Each row represents a single tag
@@ -178,8 +178,8 @@ tm_tags <- function(token, ...) {
 
 #' Get all assets
 #'
-#' Gets the complete list of available assets including their attributes from
-#' TrendMiner and returns it in a data frame.
+#' Gets the complete list of available assets including their attributes
+#' and returns it as a data frame.
 #'
 #' @inheritParams tm_search_assets
 #' @return A data frame with asset information. Each row represents a single asset
@@ -190,9 +190,9 @@ tm_tags <- function(token, ...) {
 #'  \dontrun{
 #'   token <- tm_token()
 #'
-#'   tm_get_assets(token)
+#'   tm_assets(token)
 #'  }
-tm_get_assets <- function(token, ...) {
+tm_assets <- function(token, ...) {
   tm_search_assets(token, 'type=="ASSET"', ...)
 }
 

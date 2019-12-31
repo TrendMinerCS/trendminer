@@ -2,6 +2,7 @@
 
 S3method(print,tm_token)
 export("%>%")
+export(tm_get_assets)
 export(tm_get_root_structures)
 export(tm_get_tags)
 export(tm_get_token)

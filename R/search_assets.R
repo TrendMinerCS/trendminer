@@ -167,9 +167,36 @@ select_node_result_columns <- function(df) {
 #'
 #' @examples
 #'  \dontrun{
+#'   token <- tm_get_token()
+#'
 #'   tm_get_tags(token)
 #'  }
 tm_get_tags <- function(token, ...) {
   tm_search_assets(token, 'type=="ATTRIBUTE"', ...)
 }
+
+
+#' Get all assets
+#'
+#' Gets the complete list of available assets including their attributes from
+#' TrendMiner and returns it in a data frame.
+#'
+#' @inheritParams tm_search_assets
+#' @return A data frame with asset information. Each row represents a single asset
+#'   and the columns represent specific asset attributes.
+#' @export
+#'
+#' @examples
+#'  \dontrun{
+#'   token <- tm_get_token()
+#'
+#'   tm_get_assets(token)
+#'  }
+tm_get_assets <- function(token, ...) {
+  tm_search_assets(token, 'type=="ASSET"', ...)
+}
+
+
+
+
 

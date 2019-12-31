@@ -1,20 +1,20 @@
 #' Get root structures
 #'
-#' Gets all root structures including their attributes from TrendMiner and
-#' returns it in a data frame.
+#' Gets all root structures including their attributes and returns them in a
+#' data frame.
 #'
 #' @param token A valid access token
-#' @inheritParams tm_get_token
+#' @inheritParams tm_token
 #' @importFrom rlang .data
 #' @return A data frame
 #' @export
 #'
 #' @examples
 #'   \dontrun{
-#'     token <- tm_get_token()
-#'     tm_get_root_structures(token)
+#'     token <- tm_token()
+#'     tm_root_structures(token)
 #'   }
-tm_get_root_structures <- function(token, ...) {
+tm_root_structures <- function(token, ...) {
   url <- paste(tm_get_base_url(), "/af/assets/browse", sep = "")
 
   response <- httr::GET(url,
@@ -80,3 +80,20 @@ select_structure_result_columns <- function(df) {
 }
 
 
+#' Get child structures by parent structure Id
+#'
+#' Gets the structures that have a parent defined by parentId and returns them
+#' in a data frame.
+#'
+tm_child_structures <- function(token, parentId) {
+  url <- paste(token$base_url, "/af/assets/browse?parentId=", parentId, sep = "")
+
+  response <- httr::GET(url,
+                        httr::add_headers(Authorization = paste("Bearer", token$access_token, sep = "")),
+                        httr::user_agent(tm_get_useragent()),
+                        httr::accept_json())
+
+  parsed <- httr::content(response, as =  "text", encoding = "UTF-8") %>%
+    jsonlite::fromJSON()
+
+}

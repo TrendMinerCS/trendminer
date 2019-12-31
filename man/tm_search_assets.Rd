@@ -31,7 +31,7 @@ Search for assets and tags in the asset framework that match the query pattern.
 with arbitrary queries. A node either represents an asset (component of the plant)
 or a tag (attribute of an asset storing timeseries data). \code{tm_search_assets()} is
 powering a couple of other functions under-the-hood like, e.g., \code{tm_get_assets()} and
-\code{tm_get_tags()} which offer a higher abstraction level by using pre-defined search queries.
+\code{tm_tags()} which offer a higher abstraction level by using pre-defined search queries.
 
 Depending on the query, TrendMiner search results might be paginated.
 \code{tm_search_assets()} manages pagination completely on its own by combining all
@@ -63,7 +63,7 @@ paginated search results in a data frame before returning them.
 }
 \examples{
  \dontrun{
-   token <- tm_get_token()
+   token <- tm_token()
 
    # Retrieve all assets that have "Reactor" in their name
    tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')

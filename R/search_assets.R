@@ -7,7 +7,7 @@
 #' with arbitrary queries. A node either represents an asset (component of the plant)
 #' or a tag (attribute of an asset storing timeseries data). `tm_search_assets()` is
 #' powering a couple of other functions under-the-hood like, e.g., `tm_get_assets()` and
-#' `tm_get_tags()` which offer a higher abstraction level by using pre-defined search queries.
+#' `tm_tags()` which offer a higher abstraction level by using pre-defined search queries.
 #'
 #' Depending on the query, TrendMiner search results might be paginated.
 #' `tm_search_assets()` manages pagination completely on its own by combining all
@@ -37,7 +37,7 @@
 #'
 #' @param token A valid access token
 #' @param query Search query
-#' @inheritParams tm_get_token
+#' @inheritParams tm_token
 #' @importFrom rlang .data
 #' @return A data frame with search results. Each row represents one asset/tag which
 #'   matched the query pattern. The column names of the data frame returned
@@ -49,7 +49,7 @@
 #'
 #' @examples
 #'  \dontrun{
-#'    token <- tm_get_token()
+#'    token <- tm_token()
 #'
 #'    # Retrieve all assets that have "Reactor" in their name
 #'    tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
@@ -167,11 +167,11 @@ select_node_result_columns <- function(df) {
 #'
 #' @examples
 #'  \dontrun{
-#'   token <- tm_get_token()
+#'   token <- tm_token()
 #'
-#'   tm_get_tags(token)
+#'   tm_tags(token)
 #'  }
-tm_get_tags <- function(token, ...) {
+tm_tags <- function(token, ...) {
   tm_search_assets(token, 'type=="ATTRIBUTE"', ...)
 }
 
@@ -188,15 +188,11 @@ tm_get_tags <- function(token, ...) {
 #'
 #' @examples
 #'  \dontrun{
-#'   token <- tm_get_token()
+#'   token <- tm_token()
 #'
 #'   tm_get_assets(token)
 #'  }
 tm_get_assets <- function(token, ...) {
   tm_search_assets(token, 'type=="ASSET"', ...)
 }
-
-
-
-
 

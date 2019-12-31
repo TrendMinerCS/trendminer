@@ -1,11 +1,11 @@
 context("browse structures")
 
-token <- tm_get_token()
+token <- tm_token()
 
-test_that("tm_get_root_structures returns expected results", {
+test_that("tm_root_structures returns expected results", {
   skip_on_cran()
 
-  response <- tm_get_root_structures(token)
+  response <- tm_root_structures(token)
   expect_identical(dim(response), c(3L, 12L))
   response <- response[order(response$name), ]
   rownames(response) <- NULL

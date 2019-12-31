@@ -14,9 +14,9 @@
 #'
 #' @details
 #' User credentials, client credentials and the TrendMiner base URL can be passed
-#' as arguments to `tm_get_token()` for quick testing in interactive mode.
-#' However, it is recommended to call `tm_get_token()` without arguments.
-#' In this case `tm_get_token()` will fetch the credentials and the TrendMiner
+#' as arguments to `tm_token()` for quick testing in interactive mode.
+#' However, it is recommended to call `tm_token()` without arguments.
+#' In this case `tm_token()` will fetch the credentials and the TrendMiner
 #' base URL from the following environment variables stored in
 #' `.Renviron`:
 #'
@@ -49,9 +49,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' tm_get_token()
+#' tm_token()
 #' }
-tm_get_token <- function(client_id = NULL, client_secret = NULL,
+tm_token <- function(client_id = NULL, client_secret = NULL,
                          usr_name = NULL , usr_pwd = NULL, base_url = NULL, ...) {
 
   if (!is.null(client_id)) {

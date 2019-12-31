@@ -23,7 +23,7 @@ TrendMiner and returns it in a data frame.
 }
 \examples{
  \dontrun{
-  token <- tm_get_token()
+  token <- tm_token()
 
   tm_get_assets(token)
  }

@@ -32,10 +32,10 @@ Below are some things you can do after installing the package:
 library(trendminer)
 library(dplyr)
 
-token <- tm_get_token()
+token <- tm_token()
 
 # Fetch all available tags
-my_tags <- tm_get_tags(token)
+my_tags <- tm_tags(token)
 
 my_tags %>% 
   select(name, data) %>%
@@ -58,16 +58,16 @@ Request tokens are obtained via OAuth2.0 using a resource owner password
 credentials flow. Any client which likes to interact with the API needs
 to collect the credentials from the user (username and password) and
 passes them together with its own client credentials (client ID and
-client secret) to the TrendMiner server using the `tm_get_token()`
-function. The server responds with an access token which the user needs
-to use for any subsequent API requests.
+client secret) to the TrendMiner server using the `tm_token()` function.
+The server responds with an access token which the user needs to use for
+any subsequent API requests.
 
 User credentials, client credentials and the TrendMiner base URL can be
-passed as arguments to `tm_get_token()` for quick testing in interactive
-mode. However, it is recommended to call `tm_get_token()` without
-arguments. In this case `tm_get_token()` will fetch the credentials and
-the TrendMiner base URL from the environment variables below which you
-need to store in `.Renviron`. You can easily edit `.Renviron` using
+passed as arguments to `tm_token()` for quick testing in interactive
+mode. However, it is recommended to call `tm_token()` without arguments.
+In this case `tm_token()` will fetch the credentials and the TrendMiner
+base URL from the environment variables below which you need to store in
+`.Renviron`. You can easily edit `.Renviron` using
 `usethis::edit_r_environ()`.
 
 ``` r

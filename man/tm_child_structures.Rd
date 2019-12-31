@@ -4,9 +4,26 @@
 \alias{tm_child_structures}
 \title{Get child structures by parent structure Id}
 \usage{
-tm_child_structures(token, parentId)
+tm_child_structures(token, parentId, ...)
+}
+\arguments{
+\item{parentId}{Parent structure Id}
+
+\item{...}{Additional arguments passed on to the underlying HTTP method.
+This might be necessary if you need to set some curl options explicitly
+via \code{\link[httr]{config}}.}
+}
+\value{
+A data frame
 }
 \description{
 Gets the structures that have a parent defined by parentId and returns them
 in a data frame.
+}
+\examples{
+  \dontrun{
+  token <- tm_token()
+
+  tm_child_structures(token)
+  }
 }

@@ -20,7 +20,8 @@ tm_root_structures <- function(token, ...) {
   response <- httr::GET(url,
                         httr::add_headers(Authorization = paste("Bearer", token$access_token, sep = "")),
                         httr::user_agent(tm_get_useragent()),
-                        httr::accept_json())
+                        httr::accept_json(),
+                        ...)
 
   parsed <- httr::content(response, as = "text") %>%
     jsonlite::fromJSON()
@@ -85,13 +86,25 @@ select_structure_result_columns <- function(df) {
 #' Gets the structures that have a parent defined by parentId and returns them
 #' in a data frame.
 #'
-tm_child_structures <- function(token, parentId) {
+#' @param parentId Parent structure Id
+#' @inheritParams tm_token
+#' @return A data frame
+#' @export
+#'
+#' @examples
+#'   \dontrun{
+#'   token <- tm_token()
+#'
+#'   tm_child_structures(token)
+#'   }
+tm_child_structures <- function(token, parentId, ...) {
   url <- paste(token$base_url, "/af/assets/browse?parentId=", parentId, sep = "")
 
   response <- httr::GET(url,
                         httr::add_headers(Authorization = paste("Bearer", token$access_token, sep = "")),
                         httr::user_agent(tm_get_useragent()),
-                        httr::accept_json())
+                        httr::accept_json(),
+                        ...)
 
   parsed <- httr::content(response, as =  "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()

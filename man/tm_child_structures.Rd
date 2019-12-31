@@ -23,9 +23,9 @@ Gets the structures that have a parent defined by parentId and returns them
 in a data frame.
 }
 \examples{
-  \dontrun{
-  token <- tm_token()
+\dontrun{
+token <- tm_token()
 
-  tm_child_structures(token)
-  }
+tm_child_structures(token)
+}
 }

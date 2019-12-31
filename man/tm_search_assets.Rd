@@ -62,13 +62,13 @@ paginated search results in a data frame before returning them.
 }
 }
 \examples{
- \dontrun{
-   token <- tm_token()
+\dontrun{
+token <- tm_token()
 
-   # Retrieve all assets that have "Reactor" in their name
-   tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
+# Retrieve all assets that have "Reactor" in their name
+tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
 
-   # Retrieve all tags that have "Temperature" in their name
-   tm_search_assets(token, "type=='ATTRIBUTE';name=='*Temperature*'")
- }
+# Retrieve all tags that have "Temperature" in their name
+tm_search_assets(token, "type=='ATTRIBUTE';name=='*Temperature*'")
+}
 }

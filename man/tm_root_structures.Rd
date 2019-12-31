@@ -21,8 +21,9 @@ Gets all root structures including their attributes and returns them in a
 data frame.
 }
 \examples{
-  \dontrun{
-    token <- tm_token()
-    tm_root_structures(token)
-  }
+\dontrun{
+token <- tm_token()
+
+tm_root_structures(token)
+}
 }

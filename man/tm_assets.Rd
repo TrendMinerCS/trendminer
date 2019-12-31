@@ -22,9 +22,9 @@ Gets the complete list of available assets including their attributes
 and returns it as a data frame.
 }
 \examples{
- \dontrun{
-  token <- tm_token()
+\dontrun{
+token <- tm_token()
 
-  tm_assets(token)
- }
+tm_assets(token)
+}
 }

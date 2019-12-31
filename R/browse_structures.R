@@ -10,10 +10,11 @@
 #' @export
 #'
 #' @examples
-#'   \dontrun{
-#'     token <- tm_token()
-#'     tm_root_structures(token)
-#'   }
+#' \dontrun{
+#' token <- tm_token()
+#'
+#' tm_root_structures(token)
+#' }
 tm_root_structures <- function(token, ...) {
   url <- paste(tm_get_base_url(), "/af/assets/browse", sep = "")
 
@@ -92,11 +93,11 @@ select_structure_result_columns <- function(df) {
 #' @export
 #'
 #' @examples
-#'   \dontrun{
-#'   token <- tm_token()
+#' \dontrun{
+#' token <- tm_token()
 #'
-#'   tm_child_structures(token)
-#'   }
+#' tm_child_structures(token)
+#' }
 tm_child_structures <- function(token, parentId, ...) {
   url <- paste(token$base_url, "/af/assets/browse?parentId=", parentId, sep = "")
 

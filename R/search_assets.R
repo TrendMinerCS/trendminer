@@ -48,15 +48,15 @@
 #' @export
 #'
 #' @examples
-#'  \dontrun{
-#'    token <- tm_token()
+#' \dontrun{
+#' token <- tm_token()
 #'
-#'    # Retrieve all assets that have "Reactor" in their name
-#'    tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
+#' # Retrieve all assets that have "Reactor" in their name
+#' tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
 #'
-#'    # Retrieve all tags that have "Temperature" in their name
-#'    tm_search_assets(token, "type=='ATTRIBUTE';name=='*Temperature*'")
-#'  }
+#' # Retrieve all tags that have "Temperature" in their name
+#' tm_search_assets(token, "type=='ATTRIBUTE';name=='*Temperature*'")
+#' }
 tm_search_assets <- function(token, query, ...) {
 
   if (class(token) != "tm_token") {
@@ -166,11 +166,11 @@ select_node_result_columns <- function(df) {
 #' @export
 #'
 #' @examples
-#'  \dontrun{
-#'   token <- tm_token()
+#' \dontrun{
+#' token <- tm_token()
 #'
-#'   tm_tags(token)
-#'  }
+#' tm_tags(token)
+#' }
 tm_tags <- function(token, ...) {
   tm_search_assets(token, 'type=="ATTRIBUTE"', ...)
 }
@@ -187,11 +187,11 @@ tm_tags <- function(token, ...) {
 #' @export
 #'
 #' @examples
-#'  \dontrun{
-#'   token <- tm_token()
+#' \dontrun{
+#' token <- tm_token()
 #'
-#'   tm_assets(token)
-#'  }
+#' tm_assets(token)
+#' }
 tm_assets <- function(token, ...) {
   tm_search_assets(token, 'type=="ASSET"', ...)
 }

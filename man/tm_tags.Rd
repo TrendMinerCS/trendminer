@@ -22,9 +22,9 @@ Gets the complete list of available tags including their attributes
 and returns it as a data frame.
 }
 \examples{
- \dontrun{
-  token <- tm_token()
+\dontrun{
+token <- tm_token()
 
-  tm_tags(token)
- }
+tm_tags(token)
+}
 }

@@ -87,7 +87,7 @@ select_structure_result_columns <- function(df) {
 #' in a data frame.
 #'
 #' @param parentId Parent structure Id
-#' @inheritParams tm_token
+#' @inheritParams tm_root_structures
 #' @return A data frame
 #' @export
 #'

@@ -7,6 +7,8 @@
 tm_child_structures(token, parentId, ...)
 }
 \arguments{
+\item{token}{A valid access token}
+
 \item{parentId}{Parent structure Id}
 
 \item{...}{Additional arguments passed on to the underlying HTTP method.

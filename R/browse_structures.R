@@ -110,4 +110,26 @@ tm_child_structures <- function(token, parentId, ...) {
   parsed <- httr::content(response, as =  "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
 
+  content <- parsed$content
+  # check if structure represents leaf structure. If yes, return empty list
+  if (is.list(content) & length(content) == 0)
+      return(content)
+
+  content %>%
+    select_structure_result_columns()
+}
+
+tm_descendant_structures <- function(token, parentId) {
+
+  content <- tm_child_structures(token, parentId)
+
+  if (is.list(content) & length(content) == 0)
+    return(content)
+
+  for(i in seq_along(content$structureId)) {
+    content <- dplyr::bind_rows(content,
+                                tm_descendant_structures(token, content$structureId[i]))
+  }
+
+ content
 }

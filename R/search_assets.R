@@ -115,11 +115,10 @@ tm_search_assets <- function(token, query, ...) {
     next_link <- parsed$links %>%
       dplyr::filter(.data$rel == "next") %>%
       dplyr::select(.data$href) %>%
-      sub(".*search", "", .)
+      unlist(.[1,]) %>%
+      unname()
 
-    url <- paste(token$base_url, "/af/assets/search", next_link, sep = "")
-
-    response <- httr::GET(url,
+    response <- httr::GET(next_link,
                           httr::add_headers(Authorization = paste("Bearer", token$access_token, sep = "")),
                           httr::user_agent(tm_get_useragent()),
                           httr::accept_json(),

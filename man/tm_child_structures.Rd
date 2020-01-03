@@ -9,19 +9,14 @@ tm_child_structures(token, parent_id, ...)
 \arguments{
 \item{token}{A valid access token}
 
-\item{parent_id}{Parent structure ID}
+\item{parent_id}{Parent structure ID in UUID format}
 
 \item{...}{Additional arguments passed on to the underlying HTTP method.
 This might be necessary if you need to set some curl options explicitly
 via \code{\link[httr]{config}}.}
 }
 \value{
-A data frame with child structures. Each row represents a child
-structure of \code{parent_id} and the columns represent struture attributes:
-\itemize{
-\item test
-\item test2
-}
+A data frame with child structures of \code{parent_id}.
 }
 \description{
 Gets the structures that have a parent defined by \code{parent_id} and returns them
@@ -35,10 +30,10 @@ paginated child structure results in a data frame before returning them.
 \examples{
 \dontrun{
 token <- tm_token()
-
-# Retrieve child structures of the first root structure
 roots <- tm_root_structures(token)
-tm_child_structures(token, roots[1, "structureId"])
+
+# Get child structures of the first root structure
+tm_child_structures(token, roots$structureId[1])
 
 # Get child structures by specific parent structure ID
 tm_child_structures(token, "e5225244-c6de-48c2-87da-5b51b65062e8")

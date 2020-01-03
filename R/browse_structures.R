@@ -94,7 +94,7 @@ select_structure_result_columns <- function(df) {
 #' paginated child structure results in a data frame before returning them.
 #'
 #'
-#' @param parent_id Parent structure ID
+#' @param parent_id Parent structure ID in UUID format
 #' @inheritParams tm_root_structures
 #' @return A data frame with child structures of `parent_id`.
 #' @export
@@ -102,10 +102,10 @@ select_structure_result_columns <- function(df) {
 #' @examples
 #' \dontrun{
 #' token <- tm_token()
-#'
-#' # Retrieve child structures of the first root structure
 #' roots <- tm_root_structures(token)
-#' tm_child_structures(token, roots[1, "structureId"])
+#'
+#' # Get child structures of the first root structure
+#' tm_child_structures(token, roots$structureId[1])
 #'
 #' # Get child structures by specific parent structure ID
 #' tm_child_structures(token, "e5225244-c6de-48c2-87da-5b51b65062e8")
@@ -131,6 +131,19 @@ tm_child_structures <- function(token, parent_id, ...) {
                         httr::user_agent(tm_get_useragent()),
                         httr::accept_json(),
                         ...)
+
+  if (httr::http_error(response)) {
+    stop(
+      sprintf(
+        "TrendMiner API request failed [%s]\n%s\n%s\n%s",
+        httr::status_code(response),
+        httr::http_status(response)$category,
+        httr::http_status(response)$reason,
+        httr::http_status(response)$message
+      ),
+      call. = FALSE
+    )
+  }
 
   parsed <- httr::content(response, as =  "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
@@ -185,10 +198,28 @@ tm_child_structures <- function(token, parent_id, ...) {
     select_structure_result_columns()
 }
 
+#' Get descendant structures by parent structure ID
 #'
+#' Retrieves the entire structure subtree underneath `parent_id` and returns it as
+#' a data frame.
 #'
-tm_descendant_structures <- function(token, parentId) {
-  content <- tm_child_structures(token, parentId)
+#' @inheritParams tm_child_structures
+#' @return A data frame with all descendant structures of `parent_id`.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' token <- tm_token()
+#' roots <- tm_root_structures(token)
+#'
+#' # Get descendant subtree structure underneath second root structure
+#' tm_descendant_structures(token, roots$structureId[2])
+#'
+#' # Get descendant subtree by specific parent structure id
+#' tm_descendant_structures(token, "4e58e3ca-e57d-47b5-8619-20d39626116e")
+#' }
+tm_descendant_structures <- function(token, parent_id) {
+  content <- tm_child_structures(token, parent_id)
 
   if (is.list(content) & length(content) == 0)
     return(content)

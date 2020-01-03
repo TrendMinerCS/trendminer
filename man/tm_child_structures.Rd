@@ -2,30 +2,45 @@
 % Please edit documentation in R/browse_structures.R
 \name{tm_child_structures}
 \alias{tm_child_structures}
-\title{Get child structures by parent structure Id}
+\title{Get child structures by parent structure ID}
 \usage{
-tm_child_structures(token, parentId, ...)
+tm_child_structures(token, parent_id, ...)
 }
 \arguments{
 \item{token}{A valid access token}
 
-\item{parentId}{Parent structure Id}
+\item{parent_id}{Parent structure ID}
 
 \item{...}{Additional arguments passed on to the underlying HTTP method.
 This might be necessary if you need to set some curl options explicitly
 via \code{\link[httr]{config}}.}
 }
 \value{
-A data frame
+A data frame with child structures. Each row represents a child
+structure of \code{parent_id} and the columns represent struture attributes:
+\itemize{
+\item test
+\item test2
+}
 }
 \description{
-Gets the structures that have a parent defined by parentId and returns them
+Gets the structures that have a parent defined by \code{parent_id} and returns them
 in a data frame.
+}
+\details{
+Depending on the number of child structures, the TrendMiner response might be paginated.
+\code{tm_child_structures()} manages pagination completely on its own by combining all
+paginated child structure results in a data frame before returning them.
 }
 \examples{
 \dontrun{
 token <- tm_token()
 
-tm_child_structures(token)
+# Retrieve child structures of the first root structure
+roots <- tm_root_structures(token)
+tm_child_structures(token, roots[1, "structureId"])
+
+# Get child structures by specific parent structure ID
+tm_child_structures(token, "e5225244-c6de-48c2-87da-5b51b65062e8")
 }
 }

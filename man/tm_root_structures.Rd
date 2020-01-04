@@ -17,8 +17,7 @@ via \code{\link[httr]{config}}.}
 A data frame
 }
 \description{
-Gets all root structures including their attributes and returns them in a
-data frame.
+Gets all root structures and returns them in a data frame.
 }
 \examples{
 \dontrun{

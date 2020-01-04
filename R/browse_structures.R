@@ -1,7 +1,6 @@
 #' Get root structures
 #'
-#' Gets all root structures including their attributes and returns them in a
-#' data frame.
+#' Gets all root structures and returns them in a data frame.
 #'
 #' @param token A valid access token
 #' @inheritParams tm_token

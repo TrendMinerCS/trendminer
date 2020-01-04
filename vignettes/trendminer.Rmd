@@ -57,7 +57,7 @@ For any subsequent API request you just need to pass the `token` to the respecti
 
 ## Pagination (handling multi-page responses)
 
-TrendMiner responses might be paginated. An internal function manages pagination on its own by combining all paginated search results in a data frame before returning them. This internal process for checking for further pages and combining the results is completely hidden from the end user. 
+TrendMiner responses might be paginated. An internal function manages pagination automatically by combining all paginated search results in a data frame before returning them to the respective exported function that was called. This internal process for checking for further pages and combining the results is completely hidden from the end user. 
 
 ## The `...` argument
 

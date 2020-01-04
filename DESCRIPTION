@@ -20,7 +20,10 @@ Suggests:
     spelling,
     knitr,
     rmarkdown,
-    covr
+    covr,
+    data.tree,
+    networkD3,
+    purrr
 Language: en-US
 VignetteBuilder: knitr
 Imports: 

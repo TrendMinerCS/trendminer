@@ -63,3 +63,44 @@ TrendMiner responses might be paginated. An internal function manages pagination
 
 Each function from the trendminer package comes with a `...` (dot-dot-dot) argument. It is used to pass on additional arguments to the underlying HTTP method from the `httr` package. This might be necessary if you need to set some curl options explicitly  via `httr::config()`.
 
+
+## Visualizing the asset hierachy 
+
+```{r}
+library(networkD3)
+library(purrr)
+library(trendminer)
+library(data.tree)
+
+token <- tm_token()
+roots <- tm_root_structures(token)
+all_sites_list <- map(roots$structureId, tm_descendant_structures, token = token)
+all_site_trees <- map(all_sites_list, FromDataFrameTable, pathName = "externalId")
+plots <- map(all_site_trees, ~ diagonalNetwork(ToListExplicit(.x, unname = TRUE)))
+
+plots[[1]]
+
+
+
+for (i in seq_along(plots)) {
+  print(i)
+  plots[[i]]
+}
+
+
+grenoble_tree <- all_site_trees[[3]]
+diagonalNetwork(ToListExplicit(grenoble_tree$`Line 1`, unname = TRUE), fontSize = 14, height = 400, width = 600)
+
+diagonalNetwork(ToListExplicit(grenoble_tree, unname = TRUE), fontSize = 14, height = 500, width = 700)
+```
+```{r}
+walk(all_site_trees, function(x) {
+  nw <- diagonalNetwork(ToListExplicit(x, unname = TRUE))
+  print(nw)
+}) 
+
+
+```
+
+
+

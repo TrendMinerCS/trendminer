@@ -62,12 +62,6 @@ select_structure_result_columns <- function(df) {
 #' Gets the structures that have a parent defined by `parent_id` and returns them
 #' in a data frame.
 #'
-#' @details
-#' Depending on the number of child structures, the TrendMiner response might be paginated.
-#' `tm_child_structures()` manages pagination completely on its own by combining all
-#' paginated child structure results in a data frame before returning them.
-#'
-#'
 #' @param parent_id Parent structure ID in UUID format
 #' @inheritParams tm_root_structures
 #' @return A data frame with child structures of `parent_id`.

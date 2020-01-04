@@ -9,11 +9,6 @@
 #' powering a couple of other functions under-the-hood like, e.g., `tm_assets()` and
 #' `tm_tags()` which offer a higher abstraction level by using pre-defined search queries.
 #'
-#' Depending on the query, TrendMiner search results might be paginated.
-#' `tm_search_assets()` manages pagination completely on its own by combining all
-#' paginated search results in a data frame before returning them.
-#'
-#'
 #' ## Available query operators
 #'
 #' * Search operators: equal(==), not equal(!=), in(=in=), not in(=out=)\cr

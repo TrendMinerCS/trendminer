@@ -22,11 +22,6 @@ A data frame with child structures of \code{parent_id}.
 Gets the structures that have a parent defined by \code{parent_id} and returns them
 in a data frame.
 }
-\details{
-Depending on the number of child structures, the TrendMiner response might be paginated.
-\code{tm_child_structures()} manages pagination completely on its own by combining all
-paginated child structure results in a data frame before returning them.
-}
 \examples{
 \dontrun{
 token <- tm_token()

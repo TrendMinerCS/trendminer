@@ -32,10 +32,6 @@ with arbitrary queries. A node either represents an asset (component of the plan
 or a tag (attribute of an asset storing timeseries data). \code{tm_search_assets()} is
 powering a couple of other functions under-the-hood like, e.g., \code{tm_assets()} and
 \code{tm_tags()} which offer a higher abstraction level by using pre-defined search queries.
-
-Depending on the query, TrendMiner search results might be paginated.
-\code{tm_search_assets()} manages pagination completely on its own by combining all
-paginated search results in a data frame before returning them.
 \subsection{Available query operators}{
 \itemize{
 \item Search operators: equal(==), not equal(!=), in(=in=), not in(=out=)\cr

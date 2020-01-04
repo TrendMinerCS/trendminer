@@ -24,6 +24,19 @@ tm_root_structures <- function(token, ...) {
                         httr::accept_json(),
                         ...)
 
+  if (httr::http_error(response)) {
+    stop(
+      sprintf(
+        "TrendMiner API request failed [%s]\n%s\n%s\n%s",
+        httr::status_code(response),
+        httr::http_status(response)$category,
+        httr::http_status(response)$reason,
+        httr::http_status(response)$message
+      ),
+      call. = FALSE
+    )
+  }
+
   parsed <- httr::content(response, as = "text") %>%
     jsonlite::fromJSON()
 
@@ -44,11 +57,10 @@ tm_root_structures <- function(token, ...) {
     next_link <- parsed$links %>%
       dplyr::filter(.data$rel == "next") %>%
       dplyr::select(.data$href) %>%
-      sub(".*browse", "", .)
+      unlist(.[1,]) %>%
+      unname()
 
-    url <- paste(token$base_url, "/af/assets/browse", next_link, sep = "")
-
-    response <- httr::GET(url,
+    response <- httr::GET(next_link,
                           httr::add_headers(Authorization = paste("Bearer", token$access_token, sep = "")),
                           httr::user_agent(tm_get_useragent()),
                           httr::accept_json(),

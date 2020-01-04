@@ -15,11 +15,10 @@ via \code{\link[httr]{config}}.}
 }
 \value{
 A data frame with tag information. Each row represents a single tag
-and the columns represent specific tag attributes.
+and the columns represent specific tag properties.
 }
 \description{
-Gets the complete list of available tags including their attributes
-and returns it as a data frame.
+Gets the complete list of available tags and returns it as a data frame.
 }
 \examples{
 \dontrun{

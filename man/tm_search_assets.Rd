@@ -18,8 +18,8 @@ via \code{\link[httr]{config}}.}
 \value{
 A data frame with search results. Each row represents one asset/tag which
 matched the query pattern. The column names of the data frame returned
-correspond to the search attributes listed in \strong{Details}. The only exception
-from this pattern is the \code{ìd} search attribute which will be represented
+correspond to the search properties listed in \strong{Details}. The only exception
+from this pattern is the \code{ìd} search property which will be represented
 by the \code{nodeId} column. Data frames containing only asset but no tag
 search results won't include the \code{dataType} and \code{data} column.
 }
@@ -44,7 +44,7 @@ paginated search results in a data frame before returning them.
 }
 }
 
-\subsection{List of attributes you can search on}{
+\subsection{List of node properties you can search on}{
 \itemize{
 \item \code{id} Node id (in UUID format)\cr
 \item \code{sourceId}\cr
@@ -68,7 +68,7 @@ token <- tm_token()
 # Retrieve all assets that have "Reactor" in their name
 tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
 
-# Retrieve all tags that have "Temperature" in their name
-tm_search_assets(token, "type=='ATTRIBUTE';name=='*Temperature*'")
+# Retrieve all tags whose name starts with "Temperature"
+tm_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'")
 }
 }

@@ -15,11 +15,10 @@ via \code{\link[httr]{config}}.}
 }
 \value{
 A data frame with asset information. Each row represents a single asset
-and the columns represent specific asset attributes.
+and the columns represent specific asset properties.
 }
 \description{
-Gets the complete list of available assets including their attributes
-and returns it as a data frame.
+Gets the complete list of available assets and returns it as a data frame.
 }
 \examples{
 \dontrun{

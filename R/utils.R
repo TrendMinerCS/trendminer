@@ -54,3 +54,45 @@ tm_get_client_secret <- function() {
   }
   val
 }
+
+tm_process_paginated_rsp <- function(token, parsed_response, ...) {
+  total_pages <- parsed_response$page$totalPages
+
+  if (total_pages == 1) {
+    return(parsed_response$content)
+  }
+  content <- vector("list", total_pages)
+  content[[1]] <- parsed_response$content
+
+  # deal with pagination
+  for(i in 2:length(content)) {
+    next_link <- parsed_response$links %>%
+      dplyr::filter(.data$rel == "next") %>%
+      dplyr::select(.data$href) %>%
+      unlist(.[1,]) %>%
+      unname()
+    response <- httr::GET(next_link,
+                          httr::add_headers(Authorization = paste("Bearer", token$access_token, sep = "")),
+                          httr::user_agent(tm_get_useragent()),
+                          httr::accept_json(),
+                          ...)
+
+    if (httr::http_error(response)) {
+      stop(
+        sprintf(
+          "TrendMiner API request failed [%s]\n%s\n%s\n%s",
+          httr::status_code(response),
+          httr::http_status(response)$category,
+          httr::http_status(response)$reason,
+          httr::http_status(response)$message
+        ),
+        call. = FALSE
+      )
+    }
+    parsed_response <- httr::content(response, as =  "text", encoding = "UTF-8") %>%
+      jsonlite::fromJSON()
+    content[[i]] <- parsed_response$content
+  }
+  dplyr::bind_rows(content)
+}
+

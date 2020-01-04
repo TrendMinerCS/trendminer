@@ -58,24 +58,19 @@
 #' tm_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'")
 #' }
 tm_search_assets <- function(token, query, ...) {
-
   if (class(token) != "tm_token") {
     stop("'token' must be a TrendMiner access token.")
   }
-
   if (class(token) == "tm_token" && !tm_is_valid_token(token)) {
     stop("Token expired. Please provide a valid access token.")
   }
-
   if (length(query) != 1L || typeof(query) != "character") {
     stop("'query' must be a length-one character vector.")
   }
-
   url <- paste(token$base_url, "/af/assets/search?query=",
                query, sep = "") %>%
     gsub("\"","%22", .) %>% #encode quotes
     gsub(" ", "%20", .) #encode spaces
-
   response <- httr::GET(url,
                         httr::add_headers(Authorization = paste("Bearer", token$access_token, sep = "")),
                         httr::user_agent(tm_get_useragent()),
@@ -94,53 +89,10 @@ tm_search_assets <- function(token, query, ...) {
       call. = FALSE
     )
   }
-
   parsed <- httr::content(response, as = "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
-
-  total_pages <- parsed$page$totalPages
-
-  content <- vector("list", total_pages)
-  content[[1]] <- parsed$content
-
-  if (total_pages == 1) {
-    content <- content[[1]] %>%
-      select_node_result_columns()
-    return(content)
-  }
-
-  # deal with pagination
-  for(i in 2:length(content)) {
-
-    next_link <- parsed$links %>%
-      dplyr::filter(.data$rel == "next") %>%
-      dplyr::select(.data$href) %>%
-      unlist(.[1,]) %>%
-      unname()
-
-    response <- httr::GET(next_link,
-                          httr::add_headers(Authorization = paste("Bearer", token$access_token, sep = "")),
-                          httr::user_agent(tm_get_useragent()),
-                          httr::accept_json(),
-                          ...)
-
-    if (httr::http_error(response)) {
-      stop(
-        sprintf(
-          "TrendMiner API request failed [%s]\n%s\n%s\n%s",
-          httr::status_code(response),
-          httr::http_status(response)$category,
-          httr::http_status(response)$reason,
-          httr::http_status(response)$message
-        ),
-        call. = FALSE
-      )
-    }
-    parsed <- httr::content(response, as =  "text", encoding = "UTF-8") %>%
-      jsonlite::fromJSON()
-    content[[i]] <- parsed$content
-  }
-  dplyr::bind_rows(content) %>%
+  content <- tm_process_paginated_rsp(token, parsed, ...)
+  content %>%
     select_node_result_columns()
 }
 

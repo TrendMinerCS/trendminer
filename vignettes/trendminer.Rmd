@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-TrendMiner is an industrial self-service analytics platform for analyzing, monitoring and predicting time-series based process and asset data. The trendminer R package allows access to selected endpoints of the TrendMiner API which is documented here: http://developer.trendminer.com/apidocs/index.html.
+TrendMiner is an industrial self-service analytics platform for analyzing, monitoring and predicting time-series based process and asset data. The trendminer R package allows access to selected endpoints of the TrendMiner API which is documented here: http://developer.trendminer.com/.
 
 This vignette provides a brief introduction to the trendminer R package, highlighting the following key details of its use:
 

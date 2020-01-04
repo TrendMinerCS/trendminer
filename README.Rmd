@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/alex23lemm/trendminer/branch/master/graph/badge.svg)](https://codecov.io/gh/alex23lemm/trendminer?branch=master)
 <!-- badges: end -->
 
-trendminer is an R client for accessing selected endpoints of the TrendMiner API available at  http://developer.trendminer.com/. TrendMiner is an industrial self-service analytics platform for analyzing, monitoring and predicting time-series based process and asset data.  
+trendminer is an R client for accessing selected endpoints of the TrendMiner API that is documented at http://developer.trendminer.com. TrendMiner is an industrial self-service analytics platform for analyzing, monitoring and predicting time-series based process and asset data.  
 
 ## Installation
 

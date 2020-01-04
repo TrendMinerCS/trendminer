@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "alex23lemm@gmail.com")
 Description: Allows access to selected endpoints that are part of the 
-    'TrendMiner' API <http://developer.trendminer.com/apidocs/index.html>.
+    'TrendMiner' API <http://developer.trendminer.com>.
     'TrendMiner' is an industrial self-service analytics platform for analyzing, 
     monitoring and predicting time-series based process and asset data.
 License: MIT + file LICENSE

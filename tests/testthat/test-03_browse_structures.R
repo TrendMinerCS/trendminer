@@ -54,3 +54,13 @@ test_that("tm_child_structures() returns error if 'parent_id' is not length one 
   expect_error(tm_child_structures(token, c("not", "a", "single", "parent_id")),
                "'parent_id' must be a length-one character vector")
 })
+
+test_that("tm_descendant_structures() returns the expected results", {
+  skip_on_cran()
+
+  barca_site <- tm_descendant_structures(token, "2b66622f-83c7-48e9-9ccc-6dd9214e70c6")
+  expect_identical(dim(barca_site), c(29L, 16L))
+  catalyst_subtree <- tm_descendant_structures(token, "4e58e3ca-e57d-47b5-8619-20d39626116e")
+  expect_identical(dim(catalyst_subtree), c(17L, 16L))
+})
+

@@ -20,7 +20,7 @@
 #' * Logical operator: AND(;), OR(,)\cr
 #' * Wildcard operator: *
 #'
-#' ## List of attributes you can search on
+#' ## List of node properties you can search on
 #'
 #' * `id` Node id (in UUID format)\cr
 #' * `sourceId`\cr
@@ -41,8 +41,8 @@
 #' @importFrom rlang .data
 #' @return A data frame with search results. Each row represents one asset/tag which
 #'   matched the query pattern. The column names of the data frame returned
-#'   correspond to the search attributes listed in **Details**. The only exception
-#'   from this pattern is the `ìd` search attribute which will be represented
+#'   correspond to the search properties listed in **Details**. The only exception
+#'   from this pattern is the `ìd` search property which will be represented
 #'   by the `nodeId` column. Data frames containing only asset but no tag
 #'   search results won't include the `dataType` and `data` column.
 #' @export
@@ -54,8 +54,8 @@
 #' # Retrieve all assets that have "Reactor" in their name
 #' tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
 #'
-#' # Retrieve all tags that have "Temperature" in their name
-#' tm_search_assets(token, "type=='ATTRIBUTE';name=='*Temperature*'")
+#' # Retrieve all tags whose name starts with "Temperature"
+#' tm_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'")
 #' }
 tm_search_assets <- function(token, query, ...) {
 
@@ -156,12 +156,11 @@ select_node_result_columns <- function(df) {
 
 #' Get all tags
 #'
-#' Gets the complete list of available tags including their attributes
-#' and returns it as a data frame.
+#' Gets the complete list of available tags and returns it as a data frame.
 #'
 #' @inheritParams tm_search_assets
 #' @return A data frame with tag information. Each row represents a single tag
-#'   and the columns represent specific tag attributes.
+#'   and the columns represent specific tag properties.
 #' @export
 #'
 #' @examples
@@ -177,12 +176,11 @@ tm_tags <- function(token, ...) {
 
 #' Get all assets
 #'
-#' Gets the complete list of available assets including their attributes
-#' and returns it as a data frame.
+#' Gets the complete list of available assets and returns it as a data frame.
 #'
 #' @inheritParams tm_search_assets
 #' @return A data frame with asset information. Each row represents a single asset
-#'   and the columns represent specific asset attributes.
+#'   and the columns represent specific asset properties.
 #' @export
 #'
 #' @examples
@@ -194,4 +192,3 @@ tm_tags <- function(token, ...) {
 tm_assets <- function(token, ...) {
   tm_search_assets(token, 'type=="ASSET"', ...)
 }
-

@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the TrendMiner R package"
+title: "Introduction to the trendminer R package"
 author: "Alexander Lemm"
 output: rmarkdown::html_vignette
 vignette: >
@@ -23,9 +23,9 @@ TrendMiner is an industrial self-service analytics platform for analyzing, monit
 This vignette provides a brief introduction to the trendminer R package, highlighting the following key details of its use:
 
 * Connecting to a TrendMiner instance from an interactive R session
-* Searching, browsing and visualizing the asset hierarchy
-* Fetching time-series data of tags  
-
+* Searching for assets and tags in the asset framework
+* Browsing and visualizing structures in asset trees
+* Fetching time-series data of tags (coming soon)
 
 ## Authentication 
 
@@ -59,12 +59,92 @@ For any subsequent API request you just need to pass the `token` to the respecti
 
 TrendMiner responses might be paginated. An internal function manages pagination automatically by combining all paginated search results in a data frame before returning them to the respective exported function that was called. This internal process for checking for further pages and combining the results is completely hidden from the end user. 
 
-## The `...` argument
+## Function naming convention
 
-Each function from the trendminer package comes with a `...` (dot-dot-dot) argument. It is used to pass on additional arguments to the underlying HTTP method from the `httr` package. This might be necessary if you need to set some curl options explicitly  via `httr::config()`.
+To play nicely with tab completion, we use the `tm_` prefix for all functions in the package.
+
+## Introduction to the TrendMiner asset framework
+
+The TrendMiner asset framework is constructed around two primary concepts:
+
+* Nodes
+* Structures
+
+**A node** either represents **an asset** (component of the plant) or **a tag** (attribute of an asset storing timeseries data).
+
+**A structure** defines the parent-child relationship between assets and attributes or assets and other assets. It defines the logical place of a node in an asset tree. Since a node can be part of various asset trees at the same time, nodes and structures are definted separately. 
+
+This distinction between nodes (assets and tags) and structures is reflected accordingly in the trendminer R package: An asset framework-related function either returns assets and tags if it is node-related or it returns structures. 
+
+## Connecting to a TrendMiner instance
+
+We start by fetching a TrendMiner access token which we will need to pass to any subsequent API request. Usually, a token is valid for 12 hours and you can see its expiration date by printing the token to the console:
+
+```{r}
+library(trendminer)
+
+token <- tm_token()
+```
+
+```{r include=FALSE}
+access_token <- token$access_token
+token$access_token <- "YOUR_ACCESS_TOKEN_WOULD_BE_SHOWN_HERE"
+```
+
+```{r}
+token
+```
+
+```{r include=FALSE}
+token$access_token <- access_token
+```
 
 
-## Visualizing the asset hierachy 
+## Searching for assets and tags
+
+`tm_search_assets()` allows you to search for nodes in the TrendMiner asset framework
+based on a query you define. There are several search, logical and wildcard operators available which you can use together with selected node properites to construct your query. Below we will give you some examples but you can find all the details in the function's documentation.
+
+Let us start by searching for all assets and tags which might be reactor-related. We are loading `dplyr` below only to further process the returned data frames. 
+
+```{r}
+library(dplyr)
+
+tm_search_assets(token, 'name=="*Reactor*"') %>% 
+  select(nodeId, name, type, tagName) %>%
+  head()
+```
+
+If you like to fetch all tags whose name starts with "Temperature" you can do the following:
+
+```{r}
+tm_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'") %>% 
+  select(nodeId, name, type, tagName) %>% 
+  head()
+```
+
+`tm_search_assets()` powers two other functions under the hood using pre-defined search queries: `tm_assets()` which returns the complete set of assets and `tm_tags()` which returns all tags at once.  
+
+```{r}
+assets <- tm_assets(token)
+dim(assets)
+assets %>% 
+  select(nodeId, name, type)
+
+tags <- tm_tags(token)
+dim(tags)
+tags %>% 
+  select(nodeId, name, type, tagName) %>% 
+  head()
+```
+
+Note that in all function calls above TrendMiner only returned a data frame of nodes without any information about their location in the asset trees.  
+
+
+
+## Visualizing asset trees 
+
+You even can add some magrittr and purrr flavor to chain several trendminer functions and third party libraries together to visualize the asset hierarchy. For instance, the following line of code lets you activate all your PMML models at once:
 
 ```{r}
 library(networkD3)
@@ -73,34 +153,42 @@ library(trendminer)
 library(data.tree)
 
 token <- tm_token()
-roots <- tm_root_structures(token)
-all_sites_list <- map(roots$structureId, tm_descendant_structures, token = token)
-all_site_trees <- map(all_sites_list, FromDataFrameTable, pathName = "externalId")
-plots <- map(all_site_trees, ~ diagonalNetwork(ToListExplicit(.x, unname = TRUE)))
+# tm_root_structures(token) %>% 
+#   map(.$strutureId, tm_descendant_structures, token = token) %>% 
+#   map(. , FromDataFrameTable, pathName = "externalId")
+# plots <- map(all_site_trees, ~ diagonalNetwork(ToListExplicit(.x, unname = TRUE)))
+# 
+# 
+# 
+# 
+# grenoble_tree <- all_site_trees[[3]]
+# diagonalNetwork(ToListExplicit(grenoble_tree$`Line 1`, unname = TRUE), fontSize = 14, height = 400, width = 600)
+# 
+# diagonalNetwork(ToListExplicit(grenoble_tree, unname = TRUE), fontSize = 14, height = 500, width = 700)
+# ```
+
+
+```
+
+By adding some further magrittr and purrr flavor you can even create tree plots for all root structures including all of their descendants in one go. Based on the breadth and depth of your asset hierarchy, however, that might be a very expensive call so use this example below with caution.
+
+```{r}
+plots <- tm_root_structures(token) %$%
+  map(structureId, tm_descendant_structures, token = token) %>%
+  map(FromDataFrameTable, pathName = "externalId") %>%
+  map(~ diagonalNetwork(ToListExplicit(.x, unname = TRUE), fontSize = 14, 
+                        height = 500, width = 700))
 
 plots[[1]]
 
+plots[[2]]
 
-
-for (i in seq_along(plots)) {
-  print(i)
-  plots[[i]]
-}
-
-
-grenoble_tree <- all_site_trees[[3]]
-diagonalNetwork(ToListExplicit(grenoble_tree$`Line 1`, unname = TRUE), fontSize = 14, height = 400, width = 600)
-
-diagonalNetwork(ToListExplicit(grenoble_tree, unname = TRUE), fontSize = 14, height = 500, width = 700)
-```
-```{r}
-walk(all_site_trees, function(x) {
-  nw <- diagonalNetwork(ToListExplicit(x, unname = TRUE))
-  print(nw)
-}) 
-
-
+plots[[3]]
 ```
 
+
+## The `...` argument
+
+Each function from the trendminer package comes with a `...` (dot-dot-dot) argument. It is used to pass on additional arguments to the underlying HTTP method from the `httr` package. This might be necessary if you need to set some curl options explicitly  via `httr::config()`.
 
 

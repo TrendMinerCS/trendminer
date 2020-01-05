@@ -16,4 +16,6 @@ templateId
 timeseries
 UUID
 parentId
+magrittr
+purrr
 

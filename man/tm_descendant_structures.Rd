@@ -15,8 +15,14 @@ tm_descendant_structures(token, parent_id)
 A data frame with all descendant structures of \code{parent_id}.
 }
 \description{
-Retrieves the entire structure subtree underneath \code{parent_id} and returns it as
-a data frame.
+Retrieves the entire structure subtree underneath \code{parent_id} and returns it
+as a data frame.
+}
+\details{
+\code{tm_descendant_structures()} leverages \code{tm_child_structures()} in recursive
+calls to fetch the entire subtree structure underneath \code{parent_id}. Use
+\code{tm_descendant_structures()} with caution in case you have a broad and deeply
+nested asset structure underneath \code{parent_id}.
 }
 \examples{
 \dontrun{

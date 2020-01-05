@@ -6,10 +6,10 @@ test_that("tm_search_assets() returns expected results", {
   skip_on_cran()
 
   response <- tm_search_assets(token, 'name== "Reactor Level",data=="BA2:CONC.1"')
-  parsed <- response[, c("name", "data")]
+  parsed <- response[, c("name", "tagName")]
   expect_identical(dim(response), c(3L, 11L))
   expect_identical(parsed, data.frame(name = c("Reactor Concentration", "Reactor Level", "Reactor Level"),
-                                      data = c("BA2:CONC.1", "BA2:LEVEL.1", "BA:LEVEL.1"),
+                                      tagName = c("BA2:CONC.1", "BA2:LEVEL.1", "BA:LEVEL.1"),
                                       stringsAsFactors = FALSE))
   expect_identical(dim(tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')),
                    c(6L, 9L))

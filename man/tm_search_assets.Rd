@@ -19,9 +19,10 @@ via \code{\link[httr]{config}}.}
 A data frame with search results. Each row represents one asset/tag which
 matched the query pattern. The column names of the data frame returned
 correspond to the search properties listed in \strong{Details}. The only exception
-from this pattern is the \code{ìd} search property which will be represented
-by the \code{nodeId} column. Data frames containing only asset but no tag
-search results won't include the \code{dataType} and \code{data} column.
+from this pattern are the \code{ìd} search property which will be represented
+by the \code{nodeId} column and the \code{data} search property which will be represented
+by the \code{tagName} column. Data frames containing only asset but no tag
+search results won't include the \code{dataType} and \code{tagName} columns.
 }
 \description{
 Search for assets and tags in the asset framework that match the query pattern.
@@ -53,7 +54,7 @@ powering a couple of other functions under-the-hood like, e.g., \code{tm_assets(
 \item \code{options}\cr
 \item \code{deleted} Boolean value. Either "TRUE" or "FALSE"
 \item \code{dataType} Only available for nodes of type "ATTRIBUTE"\cr
-\item \code{data} Tag id. Only available for nodes of type "ATTRIBUTE"\cr
+\item \code{data} Tag name. Only available for nodes of type "ATTRIBUTE"\cr
 }
 }
 }

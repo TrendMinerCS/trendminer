@@ -28,7 +28,7 @@
 #' * `options`\cr
 #' * `deleted` Boolean value. Either "TRUE" or "FALSE"
 #' * `dataType` Only available for nodes of type "ATTRIBUTE"\cr
-#' * `data` Tag id. Only available for nodes of type "ATTRIBUTE"\cr
+#' * `data` Tag name. Only available for nodes of type "ATTRIBUTE"\cr
 #'
 #' @param token A valid access token
 #' @param query Search query
@@ -37,9 +37,10 @@
 #' @return A data frame with search results. Each row represents one asset/tag which
 #'   matched the query pattern. The column names of the data frame returned
 #'   correspond to the search properties listed in **Details**. The only exception
-#'   from this pattern is the `ìd` search property which will be represented
-#'   by the `nodeId` column. Data frames containing only asset but no tag
-#'   search results won't include the `dataType` and `data` column.
+#'   from this pattern are the `ìd` search property which will be represented
+#'   by the `nodeId` column and the `data` search property which will be represented
+#'   by the `tagName` column. Data frames containing only asset but no tag
+#'   search results won't include the `dataType` and `tagName` columns.
 #' @export
 #'
 #' @examples
@@ -97,6 +98,7 @@ select_node_result_columns <- function(df) {
     dplyr::select(.data$nodeIdentifier, .data$sourceId, .data$type, .data$externalId,
                   .data$template, .data$templateId, .data$name, .data$description,
                   .data$deleted, dplyr::contains("data")) %>%
+    {if("data" %in% names(.)) dplyr::rename(., tagName = .data$data) else .} %>%
     dplyr::rename(nodeId = .data$nodeIdentifier)
 }
 

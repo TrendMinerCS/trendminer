@@ -16,7 +16,8 @@ This might be necessary if you need to set some curl options explicitly
 via \code{\link[httr]{config}}.}
 }
 \value{
-A data frame with child structures of \code{parent_id}.
+A data frame with child structures of \code{parent_id} or an empty list in case
+\code{parent_id} represents a leaf node.
 }
 \description{
 Gets the structures that have a parent defined by \code{parent_id} and returns them

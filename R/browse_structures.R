@@ -64,7 +64,8 @@ select_structure_result_columns <- function(df) {
 #'
 #' @param parent_id Parent structure ID in UUID format
 #' @inheritParams tm_root_structures
-#' @return A data frame with child structures of `parent_id`.
+#' @return A data frame with child structures of `parent_id` or an empty list in case
+#'   `parent_id` is a leaf node.
 #' @export
 #'
 #' @examples

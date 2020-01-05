@@ -53,7 +53,6 @@
 #' }
 tm_token <- function(client_id = NULL, client_secret = NULL,
                          usr_name = NULL , usr_pwd = NULL, base_url = NULL, ...) {
-
   if (!is.null(client_id)) {
     if (length(client_id) != 1L || typeof(client_id) != "character") {
       stop("If provided,'client_id' must be a length-one character vector.")
@@ -61,7 +60,6 @@ tm_token <- function(client_id = NULL, client_secret = NULL,
   } else {
     client_id <- tm_get_client_ID()
   }
-
   if (!is.null(client_secret)) {
     if (length(client_secret) != 1L || typeof(client_secret) != "character") {
       stop("If provided,'client_secret' must be a length-one character vector.")
@@ -69,7 +67,6 @@ tm_token <- function(client_id = NULL, client_secret = NULL,
   } else {
     client_secret <- tm_get_client_secret()
   }
-
   if (!is.null(usr_name)) {
     if (length(usr_name) != 1L || typeof(usr_name) != "character") {
       stop("If provided,'usr_name' must be a length-one character vector.")
@@ -77,7 +74,6 @@ tm_token <- function(client_id = NULL, client_secret = NULL,
   } else {
     usr_name <- tm_get_usr()
   }
-
   if (!is.null(usr_pwd)) {
     if (length(usr_pwd) != 1L || typeof(usr_pwd) != "character") {
       stop("If provided,'usr_pwd' must be a length-one character vector.")
@@ -85,7 +81,6 @@ tm_token <- function(client_id = NULL, client_secret = NULL,
   } else {
     usr_pwd <- tm_get_pwd()
   }
-
   if (!is.null(base_url)) {
     if (length(base_url) != 1L || typeof(base_url) != "character") {
       stop("If provided,'base_url' must be a length-one character vector.")
@@ -93,13 +88,11 @@ tm_token <- function(client_id = NULL, client_secret = NULL,
   } else {
     base_url <- tm_get_base_url()
   }
-
   url <- paste(base_url, "security/oauth/token", sep = "/")
   body = list(scope = "read",
               grant_type = "password",
               username = usr_name,
               password = usr_pwd)
-
   response <- httr::POST(url, httr::authenticate(client_id,
                                                  client_secret),
                          httr::user_agent(tm_get_useragent()),
@@ -120,7 +113,6 @@ tm_token <- function(client_id = NULL, client_secret = NULL,
       call. = FALSE
     )
   }
-
   curr_time <- Sys.time()
   parsed <- httr::content(response, as =  "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()

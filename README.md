@@ -59,8 +59,7 @@ tm_child_structures(token, "ca12dc39-516d-4217-b7cc-a8d220a32858") %>%
 #> 2 2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6    Line 1 Site Grenoble
 
 # Get entire subtree structure underneath Line 1
-line1_str <- tm_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6")
-line1_str %>% 
+tm_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6") %>% 
   select(name, parentName, type, tagName)
 #>                        name    parentName      type      tagName
 #> 1             Conveyer unit        Line 1     ASSET         <NA>
@@ -72,29 +71,6 @@ line1_str %>%
 #> 7 Flow secondary addition 2 Conveyer unit ATTRIBUTE  WE-FC002.PV
 #> 8         Conveyer pressure Conveyer unit ATTRIBUTE WE-PIC002.PV
 #> 9 Flow secondary addition 1 Conveyer unit ATTRIBUTE  WE-FC001.PV
-```
-
-Use a third-party library to print a structure in tree format to the
-console:
-
-``` r
-library(data.tree)
-
-# Print Line 1 structure in tree format to console
-FromDataFrameTable(line1_str, pathName = "externalId") %>% 
-print(., "type")
-#>                                levelName      type
-#> 1  Site Grenoble                                  
-#> 2   °--Line 1                                     
-#> 3       ¦--Conveyer unit                     ASSET
-#> 4       ¦   ¦--Reactor temperature       ATTRIBUTE
-#> 5       ¦   ¦--Flow secondary addition 2 ATTRIBUTE
-#> 6       ¦   ¦--Conveyer pressure         ATTRIBUTE
-#> 7       ¦   °--Flow secondary addition 1 ATTRIBUTE
-#> 8       ¦--Pressure polym reactor        ATTRIBUTE
-#> 9       ¦--Feed ratio                    ATTRIBUTE
-#> 10      ¦--Production grade              ATTRIBUTE
-#> 11      °--Feed flow                     ATTRIBUTE
 ```
 
 Retrieve all tags at once or search for specific assets/tags:

@@ -33,13 +33,20 @@ devtools::install_github("alex23lemm/trendminer")
 
 ## Usage
 
-Below are some things you can do after installing the package:
+Below are some things you can do after installing the package.
+
+Start with fetching an access token which you'll need for any subsequent API call:
 
 ```{r message=FALSE}
 library(trendminer)
-library(dplyr)
 
 token <- tm_token()
+```
+
+Browse and explore the site/plant structures starting on top with the available root structures:
+
+```{r message=FALSE}
+library(dplyr)
 
 # Get root structures
 tm_root_structures(token) %>% 
@@ -53,17 +60,30 @@ tm_child_structures(token, "ca12dc39-516d-4217-b7cc-a8d220a32858") %>%
 line1_str <- tm_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6")
 line1_str %>% 
   select(name, parentName, type, tagName)
+```
+
+Use a third-party library to print a structure in tree format to the console:
+
+```{r}
+library(data.tree)
 
 # Print Line 1 structure in tree format to console
-library(data.tree)
 FromDataFrameTable(line1_str, pathName = "externalId") %>% 
 print(., "type")
+```
 
+Retrieve all tags at once or search for specific assets/tags:
 
+```{r}
 # Fetch all available tags
 tm_tags(token) %>% 
   select(name, tagName) %>%
-  head
+  head()
+
+# Retrieve all assets and tags that have "Reactor" in their name
+tm_search_assets(token, 'name=="*Reactor*"') %>%
+  select(nodeId, name, type) %>%
+  head()
 ```
 
 

@@ -26,13 +26,22 @@ devtools::install_github("alex23lemm/trendminer")
 
 ## Usage
 
-Below are some things you can do after installing the package:
+Below are some things you can do after installing the package.
+
+Start with fetching an access token which you’ll need for any subsequent
+API call:
 
 ``` r
 library(trendminer)
-library(dplyr)
 
 token <- tm_token()
+```
+
+Browse and explore the site/plant structures starting on top with the
+available root structures:
+
+``` r
+library(dplyr)
 
 # Get root structures
 tm_root_structures(token) %>% 
@@ -63,9 +72,15 @@ line1_str %>%
 #> 7 Flow secondary addition 2 Conveyer unit ATTRIBUTE  WE-FC002.PV
 #> 8         Conveyer pressure Conveyer unit ATTRIBUTE WE-PIC002.PV
 #> 9 Flow secondary addition 1 Conveyer unit ATTRIBUTE  WE-FC001.PV
+```
+
+Use a third-party library to print a structure in tree format to the
+console:
+
+``` r
+library(data.tree)
 
 # Print Line 1 structure in tree format to console
-library(data.tree)
 FromDataFrameTable(line1_str, pathName = "externalId") %>% 
 print(., "type")
 #>                                levelName      type
@@ -80,12 +95,15 @@ print(., "type")
 #> 9       ¦--Feed ratio                    ATTRIBUTE
 #> 10      ¦--Production grade              ATTRIBUTE
 #> 11      °--Feed flow                     ATTRIBUTE
+```
 
+Retrieve all tags at once or search for specific assets/tags:
 
+``` r
 # Fetch all available tags
 tm_tags(token) %>% 
   select(name, tagName) %>%
-  head
+  head()
 #>                    name     tagName
 #> 1 Reactor Concentration  BA2:CONC.1
 #> 2         Reactor Level  BA:LEVEL.1
@@ -93,6 +111,18 @@ tm_tags(token) %>%
 #> 4   Reactor Temperature   BA:TEMP.1
 #> 5        Reactor Status BA:ACTIVE.1
 #> 6        Reaction Phase  BA:PHASE.1
+
+# Retrieve all assets and tags that have "Reactor" in their name
+tm_search_assets(token, 'name=="*Reactor*"') %>%
+  select(nodeId, name, type) %>%
+  head()
+#>                                 nodeId                  name      type
+#> 1 96b526da-aa76-46cb-8611-9c108303e755               Reactor     ASSET
+#> 2 065e17e1-7569-49e6-9aea-c30f96081b86             Reactor 2     ASSET
+#> 3 f75449bb-d144-40df-9d6a-d34a6a52f96f Reactor Concentration ATTRIBUTE
+#> 4 af82c650-bbd5-4b58-9efa-880f205c6402         Reactor Level ATTRIBUTE
+#> 5 07a7f300-f90b-458f-b334-3a0d7093d5ff   Reactor Temperature ATTRIBUTE
+#> 6 f0cb8ec3-bf9b-4eb3-8959-8b179d0e8331             Reactor 1     ASSET
 ```
 
 ## Authentication

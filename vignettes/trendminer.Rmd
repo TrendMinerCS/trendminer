@@ -27,6 +27,7 @@ This vignette provides a brief introduction to the trendminer R package, highlig
 * Browsing and visualizing structures in asset trees
 * Fetching time-series data of tags (coming soon)
 
+
 ## Authentication 
 
 All requests to the TrendMiner API require authentication. This is achieved by sending a valid Bearer access token in the request headers. Request tokens are obtained via OAuth2.0 using the Resource Owner Password Credentials flow. That means that any client which likes to interact with the API needs to collect the credentials from the user (username and password) first before passing them together with its own client credentials (client ID and client secret) to the server. The server responds with an access token which the user needs to use for any subsequent API request. 
@@ -55,13 +56,16 @@ TM_base_url = YOUR_TM_BASE_URL_HERE
 
 For any subsequent API request you just need to pass the `token` to the respective function as an argument. 
 
+
 ## Pagination (handling multi-page responses)
 
 TrendMiner responses might be paginated. An internal function manages pagination automatically by combining all paginated search results in a data frame before returning them to the respective exported function that was called. This internal process for checking for further pages and combining the results is completely hidden from the end user. 
 
+
 ## Function naming convention
 
 To play nicely with tab completion, we use the `tm_` prefix for all functions in the package.
+
 
 ## Introduction to the TrendMiner asset framework
 
@@ -72,7 +76,7 @@ The TrendMiner asset framework is constructed around two primary concepts:
 
 **A node** either represents **an asset** (component of the plant) or **a tag** (attribute of an asset storing timeseries data).
 
-**A structure** defines the parent-child relationship between assets and attributes or assets and other assets. It defines the logical place of a node in an asset tree. Since a node can be part of various asset trees at the same time, nodes and structures are definted separately. 
+**A structure** defines the parent-child relationship between assets and attributes or assets and other assets. It defines the logical place of a node in an asset tree. Since a node can be part of various asset trees at the same time, nodes and structures are defined separately. 
 
 This distinction between nodes (assets and tags) and structures is reflected accordingly in the trendminer R package: An asset framework-related function either returns assets and tags if it is node-related or it returns structures. 
 
@@ -103,7 +107,7 @@ token$access_token <- access_token
 ## Searching for assets and tags
 
 `tm_search_assets()` allows you to search for nodes in the TrendMiner asset framework
-based on a query you define. There are several search, logical and wildcard operators available which you can use together with selected node properites to construct your query. Below we will give you some examples but you can find all the details in the function's documentation.
+based on a query you define. There are several search, logical and wildcard operators available which you can use together with selected node properties to construct your query. Below we will give you some examples but you can find all the details in the function's documentation.
 
 Let us start by searching for all assets and tags which might be reactor-related. We are loading `dplyr` below only to further process the returned data frames. 
 
@@ -129,7 +133,8 @@ tm_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'") %>%
 assets <- tm_assets(token)
 dim(assets)
 assets %>% 
-  select(nodeId, name, type)
+  select(nodeId, name, type) %>% 
+  head()
 
 tags <- tm_tags(token)
 dim(tags)
@@ -141,51 +146,85 @@ tags %>%
 Note that in all function calls above TrendMiner only returned a data frame of nodes without any information about their location in the asset trees.  
 
 
+## Browsing structures in an asset tree
+
+The best way to start browsing your asset trees is to fetch all available root structures. They give you the entry points to the the different available asset trees:
+
+```{r}
+roots <- tm_root_structures(token) 
+roots %>% 
+  select(structureId, name, nodeId, type)
+```
+
+Next we might want to explore the second root structure a bit more by taking a look at its children. We will use `tm_child_structures()` for this task which returns child structures by parent structure ID. 
+
+```{r}
+tm_child_structures(token, roots$structureId[2]) %>% 
+  select(structureId, nodeId, name, parentName, type)
+```
+
+We now could go on and continue calling `tm_child_structures()` on each level with all newly retrieved structure IDs until we reach the leaves to get to know the complete tree structure of the second root structure. 
+
+Alternatively, we can make use of `tm_descendant_structures()` that retrieves the entire asset subtree underneath a given structure. In the example below we would like to get the asset subtree structure underneath the Line 1 asset:
+
+
+```{r}
+line1_str <- tm_descendant_structures(token,"2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6")
+line1_str %>% 
+  select(name, parentName, type)
+```
+
+Above you see the entire Line 1 subtree in table format which was returned by `tm_descendant_structures()`. Even though all the information is present it is very hard for the human eye to depict the tree structure from the table. 
+
+Here we can leverage the `data.tree` package which allows to convert a data frame that includes tree information in table or network format into a tree structure. Printing the tree structure after the conversion to the console will give us a much better understanding about the asset subtree:
+
+```{r}
+library(data.tree)
+
+line1_subtree <- FromDataFrameTable(line1_str, pathName = "externalId") 
+print(line1_subtree, "type")
+```
+
 
 ## Visualizing asset trees 
 
-You even can add some magrittr and purrr flavor to chain several trendminer functions and third party libraries together to visualize the asset hierarchy. For instance, the following line of code lets you activate all your PMML models at once:
+There are several libraries available which allow you to plot tree structures. In this introduction we will use the `network3D` package and pass the tree structure we just created with the `data.tree` package above to the `networkD3::diagonalNetwok()` function:
 
 ```{r}
 library(networkD3)
-library(purrr)
-library(trendminer)
-library(data.tree)
 
-token <- tm_token()
-# tm_root_structures(token) %>% 
-#   map(.$strutureId, tm_descendant_structures, token = token) %>% 
-#   map(. , FromDataFrameTable, pathName = "externalId")
-# plots <- map(all_site_trees, ~ diagonalNetwork(ToListExplicit(.x, unname = TRUE)))
-# 
-# 
-# 
-# 
-# grenoble_tree <- all_site_trees[[3]]
-# diagonalNetwork(ToListExplicit(grenoble_tree$`Line 1`, unname = TRUE), fontSize = 14, height = 400, width = 600)
-# 
-# diagonalNetwork(ToListExplicit(grenoble_tree, unname = TRUE), fontSize = 14, height = 500, width = 700)
-# ```
-
-
+diagonalNetwork(ToListExplicit(line1_subtree$`Line 1`, unname = TRUE), fontSize = 14,
+                height = 400, width = 600)
 ```
 
-By adding some further magrittr and purrr flavor you can even create tree plots for all root structures including all of their descendants in one go. Based on the breadth and depth of your asset hierarchy, however, that might be a very expensive call so use this example below with caution.
+
+
+
+
+
+By adding some magrittr and purrr flavor you can even create tree plots for all root structures including all of their descendants in one go. Based on the breadth and depth of your asset hierarchy, however, that might be a very expensive call so use the code example below with caution:
 
 ```{r}
+library(purrr)
+
 plots <- tm_root_structures(token) %$%
   map(structureId, tm_descendant_structures, token = token) %>%
   map(FromDataFrameTable, pathName = "externalId") %>%
   map(~ diagonalNetwork(ToListExplicit(.x, unname = TRUE), fontSize = 14, 
                         height = 500, width = 700))
-
-plots[[1]]
-
-plots[[2]]
-
-plots[[3]]
 ```
 
+```{r}
+plots[[1]]
+```
+
+```{r}
+plots[[2]]
+```
+
+```{r}
+plots[[3]]
+```
 
 ## The `...` argument
 

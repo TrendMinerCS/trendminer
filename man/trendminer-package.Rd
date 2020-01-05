@@ -9,7 +9,7 @@
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 Allows access to selected endpoints that are part of the 
-    'TrendMiner' API <http://developer.trendminer.com/apidocs/index.html>.
+    'TrendMiner' API <http://developer.trendminer.com>.
     'TrendMiner' is an industrial self-service analytics platform for analyzing, 
     monitoring and predicting time-series based process and asset data.
 }

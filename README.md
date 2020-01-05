@@ -12,7 +12,7 @@ coverage](https://codecov.io/gh/alex23lemm/trendminer/branch/master/graph/badge.
 <!-- badges: end -->
 
 trendminer is an R client for accessing selected endpoints of the
-TrendMiner API available at <http://developer.trendminer.com/>.
+TrendMiner API that is documented at <http://developer.trendminer.com>.
 TrendMiner is an industrial self-service analytics platform for
 analyzing, monitoring and predicting time-series based process and asset
 data.
@@ -34,13 +34,59 @@ library(dplyr)
 
 token <- tm_token()
 
-# Fetch all available tags
-my_tags <- tm_tags(token)
+# Get root structures
+tm_root_structures(token) %>% 
+  select(structureId, name)
+#>                            structureId           name
+#> 1 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne
+#> 2 2b66622f-83c7-48e9-9ccc-6dd9214e70c6 Site Barcelona
+#> 3 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble
 
-my_tags %>% 
-  select(name, data) %>%
+# Get child structures of Site Grenoble
+tm_child_structures(token, "ca12dc39-516d-4217-b7cc-a8d220a32858") %>% 
+  select(structureId, name, parentName)
+#>                            structureId      name    parentName
+#> 1 908d5613-b360-4ee7-b36b-02d097594850 Reactor 2 Site Grenoble
+#> 2 2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6    Line 1 Site Grenoble
+
+# Get entire subtree structure underneath Line 1
+line1_str <- tm_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6")
+line1_str %>% 
+  select(name, parentName, type, tagName)
+#>                        name    parentName      type      tagName
+#> 1             Conveyer unit        Line 1     ASSET         <NA>
+#> 2    Pressure polym reactor        Line 1 ATTRIBUTE WE-PIC001.PV
+#> 3                Feed ratio        Line 1 ATTRIBUTE  WE-FY001.PV
+#> 4          Production grade        Line 1 ATTRIBUTE  WE-AC001.PV
+#> 5                 Feed flow        Line 1 ATTRIBUTE  WE-FC011.PV
+#> 6       Reactor temperature Conveyer unit ATTRIBUTE WE-TIC001.PV
+#> 7 Flow secondary addition 2 Conveyer unit ATTRIBUTE  WE-FC002.PV
+#> 8         Conveyer pressure Conveyer unit ATTRIBUTE WE-PIC002.PV
+#> 9 Flow secondary addition 1 Conveyer unit ATTRIBUTE  WE-FC001.PV
+
+# Print Line 1 structure in tree format to console
+library(data.tree)
+FromDataFrameTable(line1_str, pathName = "externalId") %>% 
+print(., "type")
+#>                                levelName      type
+#> 1  Site Grenoble                                  
+#> 2   °--Line 1                                     
+#> 3       ¦--Conveyer unit                     ASSET
+#> 4       ¦   ¦--Reactor temperature       ATTRIBUTE
+#> 5       ¦   ¦--Flow secondary addition 2 ATTRIBUTE
+#> 6       ¦   ¦--Conveyer pressure         ATTRIBUTE
+#> 7       ¦   °--Flow secondary addition 1 ATTRIBUTE
+#> 8       ¦--Pressure polym reactor        ATTRIBUTE
+#> 9       ¦--Feed ratio                    ATTRIBUTE
+#> 10      ¦--Production grade              ATTRIBUTE
+#> 11      °--Feed flow                     ATTRIBUTE
+
+
+# Fetch all available tags
+tm_tags(token) %>% 
+  select(name, tagName) %>%
   head
-#>                    name        data
+#>                    name     tagName
 #> 1 Reactor Concentration  BA2:CONC.1
 #> 2         Reactor Level  BA:LEVEL.1
 #> 3 Reactor Concentration   BA:CONC.1

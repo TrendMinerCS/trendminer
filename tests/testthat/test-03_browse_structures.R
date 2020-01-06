@@ -19,6 +19,20 @@ test_that("tm_root_structures() returns the expected results", {
                               stringsAsFactors = FALSE))
 })
 
+test_that("tm_root_structures() returns error if token is not of class 'tm_token'", {
+  skip_on_cran()
+
+  expect_error(tm_root_structures("not_a_token"), "'token' must be a TrendMiner access token.")
+})
+
+test_that("tm_token_structures() returns error if an invalid token is used", {
+  skip_on_cran()
+
+  deprecated_token <- token
+  deprecated_token$expiration_date <- deprecated_token$expiration_date - 43201
+  expect_error(tm_root_structures(deprecated_token), "Token expired. Please provide a valid access token.")
+})
+
 test_that("tm_child_structures() returns the expected results", {
   skip_on_cran()
 
@@ -53,6 +67,12 @@ test_that("tm_child_structures() returns error if 'parent_id' is not length one 
   expect_error(tm_child_structures(token, 1), "'parent_id' must be a length-one character vector.")
   expect_error(tm_child_structures(token, c("not", "a", "single", "parent_id")),
                "'parent_id' must be a length-one character vector")
+})
+
+test_that("tm_child_structures() returns 400 Bad Request if 'parent_id' is not a valid UUID", {
+  skip_on_cran()
+
+  expect_error(tm_child_structures(token, "not-a-valid-UUID"), http_400_msg , fixed = TRUE)
 })
 
 test_that("tm_descendant_structures() returns the expected results", {

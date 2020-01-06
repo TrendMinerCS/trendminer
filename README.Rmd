@@ -33,7 +33,7 @@ devtools::install_github("alex23lemm/trendminer")
 
 ## Usage
 
-Below are some things you can do after installing the package.
+Below are some things you can do after installing the package. Check out the [introduction vignette](https://alex23lemm.github.io/trendminer/articles/trendminer.html) and [the docs](https://alex23lemm.github.io/trendminer/reference/index.html) for further details.
 
 Start with fetching an access token which you'll need for any subsequent API call:
 

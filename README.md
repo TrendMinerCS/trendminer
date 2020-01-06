@@ -7,8 +7,7 @@
 
 [![Travis build
 status](https://travis-ci.com/alex23lemm/trendminer.svg?branch=master)](https://travis-ci.com/alex23lemm/trendminer)
-[![Codecov test
-coverage](https://codecov.io/gh/alex23lemm/trendminer/branch/master/graph/badge.svg)](https://codecov.io/gh/alex23lemm/trendminer?branch=master)
+[![codecov](https://codecov.io/gh/alex23lemm/trendminer/branch/master/graph/badge.svg)](https://codecov.io/gh/alex23lemm/trendminer)
 <!-- badges: end -->
 
 trendminer is an R client for accessing selected endpoints of the

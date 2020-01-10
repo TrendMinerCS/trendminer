@@ -64,7 +64,11 @@ TrendMiner responses might be paginated. An internal function manages pagination
 
 ## Function naming convention
 
-To play nicely with tab completion, we use the `tm_` prefix for all functions in the package.
+To play nicely with tab completion, we use consistent prefixes:
+
+* `tm_` for all functions in the package
+* `tm_af_` for functions wrapping endpoints of the TrendMiner asset framework API
+* `tm_ts_` for functions wrapping endpoints of the TrendMiner time series API
 
 
 ## Introduction to the TrendMiner asset framework
@@ -114,7 +118,7 @@ Let us start by searching for all assets and tags which might be reactor-related
 ```{r}
 library(dplyr)
 
-tm_search_assets(token, 'name=="*Reactor*"') %>% 
+tm_af_search_assets(token, 'name=="*Reactor*"') %>% 
   select(nodeId, name, type, tagName) %>%
   head()
 ```
@@ -122,7 +126,7 @@ tm_search_assets(token, 'name=="*Reactor*"') %>%
 If you like to fetch all tags whose name starts with "Temperature" you can do the following:
 
 ```{r}
-tm_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'") %>% 
+tm_af_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'") %>% 
   select(nodeId, name, type, tagName) %>% 
   head()
 ```
@@ -130,13 +134,13 @@ tm_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'") %>%
 `tm_search_assets()` powers two other functions under the hood using pre-defined search queries: `tm_assets()` which returns the complete set of assets and `tm_tags()` which returns all tags at once.  
 
 ```{r}
-assets <- tm_assets(token)
+assets <- tm_af_assets(token)
 dim(assets)
 assets %>% 
   select(nodeId, name, type) %>% 
   head()
 
-tags <- tm_tags(token)
+tags <- tm_af_tags(token)
 dim(tags)
 tags %>% 
   select(nodeId, name, type, tagName) %>% 
@@ -151,7 +155,7 @@ Note that in all function calls above TrendMiner only returned a data frame of n
 The best way to start browsing your asset trees is to fetch all available root structures. They give you the entry points to the the different available asset trees:
 
 ```{r}
-roots <- tm_root_structures(token) 
+roots <- tm_af_root_structures(token) 
 roots %>% 
   select(structureId, name, nodeId, type)
 ```
@@ -159,7 +163,7 @@ roots %>%
 Next we might want to explore the second root structure a bit more by taking a look at its children. We will use `tm_child_structures()` for this task which returns child structures by parent structure ID. 
 
 ```{r}
-tm_child_structures(token, roots$structureId[2]) %>% 
+tm_af_child_structures(token, roots$structureId[2]) %>% 
   select(structureId, nodeId, name, parentName, type)
 ```
 
@@ -169,7 +173,7 @@ Alternatively, we can make use of `tm_descendant_structures()` that retrieves th
 
 
 ```{r}
-line1_str <- tm_descendant_structures(token,"2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6")
+line1_str <- tm_af_descendant_structures(token,"2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6")
 line1_str %>% 
   select(name, parentName, type)
 ```
@@ -207,8 +211,8 @@ By adding some magrittr and purrr flavor you can even create tree plots for all 
 ```{r}
 library(purrr)
 
-plots <- tm_root_structures(token) %$%
-  map(structureId, tm_descendant_structures, token = token) %>%
+plots <- tm_af_root_structures(token) %$%
+  map(structureId, tm_af_descendant_structures, token = token) %>%
   map(FromDataFrameTable, pathName = "externalId") %>%
   map(~ diagonalNetwork(ToListExplicit(.x, unname = TRUE), fontSize = 14, 
                         height = 500, width = 700))

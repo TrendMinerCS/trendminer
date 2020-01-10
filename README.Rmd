@@ -49,15 +49,15 @@ Browse and explore the site/plant structures starting on top with the available 
 library(dplyr)
 
 # Get root structures
-tm_root_structures(token) %>% 
+tm_af_root_structures(token) %>% 
   select(structureId, name)
 
 # Get child structures of Site Grenoble
-tm_child_structures(token, "ca12dc39-516d-4217-b7cc-a8d220a32858") %>% 
+tm_af_child_structures(token, "ca12dc39-516d-4217-b7cc-a8d220a32858") %>% 
   select(structureId, name, parentName)
 
 # Get entire subtree structure underneath Line 1
-tm_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6") %>% 
+tm_af_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6") %>% 
   select(name, parentName, type, tagName)
 ```
 
@@ -65,12 +65,12 @@ Retrieve all tags at once or search for specific assets/tags:
 
 ```{r}
 # Fetch all available tags
-tm_tags(token) %>% 
+tm_af_tags(token) %>% 
   select(name, tagName) %>%
   head()
 
 # Retrieve all assets and tags that have "Reactor" in their name
-tm_search_assets(token, 'name=="*Reactor*"') %>%
+tm_af_search_assets(token, 'name=="*Reactor*"') %>%
   select(nodeId, name, type) %>%
   head()
 ```

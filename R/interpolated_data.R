@@ -24,9 +24,9 @@
 #' start <-  ymd_hms("2019-09-15T05:16:00Z")
 #' end <- ymd_hms("2019-09-15T06:16:00Z")
 #'
-#' tm_interpoloated_data(token, "BA:CONC.1", start, end, 60)
+#' tm_ts_interpolated_data(token, "BA:CONC.1", start, end, 60)
 #' }
-tm_interpolated_data <- function(token, tag_name, start_date, end_date,
+tm_ts_interpolated_data <- function(token, tag_name, start_date, end_date,
                                   step = 1,
                                   type = "linear",
                                   shift = 0, ...) {

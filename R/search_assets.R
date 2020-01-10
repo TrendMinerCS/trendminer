@@ -3,11 +3,11 @@
 #' Search for assets and tags in the asset framework that match the query pattern.
 #'
 #' @details
-#' `tm_search_assets()` allows to search for nodes in the TrendMiner asset framework
+#' `tm_af_search_assets()` allows to search for nodes in the TrendMiner asset framework
 #' with arbitrary queries. A node either represents an asset (component of the plant)
-#' or a tag (attribute of an asset storing timeseries data). `tm_search_assets()` is
-#' powering a couple of other functions under-the-hood like, e.g., `tm_assets()` and
-#' `tm_tags()` which offer a higher abstraction level by using pre-defined search queries.
+#' or a tag (attribute of an asset storing timeseries data). `tm_af_search_assets()` is
+#' powering a couple of other functions under-the-hood like, e.g., `tm_af_assets()` and
+#' `tm_af_tags()` which offer a higher abstraction level by using pre-defined search queries.
 #'
 #' ## Available query operators
 #'
@@ -48,12 +48,12 @@
 #' token <- tm_token()
 #'
 #' # Retrieve all assets that have "Reactor" in their name
-#' tm_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
+#' tm_af_search_assets(token, 'type=="ASSET";name=="*Reactor*"')
 #'
 #' # Retrieve all tags whose name starts with "Temperature"
-#' tm_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'")
+#' tm_af_search_assets(token, "type=='ATTRIBUTE';name=='Temperature*'")
 #' }
-tm_search_assets <- function(token, query, ...) {
+tm_af_search_assets <- function(token, query, ...) {
   if (class(token) != "tm_token") {
     stop("'token' must be a TrendMiner access token.")
   }
@@ -107,7 +107,7 @@ select_node_result_columns <- function(df) {
 #'
 #' Gets the complete list of available tags and returns it as a data frame.
 #'
-#' @inheritParams tm_search_assets
+#' @inheritParams tm_af_search_assets
 #' @return A data frame with tag information. Each row represents a single tag
 #'   and the columns represent specific tag properties.
 #' @export
@@ -116,10 +116,10 @@ select_node_result_columns <- function(df) {
 #' \dontrun{
 #' token <- tm_token()
 #'
-#' tm_tags(token)
+#' tm_af_tags(token)
 #' }
-tm_tags <- function(token, ...) {
-  tm_search_assets(token, 'type=="ATTRIBUTE"', ...)
+tm_af_tags <- function(token, ...) {
+  tm_af_search_assets(token, 'type=="ATTRIBUTE"', ...)
 }
 
 
@@ -127,7 +127,7 @@ tm_tags <- function(token, ...) {
 #'
 #' Gets the complete list of available assets and returns it as a data frame.
 #'
-#' @inheritParams tm_search_assets
+#' @inheritParams tm_af_search_assets
 #' @return A data frame with asset information. Each row represents a single asset
 #'   and the columns represent specific asset properties.
 #' @export
@@ -136,8 +136,8 @@ tm_tags <- function(token, ...) {
 #' \dontrun{
 #' token <- tm_token()
 #'
-#' tm_assets(token)
+#' tm_af_assets(token)
 #' }
-tm_assets <- function(token, ...) {
-  tm_search_assets(token, 'type=="ASSET"', ...)
+tm_af_assets <- function(token, ...) {
+  tm_af_search_assets(token, 'type=="ASSET"', ...)
 }

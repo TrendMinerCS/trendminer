@@ -12,9 +12,9 @@
 #' \dontrun{
 #' token <- tm_token()
 #'
-#' tm_root_structures(token)
+#' tm_af_root_structures(token)
 #' }
-tm_root_structures <- function(token, ...) {
+tm_af_root_structures <- function(token, ...) {
   if (class(token) != "tm_token") {
     stop("'token' must be a TrendMiner access token.")
   }
@@ -63,7 +63,7 @@ select_structure_result_columns <- function(df) {
 #' in a data frame.
 #'
 #' @param parent_id Parent structure ID in UUID format
-#' @inheritParams tm_root_structures
+#' @inheritParams tm_af_root_structures
 #' @return A data frame with child structures of `parent_id` or an empty list in case
 #'   `parent_id` is a leaf node.
 #' @export
@@ -71,15 +71,15 @@ select_structure_result_columns <- function(df) {
 #' @examples
 #' \dontrun{
 #' token <- tm_token()
-#' roots <- tm_root_structures(token)
+#' roots <- tm_af_root_structures(token)
 #'
 #' # Get child structures of the first root structure
-#' tm_child_structures(token, roots$structureId[1])
+#' tm_af_child_structures(token, roots$structureId[1])
 #'
 #' # Get child structures by specific parent structure ID
-#' tm_child_structures(token, "e5225244-c6de-48c2-87da-5b51b65062e8")
+#' tm_af_child_structures(token, "e5225244-c6de-48c2-87da-5b51b65062e8")
 #' }
-tm_child_structures <- function(token, parent_id, ...) {
+tm_af_child_structures <- function(token, parent_id, ...) {
   if (class(token) != "tm_token") {
     stop("'token' must be a TrendMiner access token.")
   }
@@ -126,35 +126,35 @@ tm_child_structures <- function(token, parent_id, ...) {
 #' as a data frame.
 #'
 #' @details
-#' `tm_descendant_structures()` leverages `tm_child_structures()` in recursive
+#' `tm_af_descendant_structures()` leverages `tm_af_child_structures()` in recursive
 #' calls to fetch the entire subtree structure underneath `parent_id`. Use
-#' `tm_descendant_structures()` with caution in case you have a broad and deeply
+#' `tm_af_descendant_structures()` with caution in case you have a broad and deeply
 #' nested asset structure underneath `parent_id`.
 #'
-#' @inheritParams tm_child_structures
+#' @inheritParams tm_af_child_structures
 #' @return A data frame with all descendant structures of `parent_id`.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' token <- tm_token()
-#' roots <- tm_root_structures(token)
+#' roots <- tm_af_root_structures(token)
 #'
 #' # Get descendant subtree structure underneath second root structure
-#' tm_descendant_structures(token, roots$structureId[2])
+#' tm_af_descendant_structures(token, roots$structureId[2])
 #'
 #' # Get descendant subtree by specific parent structure id
-#' tm_descendant_structures(token, "4e58e3ca-e57d-47b5-8619-20d39626116e")
+#' tm_af_descendant_structures(token, "4e58e3ca-e57d-47b5-8619-20d39626116e")
 #' }
-tm_descendant_structures <- function(token, parent_id, ...) {
-  content <- tm_child_structures(token, parent_id, ...)
+tm_af_descendant_structures <- function(token, parent_id, ...) {
+  content <- tm_af_child_structures(token, parent_id, ...)
 
   if (is.list(content) & length(content) == 0)
     return(content)
 
   for(i in seq_along(content$structureId)) {
     content <- dplyr::bind_rows(content,
-                                tm_descendant_structures(token, content$structureId[i], ...))
+                                tm_af_descendant_structures(token, content$structureId[i], ...))
   }
  content
 }

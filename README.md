@@ -48,7 +48,7 @@ available root structures:
 library(dplyr)
 
 # Get root structures
-tm_root_structures(token) %>% 
+tm_af_root_structures(token) %>% 
   select(structureId, name)
 #>                            structureId           name
 #> 1 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne
@@ -56,14 +56,14 @@ tm_root_structures(token) %>%
 #> 3 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble
 
 # Get child structures of Site Grenoble
-tm_child_structures(token, "ca12dc39-516d-4217-b7cc-a8d220a32858") %>% 
+tm_af_child_structures(token, "ca12dc39-516d-4217-b7cc-a8d220a32858") %>% 
   select(structureId, name, parentName)
 #>                            structureId      name    parentName
 #> 1 908d5613-b360-4ee7-b36b-02d097594850 Reactor 2 Site Grenoble
 #> 2 2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6    Line 1 Site Grenoble
 
 # Get entire subtree structure underneath Line 1
-tm_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6") %>% 
+tm_af_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6") %>% 
   select(name, parentName, type, tagName)
 #>                        name    parentName      type      tagName
 #> 1             Conveyer unit        Line 1     ASSET         <NA>
@@ -81,7 +81,7 @@ Retrieve all tags at once or search for specific assets/tags:
 
 ``` r
 # Fetch all available tags
-tm_tags(token) %>% 
+tm_af_tags(token) %>% 
   select(name, tagName) %>%
   head()
 #>                    name     tagName
@@ -93,7 +93,7 @@ tm_tags(token) %>%
 #> 6        Reaction Phase  BA:PHASE.1
 
 # Retrieve all assets and tags that have "Reactor" in their name
-tm_search_assets(token, 'name=="*Reactor*"') %>%
+tm_af_search_assets(token, 'name=="*Reactor*"') %>%
   select(nodeId, name, type) %>%
   head()
 #>                                 nodeId                  name      type

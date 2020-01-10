@@ -25,7 +25,8 @@ This vignette provides a brief introduction to the trendminer R package, highlig
 * Connecting to a TrendMiner instance from an interactive R session
 * Searching for assets and tags in the asset framework
 * Browsing and visualizing structures in asset trees
-* Fetching time-series data of tags (coming soon)
+* Fetching time series data of tags
+* Visualizing tag-based time series data 
 
 
 ## Authentication 
@@ -115,7 +116,7 @@ based on a query you define. There are several search, logical and wildcard oper
 
 Let us start by searching for all assets and tags which might be reactor-related. We are loading `dplyr` below only to further process the returned data frames. 
 
-```{r}
+```{r message=FALSE}
 library(dplyr)
 
 tm_af_search_assets(token, 'name=="*Reactor*"') %>% 

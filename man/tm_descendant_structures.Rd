@@ -4,12 +4,16 @@
 \alias{tm_descendant_structures}
 \title{Get descendant structures by parent structure ID}
 \usage{
-tm_descendant_structures(token, parent_id)
+tm_descendant_structures(token, parent_id, ...)
 }
 \arguments{
 \item{token}{A valid access token}
 
 \item{parent_id}{Parent structure ID in UUID format}
+
+\item{...}{Additional arguments passed on to the underlying HTTP method.
+This might be necessary if you need to set some curl options explicitly
+via \code{\link[httr]{config}}.}
 }
 \value{
 A data frame with all descendant structures of \code{parent_id}.

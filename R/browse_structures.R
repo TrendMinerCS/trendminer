@@ -146,15 +146,15 @@ tm_child_structures <- function(token, parent_id, ...) {
 #' # Get descendant subtree by specific parent structure id
 #' tm_descendant_structures(token, "4e58e3ca-e57d-47b5-8619-20d39626116e")
 #' }
-tm_descendant_structures <- function(token, parent_id) {
-  content <- tm_child_structures(token, parent_id)
+tm_descendant_structures <- function(token, parent_id, ...) {
+  content <- tm_child_structures(token, parent_id, ...)
 
   if (is.list(content) & length(content) == 0)
     return(content)
 
   for(i in seq_along(content$structureId)) {
     content <- dplyr::bind_rows(content,
-                                tm_descendant_structures(token, content$structureId[i]))
+                                tm_descendant_structures(token, content$structureId[i], ...))
   }
  content
 }

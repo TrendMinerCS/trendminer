@@ -1,4 +1,4 @@
-#' Tags
+#' /interpolatedData
 #'
 #' @param token A valid access token
 #' @param tag_name Tag name
@@ -42,6 +42,15 @@ tm_interpoloated_data <- function(token, tag_name, start_date, end_date,
   }
   if (start_date > end_date) {
     stop("'start_date' must be before 'end_date'.")
+  }
+  if (length(step) != 1L || typeof(step) != "double") {
+    stop("'step' must be a length-one numeric vector.")
+  }
+  if (step < 1) {
+    stop("'step' should be greater or equal than 1.")
+  }
+  if (!type %in% c("linear", "stepped")) {
+    stop("'type' must be 'linear' or 'stepped'.")
   }
 
   url <- paste(tm_get_base_url(), "/compute/interpolatedData", sep = "")

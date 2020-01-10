@@ -35,12 +35,12 @@ This might be necessary if you need to set some curl options explicitly
 via \code{\link[httr]{config}}.}
 }
 \value{
-A list with two compoments:
+A list with two components:
 \itemize{
-\item \code{tag}: A list with tag information and 3 compoments:
+\item \code{tag}: A list with tag information and 3 components:
 \itemize{
 \item \code{tag_name}: Length one character vector.  \code{tag_name} of the original request
-\item \code{shift}: Length one integer vecor. \code{shift} of the original request
+\item \code{shift}: Length one integer vector. \code{shift} of the original request
 \item \code{interpolation_type}: Length one character vector. \code{interpolation_type} of the original request
 }
 \item \code{time_series}: A data frame with time series data and two columns:

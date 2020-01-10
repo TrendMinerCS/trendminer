@@ -8,10 +8,10 @@
 #' @param type Interpolation type which is either "linear" or "stepped"
 #' @param shift Time series offset expressed in seconds
 #' @inheritParams tm_token
-#' @return A list with two compoments:
-#' * `tag`: A list with tag information and 3 compoments:
+#' @return A list with two components:
+#' * `tag`: A list with tag information and 3 components:
 #'   * `tag_name`: Length one character vector.  `tag_name` of the original request
-#'   * `shift`: Length one integer vecor. `shift` of the original request
+#'   * `shift`: Length one integer vector. `shift` of the original request
 #'   * `interpolation_type`: Length one character vector. `interpolation_type` of the original request
 #' * `time_series`: A data frame with time series data and two columns:
 #'   * `index`:  Time index of each observation

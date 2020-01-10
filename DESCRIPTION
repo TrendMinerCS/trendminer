@@ -23,8 +23,7 @@ Suggests:
     covr,
     data.tree,
     networkD3,
-    purrr,
-    lubridate
+    purrr
 Language: en-US
 VignetteBuilder: knitr
 Imports: 
@@ -32,6 +31,7 @@ Imports:
     jsonlite,
     magrittr,
     dplyr,
-    rlang
+    rlang,
+    lubridate
 RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)

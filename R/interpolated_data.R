@@ -1,24 +1,35 @@
-#' /interpolatedData
+#' Get interpolated time series data by tag name
 #'
 #' @param token A valid access token
 #' @param tag_name Tag name
-#' @param start_date POSIXct object
-#' @param end_date POSIXct object
-#' @param step Time between returned time series data points expressed in seconds
+#' @param start_date POSIXct object. Start date of the time series
+#' @param end_date POSIXct object. End date of the time series
+#' @param step Time increment between returned observations expressed in seconds
 #' @param type Interpolation type which is either "linear" or "stepped"
 #' @param shift Time series offset expressed in seconds
 #' @inheritParams tm_token
-#' @return
+#' @return A list with two compoments:
+#' * `tag`: A list with tag information and 3 compoments:
+#'   * `tag_name`: Length one character vector.  `tag_name` of the original request
+#'   * `shift`: Length one integer vecor. `shift` of the original request
+#'   * `interpolation_type`: Length one character vector. `interpolation_type` of the original request
+#' * `time_series`: A data frame with time series data and two columns:
+#'   * `index`:  Time index of each observation
+#'   * `value`: Value of each observation
 #' @export
 #'
 #' @examples
 #' \dontrun{
+#' token <- tm_token()
+#' start <-  ymd_hms("2019-09-15T05:16:00Z")
+#' end <- ymd_hms("2019-09-15T06:16:00Z")
 #'
+#' tm_interpoloated_data(token, "BA:CONC.1", start, end, 60)
 #' }
-tm_interpoloated_data <- function(token, tag_name, start_date, end_date,
+tm_interpolated_data <- function(token, tag_name, start_date, end_date,
                                   step = 1,
                                   type = "linear",
-                                  shift = 0) {
+                                  shift = 0, ...) {
   if (class(token) != "tm_token") {
     stop("'token' must be a TrendMiner access token.")
   }

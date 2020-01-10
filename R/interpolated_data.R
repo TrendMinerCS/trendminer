@@ -8,14 +8,14 @@
 #' @param type Interpolation type which is either "linear" or "stepped"
 #' @param shift Time series offset expressed in seconds
 #' @inheritParams tm_token
-#' @return A list with two components:
-#' * `tag`: A list with tag information and 3 components:
-#'   * `tag_name`: Length one character vector.  `tag_name` of the original request
+#' @return A list with two elements:
+#' * `tag`: A list with tag information and three elements:
+#'   * `tagName`: Length one character vector.  `tag_name` of the original request
 #'   * `shift`: Length one integer vector. `shift` of the original request
-#'   * `interpolation_type`: Length one character vector. `interpolation_type` of the original request
-#' * `time_series`: A data frame with time series data and two columns:
-#'   * `index`:  Time index of each observation
-#'   * `value`: Value of each observation
+#'   * `interpolationType`: Length one character vector. `interpolation_type` of the original request
+#' * `timeSeries`: A data frame with time series data:
+#'   * `index`:  POSIXct vector. Time index of each observation
+#'   * `value`: Double vector. Value of each observation
 #' @export
 #'
 #' @examples
@@ -107,5 +107,9 @@ tm_interpolated_data <- function(token, tag_name, start_date, end_date,
   }
   parsed <- httr::content(response, as =  "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
+  names(parsed[["tag"]])[1] <- "tagName"
+  names(parsed)[2] <- "timeSeries"
+  names(parsed[["timeSeries"]])[1] <- "index"
+  parsed[["timeSeries"]][["index"]] <- lubridate::ymd_hms(parsed[["timeSeries"]][["index"]])
   parsed
 }

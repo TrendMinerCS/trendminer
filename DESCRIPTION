@@ -23,7 +23,8 @@ Suggests:
     covr,
     data.tree,
     networkD3,
-    purrr
+    purrr,
+    lubridate
 Language: en-US
 VignetteBuilder: knitr
 Imports: 

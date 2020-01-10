@@ -19,8 +19,8 @@ data.
 ## Installation
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("alex23lemm/trendminer")
+# install.packages("remotes")
+remotes::install_github("alex23lemm/trendminer")
 ```
 
 ## Usage

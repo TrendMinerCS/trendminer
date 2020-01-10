@@ -8,8 +8,11 @@ end <- lubridate::ymd_hms("2019-09-15T05:17:00Z")
 test_that("tm_interploated_data() returns the correct result", {
   skip_on_cran()
 
-
-
+  rsp <- tm_interpolated_data(token, "BA:CONC.1", start, end, 2)
+  expect_identical(names(rsp), c("tag", "timeSeries"))
+  expect_identical(names(rsp[[1]]), c("tagName", "shift", "interpolationType"))
+  expect_identical(names(rsp[[2]]), c("index", "value"))
+  expect_identical(dim(rsp$timeSeries), c(31L, 2L))
 })
 
 

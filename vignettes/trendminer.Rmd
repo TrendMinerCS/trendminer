@@ -183,7 +183,7 @@ Above you see the entire Line 1 subtree in table format which was returned by `t
 
 Here we can leverage the `data.tree` package which allows to convert a data frame that includes tree information in table or network format into a tree structure. Printing the tree structure after the conversion to the console will give us a much better understanding about the asset subtree:
 
-```{r}
+```{r message=FALSE}
 library(data.tree)
 
 line1_subtree <- FromDataFrameTable(line1_str, pathName = "externalId") 
@@ -195,7 +195,7 @@ print(line1_subtree, "type")
 
 There are several libraries available which allow you to plot tree structures. In this introduction we will use the `network3D` package and pass the tree structure we just created with the `data.tree` package above to the `networkD3::diagonalNetwok()` function:
 
-```{r}
+```{r message=FALSE}
 library(networkD3)
 
 diagonalNetwork(ToListExplicit(line1_subtree$`Line 1`, unname = TRUE), fontSize = 14,

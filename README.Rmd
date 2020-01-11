@@ -3,6 +3,7 @@ output: github_document
 
 ---
 
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
@@ -10,7 +11,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  dpi=300
 )
 ```
 
@@ -61,19 +63,45 @@ tm_af_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6") %>%
   select(name, parentName, type, tagName)
 ```
 
-Retrieve all tags at once or search for specific assets/tags:
+Search for specific assets/tags or retrieve all tags at once
 
 ```{r}
-# Fetch all available tags
-tm_af_tags(token) %>% 
-  select(name, tagName) %>%
-  head()
-
 # Retrieve all assets and tags that have "Reactor" in their name
 tm_af_search_assets(token, 'name=="*Reactor*"') %>%
   select(nodeId, name, type) %>%
   head()
+
+# Fetch all available tags
+tm_af_tags(token) %>% 
+  select(name, tagName) %>%
+  head()
 ```
+
+Fetch time series data of a tag: 
+
+```{r message=FALSE}
+library(lubridate)
+
+start <-  ymd_hms("2019-09-15T03:10:14Z")
+end <- ymd_hms("2019-09-15T08:42:15Z")
+
+tag_data <- tm_ts_interpolated_data(token, "BA:CONC.1", start, end, 2)
+head(tag_data$timeSeries)
+```
+
+Visualize fetched time series data:
+
+```{r tag_plot, message=FALSE, fig.height=3, fig.width=7, fig.align="center"}
+library(ggplot2)
+
+tag_data$timeSeries %>%
+  ggplot(aes(index, value)) +
+  geom_line(color = "#09557f") +
+  ggtitle(tag_data$tag$tagName) +
+  theme_minimal()
+```
+
+
 
 
 ## Authentication

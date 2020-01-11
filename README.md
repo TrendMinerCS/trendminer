@@ -77,21 +77,9 @@ tm_af_descendant_structures(token, "2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6") %>%
 #> 9 Flow secondary addition 1 Conveyer unit ATTRIBUTE  WE-FC001.PV
 ```
 
-Retrieve all tags at once or search for specific assets/tags:
+Search for specific assets/tags or retrieve all tags at once
 
 ``` r
-# Fetch all available tags
-tm_af_tags(token) %>% 
-  select(name, tagName) %>%
-  head()
-#>                    name     tagName
-#> 1 Reactor Concentration  BA2:CONC.1
-#> 2         Reactor Level  BA:LEVEL.1
-#> 3 Reactor Concentration   BA:CONC.1
-#> 4   Reactor Temperature   BA:TEMP.1
-#> 5        Reactor Status BA:ACTIVE.1
-#> 6        Reaction Phase  BA:PHASE.1
-
 # Retrieve all assets and tags that have "Reactor" in their name
 tm_af_search_assets(token, 'name=="*Reactor*"') %>%
   select(nodeId, name, type) %>%
@@ -103,7 +91,52 @@ tm_af_search_assets(token, 'name=="*Reactor*"') %>%
 #> 4 af82c650-bbd5-4b58-9efa-880f205c6402         Reactor Level ATTRIBUTE
 #> 5 07a7f300-f90b-458f-b334-3a0d7093d5ff   Reactor Temperature ATTRIBUTE
 #> 6 f0cb8ec3-bf9b-4eb3-8959-8b179d0e8331             Reactor 1     ASSET
+
+# Fetch all available tags
+tm_af_tags(token) %>% 
+  select(name, tagName) %>%
+  head()
+#>                    name     tagName
+#> 1 Reactor Concentration  BA2:CONC.1
+#> 2         Reactor Level  BA:LEVEL.1
+#> 3 Reactor Concentration   BA:CONC.1
+#> 4   Reactor Temperature   BA:TEMP.1
+#> 5        Reactor Status BA:ACTIVE.1
+#> 6        Reaction Phase  BA:PHASE.1
 ```
+
+Fetch time series data of a tag:
+
+``` r
+library(lubridate)
+
+start <-  ymd_hms("2019-09-15T03:10:14Z")
+end <- ymd_hms("2019-09-15T08:42:15Z")
+
+tag_data <- tm_ts_interpolated_data(token, "BA:CONC.1", start, end, 2)
+head(tag_data$timeSeries)
+#>                 index value
+#> 1 2019-09-15 03:11:00     0
+#> 2 2019-09-15 03:11:02     0
+#> 3 2019-09-15 03:11:04     0
+#> 4 2019-09-15 03:11:06     0
+#> 5 2019-09-15 03:11:08     0
+#> 6 2019-09-15 03:11:10     0
+```
+
+Visualize fetched time series data:
+
+``` r
+library(ggplot2)
+
+tag_data$timeSeries %>%
+  ggplot(aes(index, value)) +
+  geom_line(color = "#09557f") +
+  ggtitle(tag_data$tag$tagName) +
+  theme_minimal()
+```
+
+<img src="man/figures/README-tag_plot-1.png" width="100%" style="display: block; margin: auto;" />
 
 ## Authentication
 

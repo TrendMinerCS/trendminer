@@ -83,7 +83,7 @@ The TrendMiner asset framework is constructed around two primary concepts:
 
 **A structure** defines the parent-child relationship between assets and attributes or assets and other assets. It defines the logical place of a node in an asset tree. Since a node can be part of various asset trees at the same time, nodes and structures are defined separately. 
 
-This distinction between nodes (assets and tags) and structures is reflected accordingly in the trendminer R package: An asset framework-related function either returns assets and tags if it is node-related or it returns structures. 
+This distinction between nodes (assets and tags) and structures is reflected accordingly in the trendminer R package: An asset framework related function either returns assets and tags if it is node related or it returns structures.
 
 ## Connecting to a TrendMiner instance
 
@@ -230,6 +230,38 @@ plots[[2]]
 ```{r}
 plots[[3]]
 ```
+
+
+## Fetching time series data of tags
+
+All functions and examples we covered so far dealt with extracting and visualizing asset framework data. In this section we will move from the asset framework API functions to functions which focus on the TrendMiner time series API.
+
+`tm_ts_interpolated_data()` lets you retrieve time series data by tag name.
+
+```{r message=FALSE}
+library(lubridate)
+
+start <-  ymd_hms("2019-09-15T03:10:14Z")
+end <- ymd_hms("2019-09-15T08:42:15Z")
+
+tag_data <- tm_ts_interpolated_data(token, "BA:CONC.1", start, end, 2)
+head(tag_data$timeSeries)
+```
+
+The maximumn number of points `tm_ts_interpolated_data()` can return is 10.000. The `step` argument defines the time increment between returned observations. If you define `step` to be one second which is the default setting, the time interval you can select using the `start` and `end` arguments can span 2 hours, 46 minutes and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to increase the `step` argument if you like to fetch cohesive time series data of a tag which spans more than 10.000 seconds.  
+
+## Visualizing tag-based time series data 
+
+```{r message=FALSE}
+library(ggplot2)
+
+tag_data$timeSeries %>%
+  ggplot(aes(index, value)) +
+  geom_line(color = "#09557f") +
+  ggtitle(tag_data$tag$tagName) +
+  theme_minimal()
+```
+
 
 ## The `...` argument
 

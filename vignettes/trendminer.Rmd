@@ -248,7 +248,7 @@ tag_data <- tm_ts_interpolated_data(token, "BA:CONC.1", start, end, 2)
 head(tag_data$timeSeries)
 ```
 
-The maximumn number of points `tm_ts_interpolated_data()` can return is 10.000. The `step` argument defines the time increment between returned observations. If you define `step` to be one second which is the default setting, the time interval you can select using the `start` and `end` arguments can span 2 hours, 46 minutes and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to increase the `step` argument if you like to fetch cohesive time series data of a tag which spans more than 10.000 seconds.  
+The maximumn number of points `tm_ts_interpolated_data()` can return is 10.000. The `step` argument defines the time increment between returned observations. If you define `step` to be one second which is the default setting, the time interval you can select using the `start` and `end` arguments can span 2 hours, 46 minutes and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the resolution by increasing the `step` argument if you like to fetch cohesive time series data of a tag which spans more than 10.000 seconds.  
 
 ## Visualizing tag-based time series data 
 

@@ -6,7 +6,7 @@
 #' If you define `step` to be one second which is the default setting, the time interval
 #' you can select using the `start` and `end` arguments can span 2 hours, 46 minutes
 #' and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the
-#' resolution by increase the `step` argument if you like to fetch cohesive time series
+#' resolution by increasing the `step` argument if you like to fetch cohesive time series
 #' data of a tag which spans more than 10.000 seconds.
 #'
 #' @param token A valid access token

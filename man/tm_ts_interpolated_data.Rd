@@ -59,7 +59,7 @@ The \code{step} argument defines the time increment between returned observation
 If you define \code{step} to be one second which is the default setting, the time interval
 you can select using the \code{start} and \code{end} arguments can span 2 hours, 46 minutes
 and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the
-resolution by increase the \code{step} argument if you like to fetch cohesive time series
+resolution by increasing the \code{step} argument if you like to fetch cohesive time series
 data of a tag which spans more than 10.000 seconds.
 }
 \examples{

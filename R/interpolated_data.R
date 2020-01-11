@@ -1,12 +1,21 @@
 #' Get interpolated time series data by tag name
 #'
+#' @details
+#' The maximumn number of points `tm_ts_interpolated_data()` can return is 10.000.
+#' The `step` argument defines the time increment between returned observations.
+#' If you define `step` to be one second which is the default setting, the time interval
+#' you can select using the `start` and `end` arguments can span 2 hours, 46 minutes
+#' and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the
+#' resolution by increase the `step` argument if you like to fetch cohesive time series
+#' data of a tag which spans more than 10.000 seconds.
+#'
 #' @param token A valid access token
 #' @param tag_name Tag name
-#' @param start_date POSIXct object. Start date of the time series
-#' @param end_date POSIXct object. End date of the time series
+#' @param start_date POSIXct object with timezone set to "UTC". Start date of the time series
+#' @param end_date POSIXct object with timezone set to "UTC". End date of the time series
 #' @param step Time increment between returned observations expressed in seconds
 #' @param type Interpolation type which is either "linear" or "stepped"
-#' @param shift Time series offset expressed in seconds
+#' @param shift Offset expressed in seconds
 #' @inheritParams tm_token
 #' @return A list with two elements:
 #' * `tag`: A list with tag information and three elements:

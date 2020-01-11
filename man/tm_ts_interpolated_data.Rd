@@ -20,15 +20,15 @@ tm_ts_interpolated_data(
 
 \item{tag_name}{Tag name}
 
-\item{start_date}{POSIXct object. Start date of the time series}
+\item{start_date}{POSIXct object with timezone set to "UTC". Start date of the time series}
 
-\item{end_date}{POSIXct object. End date of the time series}
+\item{end_date}{POSIXct object with timezone set to "UTC". End date of the time series}
 
 \item{step}{Time increment between returned observations expressed in seconds}
 
 \item{type}{Interpolation type which is either "linear" or "stepped"}
 
-\item{shift}{Time series offset expressed in seconds}
+\item{shift}{Offset expressed in seconds}
 
 \item{...}{Additional arguments passed on to the underlying HTTP method.
 This might be necessary if you need to set some curl options explicitly
@@ -52,6 +52,15 @@ A list with two elements:
 }
 \description{
 Get interpolated time series data by tag name
+}
+\details{
+The maximumn number of points \code{tm_ts_interpolated_data()} can return is 10.000.
+The \code{step} argument defines the time increment between returned observations.
+If you define \code{step} to be one second which is the default setting, the time interval
+you can select using the \code{start} and \code{end} arguments can span 2 hours, 46 minutes
+and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the
+resolution by increase the \code{step} argument if you like to fetch cohesive time series
+data of a tag which spans more than 10.000 seconds.
 }
 \examples{
 \dontrun{

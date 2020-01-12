@@ -161,33 +161,33 @@ roots %>%
   select(structureId, name, nodeId, type)
 ```
 
-Next we might want to explore the second root structure a bit more by taking a look at its children. We will use `tm_child_structures()` for this task which returns child structures by parent structure ID. 
+Next we might want to explore the root structure of site Barcelona a bit more by taking a look at its children. We will use `tm_child_structures()` for this task which returns child structures by parent structure ID. 
 
 ```{r}
-tm_af_child_structures(token, roots$structureId[2]) %>% 
+tm_af_child_structures(token, roots$structureId[roots$name == "Site Barcelona"]) %>% 
   select(structureId, nodeId, name, parentName, type)
 ```
 
-We now could go on and continue calling `tm_child_structures()` on each level with all newly retrieved structure IDs until we reach the leaves to get to know the complete tree structure of the second root structure. 
+We now could go on and continue calling `tm_child_structures()` on each level with all newly retrieved structure IDs until we reach the leaves to get to know the complete tree structure of the Site Barcelona root structure. 
 
-Alternatively, we can make use of `tm_descendant_structures()` that retrieves the entire asset subtree underneath a given structure. In the example below we would like to get the asset subtree structure underneath the Line 1 asset:
+Alternatively, we can make use of `tm_descendant_structures()` that retrieves the entire asset subtree underneath a given structure. In the example below we would like to get the asset subtree structure underneath the Solvents asset:
 
 
 ```{r}
-line1_str <- tm_af_descendant_structures(token,"2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6")
-line1_str %>% 
-  select(name, parentName, type)
+solvents_str <- tm_af_descendant_structures(token,"1aef0aa1-f942-441e-82d8-0c4bfe7208b3")
+solvents_str %>% 
+  select(name, parentName, type, tagName)
 ```
 
-Above you see the entire Line 1 subtree in table format which was returned by `tm_descendant_structures()`. Even though all the information is present it is very hard for the human eye to depict the tree structure from the table. 
+Above you see the entire Solvents subtree in table format which was returned by `tm_descendant_structures()`. Even though all the information is present it is very hard for the human eye to depict the tree structure from the table. 
 
 Here we can leverage the `data.tree` package which allows to convert a data frame that includes tree information in table or network format into a tree structure. Printing the tree structure after the conversion to the console will give us a much better understanding about the asset subtree:
 
 ```{r message=FALSE}
 library(data.tree)
 
-line1_subtree <- FromDataFrameTable(line1_str, pathName = "externalId") 
-print(line1_subtree, "type")
+solvents_subtree <- FromDataFrameTable(solvents_str, pathName = "externalId") 
+print(solvents_subtree, "type", "tagName")
 ```
 
 
@@ -198,7 +198,7 @@ There are several libraries available which allow you to plot tree structures. I
 ```{r message=FALSE}
 library(networkD3)
 
-diagonalNetwork(ToListExplicit(line1_subtree$`Line 1`, unname = TRUE), fontSize = 14,
+diagonalNetwork(ToListExplicit(solvents_subtree$Solvents, unname = TRUE), fontSize = 14,
                 height = 400, width = 600)
 ```
 
@@ -232,11 +232,19 @@ plots[[3]]
 ```
 
 
-## Fetching time series data of tags
+## Fetching and visualzing time series data of tags
 
-All functions and examples we covered so far dealt with extracting and visualizing asset framework data. In this section we will move from the asset framework API functions to functions which focus on the TrendMiner time series API.
+All functions and examples we covered so far dealt with extracting and visualizing asset framework data. In this section we will move from the asset framework API functions to functions which focus on the TrendMiner time series API for tags. 
 
-`tm_ts_interpolated_data()` lets you retrieve time series data by tag name.
+In the examples below we will focus on the set of tags which are part of the Reactor 1 sub asset tree of site Barcelona which we already know from above:
+
+```{r}
+reactor1_str <- tm_af_child_structures(token,"5a0d1bf8-f298-4946-b523-8dcd5194fbaf")
+reactor1_str %>% 
+  select(parentName, name, tagName, type )
+```
+
+`tm_ts_interpolated_data()` lets you retrieve time series data by tag name. The start and the end time of the time series you like to fetch need to be defined as POSIXct objects having set "UTC" as the timezone:
 
 ```{r message=FALSE}
 library(lubridate)
@@ -244,23 +252,40 @@ library(lubridate)
 start <-  ymd_hms("2019-09-15T03:10:14Z")
 end <- ymd_hms("2019-09-15T08:42:15Z")
 
-tag_data <- tm_ts_interpolated_data(token, "BA:CONC.1", start, end, 2)
-head(tag_data$timeSeries)
+ba_conc1_data <- tm_ts_interpolated_data(token, "BA:CONC.1", start, end, step = 2)
+str(ba_conc1_data)
+head(ba_conc1_data$timeSeries)
+summary(ba_conc1_data$timeSeries)
 ```
 
 The maximumn number of points `tm_ts_interpolated_data()` can return is 10.000. The `step` argument defines the time increment between returned observations. If you define `step` to be one second which is the default setting, the time interval you can select using the `start` and `end` arguments can span 2 hours, 46 minutes and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the resolution by increasing the `step` argument if you like to fetch cohesive time series data of a tag which spans more than 10.000 seconds.  
 
-## Visualizing tag-based time series data 
+Below we are using `ggplot2` to visualize the time series data we just downoladed for tag `r ba_conc1_data$tag$tagName`:
 
-```{r message=FALSE}
+```{r single_ts_plot, message=FALSE, fig.height=3, fig.width=7, fig.align="center"}
 library(ggplot2)
 
-tag_data$timeSeries %>%
+ba_conc1_data$timeSeries %>%
   ggplot(aes(index, value)) +
   geom_line(color = "#09557f") +
-  ggtitle(tag_data$tag$tagName) +
+  ggtitle(ba_conc1_data$tag$tagName) +
   theme_minimal()
 ```
+
+
+
+```{r}
+
+tags <- reactor1_str$tagName
+
+all_data <- map(tags, ~tm_ts_interpolated_data(token, .x,  start, end, 2))
+
+
+```
+
+
+
+
 
 
 ## The `...` argument

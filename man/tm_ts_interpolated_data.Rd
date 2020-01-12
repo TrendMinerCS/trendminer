@@ -66,7 +66,7 @@ The \code{shift} argument lets you control if \code{tm_ts_interpolated_data} ret
 which are either forward or backward shifted in time before they are aligned
 with the actual time in the response. \code{shift} is expressed in seconds.
 The example in the following table shows the returned time series values based
-on different \code{shift} setings:\tabular{rrrr}{
+on different \code{shift} settings:\tabular{rrrr}{
    Time \tab shift = 0 \tab shift = 1 \tab shift = -1 \cr
    03:02:00 \tab 23 \tab NA \tab 27 \cr
    03:02:01 \tab 27 \tab 23 \tab 25 \cr

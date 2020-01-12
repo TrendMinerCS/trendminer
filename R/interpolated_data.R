@@ -13,7 +13,7 @@
 #' which are either forward or backward shifted in time before they are aligned
 #' with the actual time in the response. `shift` is expressed in seconds.
 #' The example in the following table shows the returned time series values based
-#' on different `shift` setings:
+#' on different `shift` settings:
 #'
 #'  | Time          | shift = 0   | shift = 1    | shift = -1 |
 #'  | -------------:|------------:| ------------:|-----------:|

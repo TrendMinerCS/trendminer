@@ -28,7 +28,7 @@ tm_ts_interpolated_data(
 
 \item{type}{Interpolation type which is either "linear" or "stepped"}
 
-\item{shift}{Offset expressed in seconds}
+\item{shift}{Time series shift (offset) expressed in seconds}
 
 \item{...}{Additional arguments passed on to the underlying HTTP method.
 This might be necessary if you need to set some curl options explicitly
@@ -61,6 +61,17 @@ you can select using the \code{start} and \code{end} arguments can span 2 hours,
 and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the
 resolution by increasing the \code{step} argument if you like to fetch cohesive time series
 data of a tag which spans more than 10.000 seconds.
+
+The \code{shift} argument lets you control if \code{tm_ts_interpolated_data} returns values
+which are either forward or backward shifted in time before they are aligned
+with the actual time in the response. \code{shift} is expressed in seconds.
+The example in the following table shows the returned time series values based
+on different \code{shift} setings:\tabular{rrrr}{
+   Time \tab shift = 0 \tab shift = 1 \tab shift = -1 \cr
+   03:02:00 \tab 23 \tab NA \tab 27 \cr
+   03:02:01 \tab 27 \tab 23 \tab 25 \cr
+   03:02:02 \tab 25 \tab 27 \tab NA \cr
+}
 }
 \examples{
 \dontrun{

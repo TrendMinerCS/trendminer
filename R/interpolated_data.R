@@ -9,13 +9,26 @@
 #' resolution by increasing the `step` argument if you like to fetch cohesive time series
 #' data of a tag which spans more than 10.000 seconds.
 #'
+#' The `shift` argument lets you control if `tm_ts_interpolated_data` returns values
+#' which are either forward or backward shifted in time before they are aligned
+#' with the actual time in the response. `shift` is expressed in seconds.
+#' The example in the following table shows the returned time series values based
+#' on different `shift` setings:
+#'
+#'  | Time          | shift = 0   | shift = 1    | shift = -1 |
+#'  | -------------:|------------:| ------------:|-----------:|
+#'  | 03:02:00      | 23          | NA           | 27         |
+#'  | 03:02:01      | 27          | 23           | 25         |
+#'  | 03:02:02      | 25          | 27           | NA         |
+#'
+#'
 #' @param token A valid access token
 #' @param tag_name Tag name
 #' @param start_date POSIXct object with timezone set to "UTC". Start date of the time series
 #' @param end_date POSIXct object with timezone set to "UTC". End date of the time series
 #' @param step Time increment between returned observations expressed in seconds
 #' @param type Interpolation type which is either "linear" or "stepped"
-#' @param shift Offset expressed in seconds
+#' @param shift Time series shift (offset) expressed in seconds
 #' @inheritParams tm_token
 #' @return A list with two elements:
 #' * `tag`: A list with tag information and three elements:

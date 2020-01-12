@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get TrendMiner access token — tm_token • trendminer</title>
+<title>Get all tags — tm_af_tags • trendminer</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,9 +42,8 @@
 
 
 
-<meta property="og:title" content="Get TrendMiner access token — tm_token" />
-<meta property="og:description" content="Requests a Bearer access token from TrendMiner using an OAuth2.0 resource
-owner password credentials grant flow." />
+<meta property="og:title" content="Get all tags — tm_af_tags" />
+<meta property="og:description" content="Gets the complete list of available tags and returns it as a data frame." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -130,47 +129,23 @@ owner password credentials grant flow." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get TrendMiner access token</h1>
-    <small class="dont-index">Source: <a href='https://github.com/alex23lemm/trendminer/blob/master/R/authentication.R'><code>R/authentication.R</code></a></small>
-    <div class="hidden name"><code>tm_token.Rd</code></div>
+    <h1>Get all tags</h1>
+    <small class="dont-index">Source: <a href='https://github.com/alex23lemm/trendminer/blob/master/R/search_assets.R'><code>R/search_assets.R</code></a></small>
+    <div class="hidden name"><code>tm_af_tags.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Requests a Bearer access token from TrendMiner using an OAuth2.0 resource
-owner password credentials grant flow.</p>
+    <p>Gets the complete list of available tags and returns it as a data frame.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tm_token</span>(
-  <span class='kw'>client_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>client_secret</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>usr_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>usr_pwd</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>base_url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>tm_af_tags</span>(<span class='no'>token</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>client_id</th>
-      <td><p>Client identifier issued by the authorization server</p></td>
-    </tr>
-    <tr>
-      <th>client_secret</th>
-      <td><p>Client secret issued by the authorization server</p></td>
-    </tr>
-    <tr>
-      <th>usr_name</th>
-      <td><p>Username</p></td>
-    </tr>
-    <tr>
-      <th>usr_pwd</th>
-      <td><p>User password</p></td>
-    </tr>
-    <tr>
-      <th>base_url</th>
-      <td><p>TrendMiner base URL</p></td>
+      <th>token</th>
+      <td><p>A valid access token</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -182,47 +157,14 @@ via <code><a href='https://httr.r-lib.org/reference/config.html'>config</a></cod
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A S3 object of class <code>tm_token</code> (basically a list) with the following
-components:</p><ul>
-<li><p><code>access_token</code> The access token which needs to be used for any subsequent API request</p></li>
-<li><p><code>token_type</code> Type of the token which is always "bearer"</p></li>
-<li><p><code>expires_in</code> Token expiration time in seconds</p></li>
-<li><p><code>scope</code> Character string describing the access scope</p></li>
-<li><p><code>allowedHistorians</code> Character string describing the Historians
-which can be accessed with the <code>access_token</code></p></li>
-<li><p><code>userId</code> The user's ID which will be used for any action performed
-on the connected TrendMiner instance using the <code>access_token</code></p></li>
-<li><p><code>expiration_date</code> "POSIXct" object representing the date the token will expire</p></li>
-<li><p><code>base_url</code> TrendMiner base URL</p></li>
-</ul>
-
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>All requests to the TrendMiner API require authentication. This is achieved
-by sending a valid Bearer access token in the request headers. Request tokens
-are obtained via OAuth2.0 using the resource owner password credentials flow:
-Any client which likes to interact with the API needs to
-collect the credentials from the user (username and password) and passes them
-together with its own client credentials (client ID and client secret)
-to the TrendMiner server. The server responds with an access token which the
-user needs to use for any subsequent API requests.</p>
-<p><strong>Note</strong>: You can request your client ID and client secret by contacting
-TrendMiner support or your TrendMiner Customer Success Manager.</p>
-<p>User credentials, client credentials and the TrendMiner base URL can be passed
-as arguments to <code>tm_token()</code> for quick testing in interactive mode.
-However, it is recommended to call <code>tm_token()</code> without arguments.
-In this case <code>tm_token()</code> will fetch the credentials and the TrendMiner
-base URL from the following environment variables stored in
-<code>.Renviron</code> which you can easily edit using <code>usethis::edit_r_environ()</code>:</p>
-<p><code>TM_client_ID = YOUR_CLIENT_ID_HERE</code><br />
-<code>TM_secret = YOUR_CLIENT_SECRET_HERE</code><br />
-<code>TM_usr = YOUR_USER_NAME_HERE</code><br />
-<code>TM_pwd = YOUR_USER_PASSWORD_HERE</code><br />
-<code>TM_base_url = YOUR_TM_BASE_URL_HERE</code></p>
+    <p>A data frame with tag information. Each row represents a single tag
+and the columns represent specific tag properties.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>tm_token</span>()
+<span class='no'>token</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tm_token.html'>tm_token</a></span>()
+
+<span class='fu'>tm_af_tags</span>(<span class='no'>token</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -230,7 +172,6 @@ base URL from the following environment variables stored in
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

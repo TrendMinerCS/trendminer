@@ -98,8 +98,8 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"alex23lemm/trendminer"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"alex23lemm/trendminer"</span>)</a></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -113,7 +113,7 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># Get root structures</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="reference/tm_root_structures.html">tm_root_structures</a></span>(token) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="reference/tm_af_root_structures.html">tm_af_root_structures</a></span>(token) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(structureId, name)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;                            structureId           name</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 1 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne</span></a>
@@ -121,14 +121,14 @@
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 3 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># Get child structures of Site Grenoble</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw"><a href="reference/tm_child_structures.html">tm_child_structures</a></span>(token, <span class="st">"ca12dc39-516d-4217-b7cc-a8d220a32858"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw"><a href="reference/tm_af_child_structures.html">tm_af_child_structures</a></span>(token, <span class="st">"ca12dc39-516d-4217-b7cc-a8d220a32858"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(structureId, name, parentName)</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt;                            structureId      name    parentName</span></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; 1 908d5613-b360-4ee7-b36b-02d097594850 Reactor 2 Site Grenoble</span></a>
 <a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; 2 2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6    Line 1 Site Grenoble</span></a>
 <a class="sourceLine" id="cb3-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co"># Get entire subtree structure underneath Line 1</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="kw"><a href="reference/tm_descendant_structures.html">tm_descendant_structures</a></span>(token, <span class="st">"2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="kw"><a href="reference/tm_af_descendant_structures.html">tm_af_descendant_structures</a></span>(token, <span class="st">"2cd8f0c6-4bfc-49f9-9c0d-5c878d05eae6"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-20" data-line-number="20"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(name, parentName, type, tagName)</a>
 <a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt;                        name    parentName      type      tagName</span></a>
 <a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; 1             Conveyer unit        Line 1     ASSET         &lt;NA&gt;</span></a>
@@ -140,30 +140,54 @@
 <a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; 7 Flow secondary addition 2 Conveyer unit ATTRIBUTE  WE-FC002.PV</span></a>
 <a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt; 8         Conveyer pressure Conveyer unit ATTRIBUTE WE-PIC002.PV</span></a>
 <a class="sourceLine" id="cb3-30" data-line-number="30"><span class="co">#&gt; 9 Flow secondary addition 1 Conveyer unit ATTRIBUTE  WE-FC001.PV</span></a></code></pre></div>
-<p>Retrieve all tags at once or search for specific assets/tags:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Fetch all available tags</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="reference/tm_tags.html">tm_tags</a></span>(token) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(name, tagName) <span class="op">%&gt;%</span></a>
+<p>Search for specific assets/tags or retrieve all tags at once</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Retrieve all assets and tags that have "Reactor" in their name</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="reference/tm_af_search_assets.html">tm_af_search_assets</a></span>(token, <span class="st">'name=="*Reactor*"'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(nodeId, name, type) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;                    name     tagName</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; 1 Reactor Concentration  BA2:CONC.1</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; 2         Reactor Level  BA:LEVEL.1</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; 3 Reactor Concentration   BA:CONC.1</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; 4   Reactor Temperature   BA:TEMP.1</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; 5        Reactor Status BA:ACTIVE.1</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; 6        Reaction Phase  BA:PHASE.1</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;                                 nodeId                  name      type</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; 1 96b526da-aa76-46cb-8611-9c108303e755               Reactor     ASSET</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; 2 065e17e1-7569-49e6-9aea-c30f96081b86             Reactor 2     ASSET</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; 3 f75449bb-d144-40df-9d6a-d34a6a52f96f Reactor Concentration ATTRIBUTE</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; 4 af82c650-bbd5-4b58-9efa-880f205c6402         Reactor Level ATTRIBUTE</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; 5 07a7f300-f90b-458f-b334-3a0d7093d5ff   Reactor Temperature ATTRIBUTE</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; 6 f0cb8ec3-bf9b-4eb3-8959-8b179d0e8331             Reactor 1     ASSET</span></a>
 <a class="sourceLine" id="cb4-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co"># Retrieve all assets and tags that have "Reactor" in their name</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="kw"><a href="reference/tm_search_assets.html">tm_search_assets</a></span>(token, <span class="st">'name=="*Reactor*"'</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(nodeId, name, type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co"># Fetch all available tags</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="kw"><a href="reference/tm_af_tags.html">tm_af_tags</a></span>(token) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(name, tagName) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;                                 nodeId                  name      type</span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 1 96b526da-aa76-46cb-8611-9c108303e755               Reactor     ASSET</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; 2 065e17e1-7569-49e6-9aea-c30f96081b86             Reactor 2     ASSET</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; 3 f75449bb-d144-40df-9d6a-d34a6a52f96f Reactor Concentration ATTRIBUTE</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; 4 af82c650-bbd5-4b58-9efa-880f205c6402         Reactor Level ATTRIBUTE</span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; 5 07a7f300-f90b-458f-b334-3a0d7093d5ff   Reactor Temperature ATTRIBUTE</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; 6 f0cb8ec3-bf9b-4eb3-8959-8b179d0e8331             Reactor 1     ASSET</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;                    name     tagName</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 1 Reactor Concentration  BA2:CONC.1</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; 2         Reactor Level  BA:LEVEL.1</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; 3 Reactor Concentration   BA:CONC.1</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; 4   Reactor Temperature   BA:TEMP.1</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; 5        Reactor Status BA:ACTIVE.1</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; 6        Reaction Phase  BA:PHASE.1</span></a></code></pre></div>
+<p>Fetch time series data of a tag:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lubridate)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">start &lt;-<span class="st">  </span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span>(<span class="st">"2019-09-15T03:10:14Z"</span>)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">end &lt;-<span class="st"> </span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span>(<span class="st">"2019-09-15T08:42:15Z"</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">tag_data &lt;-<span class="st"> </span><span class="kw"><a href="reference/tm_ts_interpolated_data.html">tm_ts_interpolated_data</a></span>(token, <span class="st">"BA:CONC.1"</span>, start, end, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tag_data<span class="op">$</span>timeSeries)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;                 index value</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 1 2019-09-15 03:11:00     0</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 2 2019-09-15 03:11:02     0</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; 3 2019-09-15 03:11:04     0</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; 4 2019-09-15 03:11:06     0</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; 5 2019-09-15 03:11:08     0</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; 6 2019-09-15 03:11:10     0</span></a></code></pre></div>
+<p>Visualize fetched time series data:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">tag_data<span class="op">$</span>timeSeries <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(index, value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="dt">color =</span> <span class="st">"#09557f"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(tag_data<span class="op">$</span>tag<span class="op">$</span>tagName) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>()</a></code></pre></div>
+<p><img src="reference/figures/README-tag_plot-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="authentication" class="section level2">
 <h2 class="hasAnchor">
@@ -171,11 +195,11 @@
 <p>All requests to the TrendMiner API require authentication using a valid Bearer access token that is sent as part of the request headers.</p>
 <p>Request tokens are obtained via OAuth2.0 using a resource owner password credentials flow. Any client which likes to interact with the API needs to collect the credentials from the user (username and password) and passes them together with its own client credentials (client ID and client secret) to the TrendMiner server using the <code><a href="reference/tm_token.html">tm_token()</a></code> function. The server responds with an access token which the user needs to use for any subsequent API requests.</p>
 <p>User credentials, client credentials and the TrendMiner base URL can be passed as arguments to <code><a href="reference/tm_token.html">tm_token()</a></code> for quick testing in interactive mode. However, it is recommended to call <code><a href="reference/tm_token.html">tm_token()</a></code> without arguments. In this case <code><a href="reference/tm_token.html">tm_token()</a></code> will fetch the credentials and the TrendMiner base URL from the environment variables below which you need to store in <code>.Renviron</code>. You can easily edit <code>.Renviron</code> using <code>usethis::edit_r_environ()</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">TM_client_ID =<span class="st"> </span>YOUR_CLIENT_ID_HERE</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">TM_client_secret =<span class="st"> </span>YOUR_CLIENT_SECRET_HERE</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">TM_usr =<span class="st"> </span>YOUR_USER_NAME_HERE</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">TM_pwd =<span class="st"> </span>YOUR_USER_PASSWORD_HERE</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">TM_base_url =<span class="st"> </span>YOUR_TM_BASE_URL_HERE</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">TM_client_ID =<span class="st"> </span>YOUR_CLIENT_ID_HERE</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">TM_client_secret =<span class="st"> </span>YOUR_CLIENT_SECRET_HERE</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">TM_usr =<span class="st"> </span>YOUR_USER_NAME_HERE</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">TM_pwd =<span class="st"> </span>YOUR_USER_PASSWORD_HERE</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">TM_base_url =<span class="st"> </span>YOUR_TM_BASE_URL_HERE</a></code></pre></div>
 </div>
 </div>
   </div>

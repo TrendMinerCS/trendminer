@@ -1,7 +1,7 @@
 #' Get interpolated time series data by tag name
 #'
 #' @details
-#' The maximumn number of points `tm_ts_interpolated_data()` can return is 10.000.
+#' The maximum number of points `tm_ts_interpolated_data()` can return is 10.000.
 #' The `step` argument defines the time increment between returned observations.
 #' If you define `step` to be one second which is the default setting, the time interval
 #' you can select using the `start` and `end` arguments can span 2 hours, 46 minutes

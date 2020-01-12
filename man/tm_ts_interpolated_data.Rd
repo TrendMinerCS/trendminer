@@ -54,7 +54,7 @@ A list with two elements:
 Get interpolated time series data by tag name
 }
 \details{
-The maximumn number of points \code{tm_ts_interpolated_data()} can return is 10.000.
+The maximum number of points \code{tm_ts_interpolated_data()} can return is 10.000.
 The \code{step} argument defines the time increment between returned observations.
 If you define \code{step} to be one second which is the default setting, the time interval
 you can select using the \code{start} and \code{end} arguments can span 2 hours, 46 minutes

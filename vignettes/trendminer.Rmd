@@ -88,7 +88,12 @@ The TrendMiner asset framework is constructed around two primary concepts:
 
 **A structure** defines the parent-child relationship between assets and attributes or assets and other assets. It defines the logical place of a node in an asset tree. Since a node can be part of various asset trees at the same time, nodes and structures are defined separately. 
 
-This distinction between nodes (assets and tags) and structures is reflected accordingly in the trendminer R package: An asset framework related function either returns assets and tags if it is node related or it returns structures.
+This distinction between nodes (assets and tags) and structures is reflected accordingly in the trendminer R package: An asset framework related function either returns assets and tags if it is node related or it returns structures. 
+
+Since every structure represents a node at a particular level of an asset tree including the entire parent-child relationship path starting at the respective root, functions which return structures actually return two types of information at once:
+
+* Information on the node the structure presents
+* A single asset tree path including all the notes from the root until the node the structure represents
 
 ## Connecting to a TrendMiner instance
 
@@ -170,7 +175,7 @@ Next we might want to explore the root structure of site Barcelona a bit more by
 
 ```{r}
 tm_af_child_structures(token, roots$structureId[roots$name == "Site Barcelona"]) %>% 
-  select(structureId, nodeId, name, parentName, type)
+  select(structureId, nodeId, name, path, type, parentName)
 ```
 
 We now could go on and continue calling `tm_child_structures()` on each level with all newly retrieved structure IDs until we reach the leaves to get to know the complete tree structure of the Site Barcelona root structure. 
@@ -207,11 +212,6 @@ diagonalNetwork(ToListExplicit(solvents_subtree$Solvents, unname = TRUE), fontSi
                 height = 400, width = 600)
 ```
 
-
-
-
-
-
 By adding some magrittr and purrr flavor you can even create tree plots for all root structures including all of their descendants in one go. Based on the breadth and depth of your asset hierarchy, however, that might be a very expensive call so use the code example below with caution:
 
 ```{r}
@@ -237,7 +237,7 @@ plots[[3]]
 ```
 
 
-## Fetching and visualzing time series data of tags
+## Fetching and visualizing time series data of tags
 
 All functions and examples we covered so far dealt with extracting and visualizing asset framework data using asset framework API functions. In this section we will now focus on TrendMiner time series API functions for tags.
 
@@ -261,7 +261,7 @@ ba_conc1_data <- tm_ts_interpolated_data(token, "BA:CONC.1", start, end, step = 
 
 ```
 
-The maximumn number of points `tm_ts_interpolated_data()` can return is 10.000. The `step` argument defines the time increment between returned observations. If you define `step` to be one second which is the default setting, the time interval you can select using the `start` and `end` arguments can span 2 hours, 46 minutes and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the resolution by increasing the `step` argument if you like to fetch cohesive time series data of a tag which spans more than 10.000 seconds. 
+The maximum number of points `tm_ts_interpolated_data()` can return is 10.000. The `step` argument defines the time increment between returned observations. If you define `step` to be one second which is the default setting, the time interval you can select using the `start` and `end` arguments can span 2 hours, 46 minutes and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the resolution by increasing the `step` argument if you like to fetch cohesive time series data of a tag which spans more than 10.000 seconds. 
 
 ```{r}
 str(ba_conc1_data)
@@ -271,7 +271,7 @@ summary(ba_conc1_data$timeSeries)
 
 There are plenty of time series plotting options available in R. Since `tm_ts_interpolated_data()` returns the time series of the tag in a data frame we will use `ggplot` in our plotting examples below. 
 
-We start by visualizing the time series data we just downoladed for tag `r ba_conc1_data$tag$tagName`:
+We start by visualizing the time series data we just downloaded for tag `r ba_conc1_data$tag$tagName`:
 
 ```{r single_ts_plot, message=FALSE, fig.height=3, fig.width=7, fig.align="center"}
 library(ggplot2)
@@ -283,7 +283,7 @@ ba_conc1_data$timeSeries %>%
   theme_minimal()
 ```
 
-If you know that the tags you are interested in operate on the same scale you can fetch and visualize their data in one go my chaining several ``purrr::map()` calls together. Below, however, we will break the data fetching and visualing process into two steps to explain some of the underlying details.
+If you know that the tags you are interested in operate on the same scale you can fetch and visualize their data in one go my chaining several `purrr::map()` calls together. Below, however, we will break the data fetching and visualizing process into two steps to explain some of the underlying details.
 
 We start by selecting three tags from Reactor 1 whose time series data we like to extract from TrendMiner. We fetch their data and store the results in a single combined data frame on top of each other in long format.  Because `ggplot` needs a data frame in long format including a group variable when plotting a multivariate time series, we make sure to add an additional group column `tag_name` to the data frame:
 
@@ -298,7 +298,6 @@ combined_data <- map(tags, ~ tm_ts_interpolated_data(token, .x,  start, end, 2))
                tag_name = .x[["tag"]][["tagName"]]
               )) 
 ```
-
 
 We can now directly plot our data without further processing: 
 

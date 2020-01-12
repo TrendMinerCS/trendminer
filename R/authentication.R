@@ -3,6 +3,7 @@
 #' Requests a Bearer access token from TrendMiner using an OAuth2.0 resource
 #' owner password credentials grant flow.
 #'
+#' @details
 #' All requests to the TrendMiner API require authentication. This is achieved
 #' by sending a valid Bearer access token in the request headers. Request tokens
 #' are obtained via OAuth2.0 using the resource owner password credentials flow:
@@ -12,19 +13,22 @@
 #' to the TrendMiner server. The server responds with an access token which the
 #' user needs to use for any subsequent API requests.
 #'
-#' @details
+#' **Note**: You can request your client ID and client secret by contacting
+#' TrendMiner support or your TrendMiner Customer Success Manager.
+#'
 #' User credentials, client credentials and the TrendMiner base URL can be passed
 #' as arguments to `tm_token()` for quick testing in interactive mode.
 #' However, it is recommended to call `tm_token()` without arguments.
 #' In this case `tm_token()` will fetch the credentials and the TrendMiner
 #' base URL from the following environment variables stored in
-#' `.Renviron`:
+#' `.Renviron` which you can easily edit using `usethis::edit_r_environ()`:
 #'
 #' `TM_client_ID = YOUR_CLIENT_ID_HERE`\cr
 #' `TM_secret = YOUR_CLIENT_SECRET_HERE`\cr
 #' `TM_usr = YOUR_USER_NAME_HERE`\cr
 #' `TM_pwd = YOUR_USER_PASSWORD_HERE`\cr
 #' `TM_base_url = YOUR_TM_BASE_URL_HERE`
+#'
 #' @param client_id Client identifier issued by the authorization server
 #' @param client_secret Client secret issued by the authorization server
 #' @param usr_name Username

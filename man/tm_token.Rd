@@ -58,12 +58,15 @@ together with its own client credentials (client ID and client secret)
 to the TrendMiner server. The server responds with an access token which the
 user needs to use for any subsequent API requests.
 
+\strong{Note}: You can request your client ID and client secret by contacting
+TrendMiner support or your TrendMiner Customer Success Manager.
+
 User credentials, client credentials and the TrendMiner base URL can be passed
 as arguments to \code{tm_token()} for quick testing in interactive mode.
 However, it is recommended to call \code{tm_token()} without arguments.
 In this case \code{tm_token()} will fetch the credentials and the TrendMiner
 base URL from the following environment variables stored in
-\code{.Renviron}:
+\code{.Renviron} which you can easily edit using \code{usethis::edit_r_environ()}:
 
 \code{TM_client_ID = YOUR_CLIENT_ID_HERE}\cr
 \code{TM_secret = YOUR_CLIENT_SECRET_HERE}\cr

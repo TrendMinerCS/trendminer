@@ -1,6 +1,6 @@
 Package: trendminer
 Title: R client for the 'TrendMiner' API 
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person(given = "Alexander",
            family = "Lemm",

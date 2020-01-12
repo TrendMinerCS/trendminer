@@ -178,7 +178,7 @@
     </tr>
     <tr>
       <th>shift</th>
-      <td><p>Offset expressed in seconds</p></td>
+      <td><p>Time series shift (offset) expressed in seconds</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -211,6 +211,18 @@ you can select using the <code>start</code> and <code>end</code> arguments can s
 and 40 seconds (2 x 60 x 60 + 46 x 60 + 40 = 10.000) at most. Make sure to decrease the
 resolution by increasing the <code>step</code> argument if you like to fetch cohesive time series
 data of a tag which spans more than 10.000 seconds.</p>
+<p>The <code>shift</code> argument lets you control if <code>tm_ts_interpolated_data</code> returns values
+which are either forward or backward shifted in time before they are aligned
+with the actual time in the response. <code>shift</code> is expressed in seconds.
+The example in the following table shows the returned time series values based
+on different <code>shift</code> setings:</p><table class='table'>
+<tr><td>Time</td><td>shift = 0</td><td>shift = 1</td><td>shift = -1</td></tr>
+<tr><td>03:02:00</td><td>23</td><td>NA</td><td>27</td></tr>
+<tr><td>03:02:01</td><td>27</td><td>23</td><td>25</td></tr>
+<tr><td>03:02:02</td><td>25</td><td>27</td><td>NA</td></tr>
+</table>
+
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

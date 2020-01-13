@@ -113,7 +113,8 @@ tm_ts_interpolated_data <- function(token, tag_name, start_date, end_date,
                          httr::user_agent(tm_get_useragent()),
                          httr::accept_json(),
                          body = body,
-                         encode = "json")
+                         encode = "json",
+                         ...)
 
   if (httr::http_error(response)) {
     stop(

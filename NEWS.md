@@ -1,4 +1,4 @@
-# trendminer (development version)
+# trendminer 0.1.0
 
 ## New functions
 

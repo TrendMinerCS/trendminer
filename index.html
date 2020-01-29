@@ -104,7 +104,7 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>Below are some things you can do after installing the package. Check out the <a href="https://alex23lemm.github.io/trendminer/articles/trendminer.html">introduction vignette</a> and <a href="https://alex23lemm.github.io/trendminer/reference/index.html">the docs</a> for further details.</p>
+<p>Below are some things you can do after installing the package. Check out the <a href="https://trendminer.github.io/trendminer/articles/trendminer.html">introduction vignette</a> and <a href="https://trendminer.github.io/trendminer/reference/index.html">the docs</a> for further details.</p>
 <p>Start with fetching an access token which you’ll need for any subsequent API call:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(trendminer)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
@@ -116,9 +116,9 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="reference/tm_af_root_structures.html">tm_af_root_structures</a></span>(token) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(structureId, name)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;                            structureId           name</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 1 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 2 2b66622f-83c7-48e9-9ccc-6dd9214e70c6 Site Barcelona</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 3 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 1 2b66622f-83c7-48e9-9ccc-6dd9214e70c6 Site Barcelona</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 2 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 3 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># Get child structures of Site Grenoble</span></a>
 <a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw"><a href="reference/tm_af_child_structures.html">tm_af_child_structures</a></span>(token, <span class="st">"ca12dc39-516d-4217-b7cc-a8d220a32858"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -225,14 +225,15 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Alexander Lemm <br><small class="roles"> Author, maintainer </small>  </li>
+<li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.com/alex23lemm/trendminer"><img src="https://travis-ci.com/alex23lemm/trendminer.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://codecov.io/gh/alex23lemm/trendminer"><img src="https://codecov.io/gh/alex23lemm/trendminer/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://travis-ci.com/TrendMiner/trendminer"><img src="https://travis-ci.com/TrendMiner/trendminer.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://codecov.io/gh/trendminer/trendminer"><img src="https://codecov.io/gh/trendminer/trendminer/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
 </div>

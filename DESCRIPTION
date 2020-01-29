@@ -1,11 +1,14 @@
 Package: trendminer
 Title: R client for the 'TrendMiner' API 
 Version: 0.1.0
-Authors@R: 
+Authors@R: c(
     person(given = "Alexander",
            family = "Lemm",
            role = c("aut", "cre"),
-           email = "alex23lemm@gmail.com")
+           email = "alex23lemm@gmail.com"),
+    person(given = "TrendMiner NV",
+           role = c("cph"))
+    )
 Description: Allows access to selected endpoints that are part of the 
     'TrendMiner' API <http://developer.trendminer.com>.
     'TrendMiner' is an industrial self-service analytics platform for analyzing, 

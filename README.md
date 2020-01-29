@@ -5,9 +5,9 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.com/alex23lemm/trendminer.svg?branch=master)](https://travis-ci.com/alex23lemm/trendminer)
-[![codecov](https://codecov.io/gh/alex23lemm/trendminer/branch/master/graph/badge.svg)](https://codecov.io/gh/alex23lemm/trendminer)
+[![Build
+Status](https://travis-ci.com/TrendMiner/trendminer.svg?branch=master)](https://travis-ci.com/TrendMiner/trendminer)
+[![codecov](https://codecov.io/gh/trendminer/trendminer/branch/master/graph/badge.svg)](https://codecov.io/gh/trendminer/trendminer)
 <!-- badges: end -->
 
 trendminer is an R client for accessing selected endpoints of the
@@ -27,9 +27,9 @@ remotes::install_github("alex23lemm/trendminer")
 
 Below are some things you can do after installing the package. Check out
 the [introduction
-vignette](https://alex23lemm.github.io/trendminer/articles/trendminer.html)
+vignette](https://trendminer.github.io/trendminer/articles/trendminer.html)
 and [the
-docs](https://alex23lemm.github.io/trendminer/reference/index.html) for
+docs](https://trendminer.github.io/trendminer/reference/index.html) for
 further details.
 
 Start with fetching an access token which you’ll need for any subsequent
@@ -51,9 +51,9 @@ library(dplyr)
 tm_af_root_structures(token) %>% 
   select(structureId, name)
 #>                            structureId           name
-#> 1 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne
-#> 2 2b66622f-83c7-48e9-9ccc-6dd9214e70c6 Site Barcelona
-#> 3 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble
+#> 1 2b66622f-83c7-48e9-9ccc-6dd9214e70c6 Site Barcelona
+#> 2 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble
+#> 3 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne
 
 # Get child structures of Site Grenoble
 tm_af_child_structures(token, "ca12dc39-516d-4217-b7cc-a8d220a32858") %>% 

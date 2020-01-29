@@ -28,13 +28,16 @@ token <- tm_token()
 
 ## ----include=FALSE------------------------------------------------------------
 access_token <- token$access_token
+tm_url <- token$base_url
 token$access_token <- "YOUR_ACCESS_TOKEN_WOULD_BE_SHOWN_HERE"
+token$base_url <- "YOUR_TM_BASE_URL_WOULD_BE_SHOWN_HERE"
 
 ## -----------------------------------------------------------------------------
 token
 
 ## ----include=FALSE------------------------------------------------------------
 token$access_token <- access_token
+token$base_url <- tm_url
 
 ## ----message=FALSE------------------------------------------------------------
 library(dplyr)

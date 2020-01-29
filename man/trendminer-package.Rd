@@ -25,5 +25,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Alexander Lemm \email{alex23lemm@gmail.com}
 
+Other contributors:
+\itemize{
+  \item TrendMiner NV [copyright holder]
+}
+
 }
 \keyword{internal}

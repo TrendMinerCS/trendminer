@@ -16,9 +16,9 @@ Allows access to selected endpoints that are part of the
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://alex23lemm.github.io/trendminer}
-  \item \url{https://github.com/alex23lemm/trendminer}
-  \item Report bugs at \url{https://github.com/alex23lemm/trendminer/issues}
+  \item \url{https://trendminer.github.io/trendminer}
+  \item \url{https://github.com/trendminer/trendminer}
+  \item Report bugs at \url{https://github.com/trendminer/trendminer/issues}
 }
 
 }

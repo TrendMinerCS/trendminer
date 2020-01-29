@@ -20,7 +20,7 @@ data.
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("alex23lemm/trendminer")
+remotes::install_github("TrendMiner/trendminer")
 ```
 
 ## Usage
@@ -51,9 +51,9 @@ library(dplyr)
 tm_af_root_structures(token) %>% 
   select(structureId, name)
 #>                            structureId           name
-#> 1 2b66622f-83c7-48e9-9ccc-6dd9214e70c6 Site Barcelona
-#> 2 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble
-#> 3 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne
+#> 1 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne
+#> 2 2b66622f-83c7-48e9-9ccc-6dd9214e70c6 Site Barcelona
+#> 3 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble
 
 # Get child structures of Site Grenoble
 tm_af_child_structures(token, "ca12dc39-516d-4217-b7cc-a8d220a32858") %>% 

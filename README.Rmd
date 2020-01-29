@@ -29,7 +29,7 @@ trendminer is an R client for accessing selected endpoints of the TrendMiner API
 
 ``` {r install, eval=FALSE}
 # install.packages("remotes")
-remotes::install_github("alex23lemm/trendminer")
+remotes::install_github("TrendMiner/trendminer")
 ```
 
 ## Usage

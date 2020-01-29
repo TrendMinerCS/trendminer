@@ -99,7 +99,7 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"alex23lemm/trendminer"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"TrendMiner/trendminer"</span>)</a></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -116,9 +116,9 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="reference/tm_af_root_structures.html">tm_af_root_structures</a></span>(token) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(structureId, name)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;                            structureId           name</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 1 2b66622f-83c7-48e9-9ccc-6dd9214e70c6 Site Barcelona</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 2 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 3 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 1 783249ff-bfc3-4453-bd6a-27d9e71f03e2   Site Cologne</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 2 2b66622f-83c7-48e9-9ccc-6dd9214e70c6 Site Barcelona</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 3 ca12dc39-516d-4217-b7cc-a8d220a32858  Site Grenoble</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># Get child structures of Site Grenoble</span></a>
 <a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw"><a href="reference/tm_af_child_structures.html">tm_af_child_structures</a></span>(token, <span class="st">"ca12dc39-516d-4217-b7cc-a8d220a32858"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
